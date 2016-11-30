@@ -1,8 +1,12 @@
 doctype html
-html (lang='en')
+html(lang='en')
   head
-    title Brunch with ES6
+    title TransforMap Editor
+    meta(charset="utf-8")
     script(src='/vendor.js')
     script(src='/app.js')
+    script require('initialize')
+    link(rel='stylesheet', href="/app.css")
+    link(rel='stylesheet', href="/vendor.css")
   body
-    #app
+    #map

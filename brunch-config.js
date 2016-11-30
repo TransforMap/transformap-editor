@@ -1,15 +1,24 @@
 module.exports = {
+  npm: {
+    styles: {leaflet: ['dist/leaflet.css']}
+  },
+
   files: {
     javascripts: {
       joinTo: {
-        'vendor.js': /^(?!app)/,
+        'vendor.js': /^node_modules/,
         'app.js': /^app/
       }
     },
-    stylesheets: {joinTo: 'app.css'}
+    stylesheets: {
+      joinTo: {
+        'vendor.css': /^node_modules/,
+        'app.css': /^app/
+      }
+    }
   },
 
   plugins: {
-    babel: {presets: ['es2015']}
+    babel: {presets: ['es2015']},
   }
 };
