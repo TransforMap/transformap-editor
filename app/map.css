@@ -1,4 +1,36 @@
+* {
+  margin:0;
+  padding:0;
+}
+label,input,textarea,select {
+  font-size:1em;
+}
+
+#forms {
+  width:49%;
+  padding:10px;
+  float:left;
+}
+#forms fieldset {
+  padding:10px;
+  margin-bottom:10px;
+}
+#forms .row label,
+#forms .row > p:first-child,
+#forms .row > input:first-child {
+  display:block;
+  float:left;
+  min-width:15em;
+  text-align:right;
+  margin-right:10px;
+}
+#forms .row label + * {
+  margin-bottom:0.5em;
+}
+
+
 #map {
-  width: 1000px;
-  height: 500px;
+  width: 49%;
+  height: 90vh;
+  border:1px solid black
 }

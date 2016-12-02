@@ -11,4 +11,78 @@ html(lang='en')
     link(rel='stylesheet', href="/app.css")
     link(rel='stylesheet', href="/vendor.css")
   body
+    #forms
+      form
+        fieldset
+          .row#name
+            label(for=name) Name
+            input(type=text id=name name=name)
+          .row#toi
+            label(for=type_of_initiative) Type of Initiative
+            input(type=text id=type_of_initiative)
+            //fixme should be a multi-select populated from the taxonomy, possible with search
+          .row
+            label(for=SSEDAS_PARTNER) SUSY Partner
+            select(id=SSEDAS_PARTNER name='SSEDAS_PARTNER' required)
+              option(value=) Choose Partner
+              option(value=Suedwind) Südwind
+              option(value=FTH) Fair Trade Hellas
+              option(value=RHSF) Ressources Humaines Sans Frontières
+        fieldset#address
+          legend Address
+          .row
+            label(for=addr_country) Country
+            input(type=text id=addr_country name='addr:country')
+          .row
+            label(for=addr_city) City
+            input(type=text id=addr_city name='addr:city')
+          .row
+            label(for=addr_postcode) Postcode
+            input(type=text id=addr_postcode name='addr:postcode')
+          .row
+            label(for=addr_street) Street Name
+            input(type=text id=addr_street name='addr:street')
+          .row
+            label(for=addr_housenumber) House Number
+            input(type=text id=addr_housenumber name='addr:housenumber')
+          //fixme add support for addr:housename and addr:place
+        fieldset
+          legend Contact Data
+          .row
+            label(for=contact_website) Website
+            input(type=text id=contact_website name='contact:website')
+          .row
+            label(for=contact_email) Email Address
+            input(type=text id=contact_email name='contact:email')
+          .row
+            label(for=contact_phone) Phone Number
+            input(type=text id=contact_phone name='contact:phone')
+          .row
+            label(for=opening_hours) Opening Hours
+            input(type=text id=opening_hours name='opening_hours')
+          
+          //fixme allow more than one field for each type
+        fieldset
+          legend Additional Information
+          .row
+            label(for=image) Link to image
+            input(type=text id=image name='image')
+          .row
+            label(for=video) Link to video
+            input(type=text id=video name='video')
+          .row
+            label(for=description) Description text
+            textarea(id=description name='description' rows=4)
+          //fixme different langs for description
+        fieldset
+          legend Free Tags
+          .row
+            p Key
+            p Value
+          .row
+            input(type=text id=k1)
+            input(type=text id=v1)
+          //fixme must add additional fields when user fills one
+
+            
     #map
