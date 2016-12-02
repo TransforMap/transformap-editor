@@ -15,74 +15,75 @@ html(lang='en')
       form
         fieldset
           .row#name
-            label(for=name) Name
-            input(type=text id=name name=name)
+            label(for='_key_name') Name
+            input(type='text' id='_key_name')
           .row#toi
-            label(for=type_of_initiative) Type of Initiative
-            input(type=text id=type_of_initiative)
+            label(for='_key_type_of_initiative') Type of Initiative
+            input(type='text' id='_key_type_of_initiative')
             //fixme should be a multi-select populated from the taxonomy, possible with search
           .row
-            label(for=SSEDAS_PARTNER) SUSY Partner
-            select(id=SSEDAS_PARTNER name='SSEDAS_PARTNER' required)
-              option(value=) Choose Partner
-              option(value=Suedwind) Südwind
-              option(value=FTH) Fair Trade Hellas
-              option(value=RHSF) Ressources Humaines Sans Frontières
+            label(for='_key_SSEDAS_PARTNER') SUSY Partner
+            select(id='_key_SSEDAS_PARTNER' name='SSEDAS_PARTNER' required)
+              option(value='') Choose Partner
+              option(value='Suedwind') Südwind
+              option(value='FTH') Fair Trade Hellas
+              option(value='RHSF') Ressources Humaines Sans Frontières
+              option(value='BILS') BILSP
         fieldset#address
           legend Address
           .row
-            label(for=addr_country) Country
-            input(type=text id=addr_country name='addr:country')
+            label(for='_key_addr:country') Country
+            input(type='text' id='_key_addr:country')
           .row
-            label(for=addr_city) City
-            input(type=text id=addr_city name='addr:city')
+            label(for='_key_addr:city') City
+            input(type='text' id='_key_addr:city')
           .row
-            label(for=addr_postcode) Postcode
-            input(type=text id=addr_postcode name='addr:postcode')
+            label(for='_key_addr:postcode') Postcode
+            input(type='text' id='_key_addr:postcode')
           .row
-            label(for=addr_street) Street Name
-            input(type=text id=addr_street name='addr:street')
+            label(for='_key_addr:street') Street Name
+            input(type='text' id='_key_addr:street')
           .row
-            label(for=addr_housenumber) House Number
-            input(type=text id=addr_housenumber name='addr:housenumber')
+            label(for='_key_addr:housenumber') House Number
+            input(type='text' id='_key_addr:housenumber')
           //fixme add support for addr:housename and addr:place
         fieldset
           legend Contact Data
           .row
-            label(for=contact_website) Website
-            input(type=text id=contact_website name='contact:website')
+            label(for='_key_contact:website') Website
+            input(type='text' id='_key_contact:website')
           .row
-            label(for=contact_email) Email Address
-            input(type=text id=contact_email name='contact:email')
+            label(for='_key_contact:email') Email Address
+            input(type='text' id='_key_contact:email')
           .row
-            label(for=contact_phone) Phone Number
-            input(type=text id=contact_phone name='contact:phone')
+            label(for='_key_contact:phone') Phone Number
+            input(type='text' id='_key_contact:phone')
           .row
-            label(for=opening_hours) Opening Hours
-            input(type=text id=opening_hours name='opening_hours')
+            label(for='_key_opening_hours') Opening Hours
+            input(type='text' id='_key_opening_hours')
           
           //fixme allow more than one field for each type
         fieldset
           legend Additional Information
           .row
-            label(for=image) Link to image
-            input(type=text id=image name='image')
+            label(for='_key_image') Link to image
+            input(type='text' id='_key_image')
           .row
-            label(for=video) Link to video
-            input(type=text id=video name='video')
+            label(for='_key_video') Link to video
+            input(type='text' id='_key_video')
           .row
-            label(for=description) Description text
-            textarea(id=description name='description' rows=4)
+            label(for='_key_description') Description text
+            textarea(id='_key_description' rows='4')
           //fixme different langs for description
-        fieldset
+        fieldset#freetags
           legend Free Tags
-          .row
+          //fixme must add additional fields when user fills one
+          .row.header
             p Key
             p Value
           .row
-            input(type=text id=k1)
-            input(type=text id=v1)
-          //fixme must add additional fields when user fills one
+            input(type='text' id='key1')
+            input(type='text' id='value1')
 
             
     #map

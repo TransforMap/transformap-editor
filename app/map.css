@@ -24,10 +24,18 @@ label,input,textarea,select {
   text-align:right;
   margin-right:10px;
 }
-#forms .row label + * {
-  margin-bottom:0.5em;
+#forms .row label:after {
+  content:":";
 }
 
+#forms .row * + * {
+  margin-bottom:0.5em;
+}
+#forms .row input,
+#forms .row * + textarea {
+  width:15em;
+  padding:0.2em;
+}
 
 #map {
   width: 49%;
