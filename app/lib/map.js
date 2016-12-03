@@ -1,28 +1,76 @@
 const L = require('leaflet')
+const L_Hash = require('leaflet-hash')
 const redFetch = require('./red_fetch.js')
+
+var map;
 
 module.exports = function () {
   console.log("called initMap, didn't reply")
-  const center = new L.LatLng(51.1657, 10.4515)
-  var baseMaps = {}
-  baseMaps['stamen_terrain'] = new L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/terrain/{z}/{x}/{y}.png', {
-    attribution: 'Map tiles by <a href="http://stamen.com/">Stamen Design</a>, ' +
-      'under <a href="https://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. ',
-    maxZoom: 18,
-    noWrap: true
-  })
-  const basemaps = {
-    'Stamen - Terrain': baseMaps['stamen_terrain']
+
+  function getUrlVars() {
+    var vars = {};
+    var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+        vars[key] = value.replace(/#.*$/,'');
+    });
+    return vars;
   }
-  const map = L.map('map', {
-    zoomControl: false,
-    center: center,
-//    zoom: window.zoom ? zoom : 5,
-    zoom: 5,
-    layers: baseMaps['stamen_terrain']
+
+  var attr_osm = 'Map data by <a href="https://openstreetmap.org">OpenStreetMap</a> contributors, under <a href="https://www.openstreetmap.org/copyright">ODbL</a>. ',
+      attr_pois = 'POIs by <a href="http://solidariteconomy.eu">SUSY</a>, <a href="https://creativecommons.org/publicdomain/zero/1.0/">CC-0</a>. ';
+  var leaflet_bg_maps,
+      center,
+      zoom,
+      defaultlayer,
+      base_maps = {};
+
+  base_maps['mapnik'] = new L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: attr_osm + attr_pois,
+      maxZoom : 19,
+      noWrap: true
+  });
+  base_maps['stamen_terrain'] = new L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/terrain/{z}/{x}/{y}.png', {
+      attribution: 'Map tiles by <a href="http://stamen.com/">Stamen Design</a>, '+
+        'under <a href="https://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. '+
+        attr_osm  + attr_pois,
+      maxZoom : 18,
+      noWrap: true
+  });
+  base_maps['stamen_terrain_bg'] = new L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/terrain-background/{z}/{x}/{y}.png', {
+      attribution: 'Map tiles by <a href="http://stamen.com/">Stamen Design</a>, '+
+        'under <a href="https://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. '+
+        attr_osm + attr_pois,
+      maxZoom : 18,
+      noWrap: true
+  });
+  base_maps['hot'] = new L.tileLayer('http://tile-{s}.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
+      attribution: 'Tiles courtesy of <a href="http://hot.openstreetmap.org/">Humanitarian OpenStreetMap Team</a>. '+
+        attr_osm + attr_pois,
+      maxZoom : 20,
+      noWrap: true
+  });
+
+  if(!leaflet_bg_maps)
+    leaflet_bg_maps = {
+      'Stamen - Terrain': base_maps['stamen_terrain'],
+      'Stamen - Terrain Background': base_maps['stamen_terrain_bg'],
+      'OpenStreetMap - Mapnik': base_maps['mapnik'],
+      'Humanitarian OpenStreetMap ': base_maps['hot']
+    };
+  if(!defaultlayer)
+    defaultlayer = base_maps['mapnik'];
+
+  var urlparams = getUrlVars();
+
+  map = L.map('map', {
+    zoomControl: true,
+    center: center ? center : new L.LatLng(51.1657, 10.4515),
+    zoom: zoom ? zoom : 15,
+    layers: defaultlayer
   })
-  const ctrl = new L.Control.Layers(basemaps)
+
+  const ctrl = new L.Control.Layers(leaflet_bg_maps)
   map.addControl(ctrl)
+  var hash = new L.Hash(map); // Leaflet persistent Url Hash function
 
   var lang = 'de'
   const data_urls = [ 'http://192.168.0.2:6000/place/2c10b95ea433712f0b06a3f7d300020f', '2c10b95ea433712f0b06a3f7d310e7d5' ]
@@ -39,7 +87,7 @@ module.exports = function () {
           console.log(field)
           console.log(value)
           field.value = value
-        } else {
+        } else { //put it into "free tags"
           //get last child
           var freetags = document.getElementById("freetags")
           console.log(freetags)
@@ -77,10 +125,15 @@ module.exports = function () {
     if(current_data.geometry && current_data.geometry.coordinates) {
       var lon = current_data.geometry.coordinates[0],
           lat = current_data.geometry.coordinates[1];
-      if(lon)
-        document.getElementById("_geometry_lon").value = lon
-      if(lat)
-        document.getElementById("_geometry_lat").value = lat
+      if(lat === undefined || lon === undefined) {
+        console.error("lat or lon empty")
+        return
+      }
+
+      document.getElementById("_geometry_lon").value = lon
+      document.getElementById("_geometry_lat").value = lat
+      map.panTo(new L.LatLng(lat,lon))
+
     }
   }
 
