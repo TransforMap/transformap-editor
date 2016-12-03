@@ -3,7 +3,9 @@ const L_Hash = require('leaflet-hash')
 const L_Draw = require('leaflet-draw')
 const redFetch = require('./red_fetch.js')
 
-var map;
+var map,
+    editableLayers,
+    placeMarker;
 
 module.exports = function () {
   console.log("called initialize, didn't reply")
@@ -75,7 +77,7 @@ module.exports = function () {
     var hash = new L.Hash(map); // Leaflet persistent Url Hash function
 
     //leaflet draw
-    var editableLayers = new L.FeatureGroup();
+    editableLayers = new L.FeatureGroup();
     map.addLayer(editableLayers);
     var placeMarker = L.Icon.extend({
         options: {
@@ -111,6 +113,8 @@ module.exports = function () {
         }
     
         editableLayers.addLayer(layer);
+
+        //TODO deactivate adding, switch to edit mode for moving marker
     });
   
   }
