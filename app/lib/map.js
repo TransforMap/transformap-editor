@@ -74,6 +74,14 @@ module.exports = function () {
         }
       }
     }
+    if(current_data.geometry && current_data.geometry.coordinates) {
+      var lon = current_data.geometry.coordinates[0],
+          lat = current_data.geometry.coordinates[1];
+      if(lon)
+        document.getElementById("_geometry_lon").value = lon
+      if(lat)
+        document.getElementById("_geometry_lat").value = lat
+    }
   }
 
   redFetch(data_urls,fillForm,console.error)

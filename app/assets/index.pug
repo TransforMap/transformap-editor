@@ -47,6 +47,12 @@ html(lang='en')
             label(for='_key_addr:housenumber') House Number
             input(type='text' id='_key_addr:housenumber')
           //fixme add support for addr:housename and addr:place
+          .row(style='margin-top:1em')
+            label(for='_geometry_lon' title='X, WGS84, decimal degree') Longitude
+            input(type='text' id='_geometry_lon')
+          .row
+            label(for='_geometry_lat' title='Y, WGS84, decimal degree') Latitude
+            input(type='text' id='_geometry_lat')
         fieldset
           legend Contact Data
           .row
