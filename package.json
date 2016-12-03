@@ -11,7 +11,7 @@
     "lint": "standard app/**/*js",
     "start": "brunch watch --server",
     "prod": "brunch build --production",
-    "postinstall": "cp -r node_modules/leaflet/dist/images public/"
+    "postinstall": "cp -r node_modules/leaflet/dist/images public/; cp -r node_modules/leaflet-draw/dist/images public/"
   },
   "dependencies": {},
   "devDependencies": {
@@ -24,6 +24,7 @@
     "javascript-brunch": "^2.0.0",
     "leaflet": "^1.0.2",
     "leaflet-hash": "^0.2.1",
+    "leaflet-draw": "^0.4.4",
     "pugjs-brunch": "^2.8.5",
     "standard": "^8.6.0",
     "uglify-js-brunch": "^2.0.0"

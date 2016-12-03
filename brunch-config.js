@@ -1,6 +1,9 @@
 module.exports = {
   npm: {
-    styles: {leaflet: ['dist/leaflet.css']}
+    styles: {
+      leaflet: ['dist/leaflet.css'],
+      'leaflet-draw' : ['src/leaflet.draw.css']
+    }
   },
 
   files: {
