@@ -5,10 +5,30 @@ const redFetch = require('./red_fetch.js')
 
 var map,
     editableLayers,
+    drawControl,
     placeMarker;
 
 module.exports = function () {
   console.log("called initialize, didn't reply")
+
+  function getDrawControl(allow_new_marker) {
+    var marker_value = allow_new_marker ? { icon: new placeMarker() } : false
+    var options = {
+      position: 'bottomleft',
+      draw: {
+        polyline: false,
+        polygon: false,
+        rectangle: false,
+        circle: false,
+        marker: marker_value
+      },
+      edit: {
+        featureGroup: editableLayers, //REQUIRED!!
+        remove: false
+      }
+    }
+    return new L.Control.Draw(options);
+  }
 
   function getUrlVars() {
     var vars = {};
@@ -79,7 +99,7 @@ module.exports = function () {
     //leaflet draw
     editableLayers = new L.FeatureGroup();
     map.addLayer(editableLayers);
-    var placeMarker = L.Icon.extend({
+    placeMarker = L.Icon.extend({
         options: {
             shadowUrl: null,
             iconAnchor: new L.Point(12, 40),
@@ -87,22 +107,6 @@ module.exports = function () {
             iconUrl: 'marker-green.png'
         }
     });
-    var options = {
-      position: 'bottomleft',
-      draw: {
-        polyline: false,
-        polygon: false,
-        rectangle: false,
-        circle: false,
-        marker: { icon: new placeMarker() }
-      },
-      edit: {
-        featureGroup: editableLayers, //REQUIRED!! 
-        remove: false
-      }
-    }
-    var drawControl = new L.Control.Draw(options);
-    map.addControl(drawControl);
 
     map.on(L.Draw.Event.CREATED, function (e) {
         var type = e.layerType,
@@ -113,9 +117,23 @@ module.exports = function () {
         }
     
         editableLayers.addLayer(layer);
+        document.getElementById("_geometry_lon").value = layer._latlng.lng.toFixed(6)
+        document.getElementById("_geometry_lat").value = layer._latlng.lat.toFixed(6)
 
-        //TODO deactivate adding, switch to edit mode for moving marker
+        map.removeControl(drawControl) 
+        drawControl = getDrawControl(false) //deactivate "add marker" after the 1st one
+        map.addControl(drawControl)
+        //fixme instantly enable 'edit' mode of layer
     });
+
+
+    map.on('draw:editmove', function(e) {
+      console.log("editmove");
+      console.log(e);
+      document.getElementById("_geometry_lon").value = e.layer._latlng.lng.toFixed(6)
+      document.getElementById("_geometry_lat").value = e.layer._latlng.lat.toFixed(6)
+
+    })
   
   }
   initMap()
@@ -178,9 +196,20 @@ module.exports = function () {
 
       document.getElementById("_geometry_lon").value = lon
       document.getElementById("_geometry_lat").value = lat
+
+      editableLayers.addLayer(new L.marker([lat,lon], { icon: new placeMarker() }))
+
+      drawControl = getDrawControl(false)
+      map.addControl(drawControl)
+
       map.panTo(new L.LatLng(lat,lon))
 
     }
+    else { //allow adding a marker
+      drawControl = getDrawControl(true)
+      map.addControl(drawControl)
+    }
+
   }
 
   redFetch(data_urls,fillForm,console.error)
