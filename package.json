@@ -1,11 +1,11 @@
 {
-  "name": "your-app",
-  "description": "Description",
-  "author": "Your Name",
-  "version": "0.0.1",
+  "name": "transformap-editor",
+  "description": "CRUD data.transformap.co interface",
+  "author": "Michael Maier, Jon Richter",
+  "version": "0.0.2",
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/TransforMap/transformap-editor.git"
   },
   "scripts": {
     "lint": "standard app/**/*js",
