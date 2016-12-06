@@ -1,8 +1,8 @@
-const map = require('lib/map')
+const editor = require('lib/editor')
 
 document.addEventListener('DOMContentLoaded', () => {
   // do your setup here
-  map()
+  editor()
   console.log('Initialized app');
   
 });
