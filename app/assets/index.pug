@@ -14,6 +14,11 @@ html(lang='en')
     #forms
       form
         fieldset
+          .row#id
+            label(for='_id') Object ID
+            input(type='text' id='_id' disabled='true')
+            button(type='button' id='save') Save
+        fieldset
           .row#name
             label(for='_key_name') Name
             input(type='text' id='_key_name')
@@ -89,8 +94,8 @@ html(lang='en')
             p Key
             p Value
           .row
-            input(type='text' id='key1')
-            input(type='text' id='value1')
+            input(type='text' id='key1' name='freetags')
+            input(type='text' id='value1' name='freetags')
 
             
     #map
