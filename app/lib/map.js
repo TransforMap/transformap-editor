@@ -27,6 +27,7 @@ function getDrawControl(allow_new_marker) {
 }
 
 function initMap () {
+  console.log("initMap start")
   var map;
 
   var attr_osm = 'Map data by <a href="https://openstreetmap.org">OpenStreetMap</a> contributors, under <a href="https://www.openstreetmap.org/copyright">ODbL</a>. ',
@@ -144,8 +145,9 @@ function initMap () {
   document.getElementById("_geometry_lat").onblur = map.updateMarkerFromForm
   document.getElementById("_geometry_lon").onblur = map.updateMarkerFromForm
 
-  console.log(map)
+  //console.log(map)
 
+  console.log("initMap end")
   return map
 }
 
