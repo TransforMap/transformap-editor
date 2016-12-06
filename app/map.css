@@ -24,6 +24,10 @@ label,input,textarea,select {
   text-align:right;
   margin-right:10px;
 }
+#forms .row label:first-child {
+  margin-top:5px;
+}
+
 #forms .row label:after {
   content:":";
 }
@@ -31,10 +35,20 @@ label,input,textarea,select {
 #forms .row * + * {
   margin-bottom:0.5em;
 }
+
+#forms .row * + #_id + button { /* 'Save'-Button */
+  width:5em;
+  height:2em;
+  margin-left:2em;
+}
 #forms .row input,
 #forms .row * + textarea {
   width:15em;
   padding:0.2em;
+}
+#forms .row #_id {
+  width:18em;
+  text-align:center;
 }
 
 #map {
