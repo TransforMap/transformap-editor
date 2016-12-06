@@ -5,12 +5,26 @@ const redFetch = require('./red_fetch.js')
 var map;
 
 module.exports = function () {
-  console.log("called initialize, didn't reply")
+  console.log("editor initialize start")
 
   var map = initMap()
 
   var lang = 'de'
-  const data_urls = [ 'http://192.168.0.2:6000/place/2c10b95ea433712f0b06a3f7d300020f', '2c10b95ea433712f0b06a3f7d310e7d5' ]
+
+  var url_vars = getUrlVars();
+  var data_urls;
+  const place = url_vars['place'];
+  if(place) {
+    if(/^[0-9a-f-]{32,36}$/i.test(place)) {
+      const normalized_place = place.replace(/-/,"")
+      if(normalized_place.length == 32)
+        data_urls = [ 'https://data.transformap.co/place/' + place, 'http://192.168.0.2:6000/place/' + place, place ]
+      else
+        data_urls = [ place ];
+    }
+    else
+      data_urls = [ place ];
+  }
 
   var current_data = {}
 
@@ -84,7 +98,16 @@ module.exports = function () {
 
   }
 
-  redFetch(data_urls,fillForm,console.error)
+  if(place)
+    redFetch(data_urls,fillForm,function(e) {
+      console.error(e)
+      map.my_drawControl = map.getDrawControl(true)
+      map.addControl(map.my_drawControl)
+    })
+  else {
+    map.my_drawControl = map.getDrawControl(true)
+    map.addControl(map.my_drawControl)
+  }
 
-  console.log("'initialize' called")
+  console.log("editor initialize end")
 }
