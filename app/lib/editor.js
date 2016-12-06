@@ -39,6 +39,11 @@ module.exports = function () {
           //console.log(value)
           field.value = value
         } else { //put it into "free tags"
+
+          //ignore DB-generated fields
+          if(/^_/.test(value))
+            continue
+
           //get last child
           var freetags = document.getElementById("freetags")
           var last_row = freetags.lastChild
@@ -90,11 +95,15 @@ module.exports = function () {
 
       map.panTo(new L.LatLng(lat,lon))
 
-    }
-    else { //allow adding a marker
+    } else { //allow adding a marker
       map.my_drawControl = map.getDrawControl(true)
       map.addControl(map.my_drawControl)
     }
+    if(current_data.properties._id) 
+      document.getElementById("_id").value = current_data.properties._id
+    else if(current_data._id)
+      document.getElementById("_id").value = current_data._id
+
 
   }
 
@@ -108,6 +117,89 @@ module.exports = function () {
     map.my_drawControl = map.getDrawControl(true)
     map.addControl(map.my_drawControl)
   }
+
+  function clickSubmit() {
+    console.log("clickSubmit enter")
+    const required_fields = [ '_key_type_of_initiative','_key_name','_geometry_lat','_geometry_lon']
+    for(var i = 0; i < required_fields.length; i++) {
+      var id = required_fields[i]
+      var value = document.getElementById(id).value
+      if(! value || !value.length) {
+        console.error("submit: field " + id + " empty")
+        return false
+      }
+    }
+
+    var data = {
+      "type": "Feature",
+      "properties": {
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          document.getElementById("_geometry_lon").value,
+          document.getElementById("_geometry_lat").value
+        ]
+      }
+    }
+
+    // all 'input type=text'
+    var all_inputs = document.getElementsByTagName('input')
+    var free_tags = { keys: {}, values: {} }
+
+    console.log(all_inputs)
+
+    for(var i = 0; i < all_inputs.length; i++) {
+      var element = all_inputs[i]
+      if(!element.type == 'text')
+        continue
+      if(element.value && element.id) {
+        console.log(element.id + ": " + element.value)
+        if(/^_key_/.test(element.id)) {
+          var key = element.id.replace(/^_key_/,"")
+          data.properties[key] = element.value
+       //element of 'free tags'
+        } else if (/^key[0-9]+$/.test(element.id) && element.name == 'freetags') {
+          var nr = element.id.replace(/^key/,"")
+          free_tags.keys[nr] = element.value
+        } else if (/^value[0-9]+$/.test(element.id) && element.name == 'freetags') {
+          var nr = element.id.replace(/^value/,"")
+          free_tags.values[nr] = element.value
+        }
+      }
+    }
+    console.log(free_tags)
+
+    for (var keynr in free_tags.keys) {
+      var key = free_tags.keys[keynr]
+      if(key && free_tags.values[keynr]) //only take if key and value are not ""
+        data.properties[key] = free_tags.values[keynr]
+    }
+
+    // drop-down
+    var all_selects = document.getElementsByTagName('select')
+    for(var i = 0; i < all_selects.length; i++) {
+      var element = all_selects[i]
+      if(/^_key_/.test(element.id) && element.value) {
+        var key = element.id.replace(/^_key_/,"")
+        data.properties[key] = element.value
+      }
+    }
+
+    // textarea
+    var all_textareas = document.getElementsByTagName('textarea')
+    console.log(all_textareas)
+    for(var i = 0; i < all_textareas.length; i++) {
+      var element = all_textareas[i]
+      if(/^_key_/.test(element.id) && element.value) {
+        var key = element.id.replace(/^_key_/,"")
+        data.properties[key] = element.value
+      }
+    }
+
+    console.log(data)
+  }
+  document.getElementById("save").onclick = clickSubmit
 
   console.log("editor initialize end")
 }
