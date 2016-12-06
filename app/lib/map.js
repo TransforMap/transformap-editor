@@ -105,6 +105,7 @@ function initMap () {
       }
   
       editableLayers.addLayer(layer);
+      map.my_current_marker = layer
       document.getElementById("_geometry_lon").value = layer._latlng.lng.toFixed(6)
       document.getElementById("_geometry_lat").value = layer._latlng.lat.toFixed(6)
 
@@ -127,6 +128,23 @@ function initMap () {
   map.my_drawControl = drawControl
   map.my_placeMarker = placeMarker
   map.getDrawControl = getDrawControl
+
+  map.updateMarkerFromForm = function () {
+    const lat = document.getElementById("_geometry_lat").value
+    const lon = document.getElementById("_geometry_lon").value
+    console.log("new lat: " + lat + " lon: " + lon)
+
+    if(lat && lon) {
+      const coords = L.latLng(lat,lon)
+      map.my_current_marker.setLatLng(coords)
+      map.panTo(coords)
+    }
+
+  }
+  document.getElementById("_geometry_lat").onblur = map.updateMarkerFromForm
+  document.getElementById("_geometry_lon").onblur = map.updateMarkerFromForm
+
+  console.log(map)
 
   return map
 }

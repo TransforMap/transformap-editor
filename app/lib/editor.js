@@ -68,7 +68,8 @@ module.exports = function () {
       document.getElementById("_geometry_lon").value = lon
       document.getElementById("_geometry_lat").value = lat
 
-      map.my_editableLayers.addLayer(new L.marker([lat,lon], { icon: new map.my_placeMarker() }))
+      map.my_current_marker = new L.marker([lat,lon], { icon: new map.my_placeMarker() })
+      map.my_editableLayers.addLayer(map.my_current_marker)
 
       map.my_drawControl = map.getDrawControl(false)
       map.addControl(map.my_drawControl)
