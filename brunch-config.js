@@ -2,7 +2,7 @@ module.exports = {
   npm: {
     styles: {
       leaflet: ['dist/leaflet.css'],
-      'leaflet-draw' : ['src/leaflet.draw.css']
+      'leaflet-draw': ['src/leaflet.draw.css']
     }
   },
 
@@ -22,6 +22,6 @@ module.exports = {
   },
 
   plugins: {
-    babel: {presets: ['es2015']},
+    babel: {presets: ['es2015']}
   }
-};
+}
