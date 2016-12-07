@@ -2,204 +2,204 @@ const initMap = require('./map.js')
 const getUrlVars = require('./getUrlVars.js')
 const redFetch = require('./red_fetch.js')
 
-var map;
+var map
 
 module.exports = function () {
-  console.log("editor initialize start")
+  console.log('editor initialize start')
 
   var map = initMap()
 
   var lang = 'de'
 
-  var url_vars = getUrlVars();
-  var data_urls;
-  const place = url_vars['place'];
-  if(place) {
-    if(/^[0-9a-f-]{32,36}$/i.test(place)) {
-      const normalized_place = place.replace(/-/,"")
-      if(normalized_place.length == 32)
-        data_urls = [ 'https://data.transformap.co/place/' + place, 'http://192.168.0.2:6000/place/' + place, place ]
-      else
-        data_urls = [ place ];
+  var urlVars = getUrlVars()
+  var dataUrls
+  const place = urlVars['place']
+  if (place) {
+    if (/^[0-9a-f-]{32,36}$/i.test(place)) {
+      const normalizedPlace = place.replace(/-/, '')
+      if (normalizedPlace.length == 32) {
+        dataUrls = [ 'https://data.transformap.co/place/' + place, 'http://192.168.0.2:6000/place/' + place, place ]
+      } else {
+        dataUrls = [ place ]
+      }
+    } else {
+      dataUrls = [ place ]
     }
-    else
-      data_urls = [ place ];
   }
 
-  var current_data = {}
+  var currentData = {}
 
-  function fillForm(place_data) {
-    current_data = place_data
-    if(current_data.properties) {
-      for(var key in current_data.properties) {
-        var field = document.getElementById("_key_" + key)
-        var value = current_data.properties[key]
-        if(field) {
-          //console.log(field)
-          //console.log(value)
+  function fillForm (placeData) {
+    currentData = placeData
+    if (currentData.properties) {
+      for (var key in currentData.properties) {
+        // ignore DB-generated fields
+        if(/^_/.test(key))
+          continue
+
+        var field = document.getElementById('_key_' + key)
+        var value = currentData.properties[key]
+
+        if (field) {
+          // console.log(field)
+          // console.log(value)
           field.value = value
-        } else { //put it into "free tags"
+        } else { // put it into "free tags"
 
-          //ignore DB-generated fields
-          if(/^_/.test(value))
-            continue
+          // get last child
+          var freetags = document.getElementById('freetags')
+          var lastRow = freetags.lastChild
+          while (lastRow.nodeType == 3) { // 3 = text-node
+            lastRow = lastRow.previousSibling
+          }
 
-          //get last child
-          var freetags = document.getElementById("freetags")
-          var last_row = freetags.lastChild
-          while(last_row.nodeType == 3) //3 = text-node
-            last_row = last_row.previousSibling
+          // set data on last child
+          var keyNode = (lastRow.firstChild.nodeType == 1) ? lastRow.firstChild : lastRow.firstChild.nextSibling
+          keyNode.value = key
+          var valueNode = (lastRow.lastChild.nodeType == 1) ? lastRow.lastChild : lastRow.lastChild.previousSibling
+          valueNode.value = value
+          var newNr = parseInt(keyNode.id.slice(-1)) + 1
 
-          //set data on last child
-          var key_node = (last_row.firstChild.nodeType == 1) ? last_row.firstChild : last_row.firstChild.nextSibling
-          key_node.value = key
-          var value_node = (last_row.lastChild.nodeType == 1) ? last_row.lastChild : last_row.lastChild.previousSibling
-          value_node.value = value
-
-          var new_nr = parseInt(key_node.id.slice(-1)) + 1
-          //append child+1
-          var new_row = document.createElement("div")
-          var div_class = document.createAttribute("class");
-          div_class.value = "row";
-          new_row.setAttributeNode(div_class);
-          var new_key = document.createElement("input")
-          var new_value = document.createElement("input")
-          var key_id = document.createAttribute("id")
-            key_id.value = "key" + new_nr
-          var value_id = document.createAttribute("id")
-            value_id.value = "value" + new_nr
-          new_key.setAttributeNode(key_id)
-          new_value.setAttributeNode(value_id)
-          new_row.appendChild(new_key)
-          new_row.appendChild(new_value)
-          freetags.appendChild(new_row)
+          // append child+1
+          var newRow = document.createElement('div')
+          var divClass = document.createAttribute('class')
+          divClass.value = 'row'
+          newRow.setAttributeNode(divClass)
+          var newKey = document.createElement('input')
+          var newValue = document.createElement('input')
+          var keyId = document.createAttribute('id')
+          keyId.value = 'key' + newNr
+          var valueId = document.createAttribute('id')
+          valueId.value = 'value' + newNr
+          newKey.setAttributeNode(keyId)
+          newValue.setAttributeNode(valueId)
+          newRow.appendChild(newKey)
+          newRow.appendChild(newValue)
+          freetags.appendChild(newRow)
         }
       }
     }
-    if(current_data.geometry && current_data.geometry.coordinates) {
-      var lon = current_data.geometry.coordinates[0],
-          lat = current_data.geometry.coordinates[1];
-      if(lat === undefined || lon === undefined) {
-        console.error("lat or lon empty")
+    if (currentData.geometry && currentData.geometry.coordinates) {
+      var lon = currentData.geometry.coordinates[0]
+      var lat = currentData.geometry.coordinates[1]
+      if (lat === undefined || lon === undefined) {
+        console.error('lat or lon empty')
         return
       }
 
-      document.getElementById("_geometry_lon").value = lon
-      document.getElementById("_geometry_lat").value = lat
+      document.getElementById('_geometry_lon').value = lon
+      document.getElementById('_geometry_lat').value = lat
 
-      map.my_current_marker = new L.marker([lat,lon], { icon: new map.my_placeMarker() })
+      map.my_current_marker = new L.marker([lat, lon], { icon: new map.my_placeMarker() })
       map.my_editableLayers.addLayer(map.my_current_marker)
 
       map.my_drawControl = map.getDrawControl(false)
       map.addControl(map.my_drawControl)
 
-      map.panTo(new L.LatLng(lat,lon))
-
-    } else { //allow adding a marker
+      map.panTo(new L.LatLng(lat, lon))
+    } else { // allow adding a marker
       map.my_drawControl = map.getDrawControl(true)
       map.addControl(map.my_drawControl)
     }
-    if(current_data.properties._id) 
-      document.getElementById("_id").value = current_data.properties._id
-    else if(current_data._id)
-      document.getElementById("_id").value = current_data._id
-
-
+    if(currentData.properties._id) 
+      document.getElementById('_id').value = currentData.properties._id
+    else if(currentData._id)
+      document.getElementById('_id').value = currentData._id
   }
 
-  if(place)
-    redFetch(data_urls,fillForm,function(e) {
+  if (place) {
+    redFetch(dataUrls, fillForm, function (e) {
       console.error(e)
       map.my_drawControl = map.getDrawControl(true)
       map.addControl(map.my_drawControl)
     })
-  else {
+  } else {
     map.my_drawControl = map.getDrawControl(true)
     map.addControl(map.my_drawControl)
   }
 
   function clickSubmit() {
-    console.log("clickSubmit enter")
-    const required_fields = [ '_key_type_of_initiative','_key_name','_geometry_lat','_geometry_lon']
-    for(var i = 0; i < required_fields.length; i++) {
-      var id = required_fields[i]
+    console.log('clickSubmit enter')
+    const requiredFields = [ '_key_type_of_initiative','_key_name','_geometry_lat','_geometry_lon']
+    for(var i = 0; i < requiredFields.length; i++) {
+      var id = requiredFields[i]
       var value = document.getElementById(id).value
       if(! value || !value.length) {
-        console.error("submit: field " + id + " empty")
+        console.error('submit: field ' + id + ' empty')
         return false
       }
     }
 
     var data = {
-      "type": "Feature",
-      "properties": {
+      'type': 'Feature',
+      'properties': {
       },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          document.getElementById("_geometry_lon").value,
-          document.getElementById("_geometry_lat").value
+      'geometry': {
+        'type': 'Point',
+        'coordinates': [
+          document.getElementById('_geometry_lon').value,
+          document.getElementById('_geometry_lat').value
         ]
       }
     }
 
     // all 'input type=text'
-    var all_inputs = document.getElementsByTagName('input')
-    var free_tags = { keys: {}, values: {} }
+    var allInputs = document.getElementsByTagName('input')
+    var freeTags = { keys: {}, values: {} }
 
-    console.log(all_inputs)
+    console.log(allInputs)
 
-    for(var i = 0; i < all_inputs.length; i++) {
-      var element = all_inputs[i]
+    for(var i = 0; i < allInputs.length; i++) {
+      var element = allInputs[i]
       if(!element.type == 'text')
         continue
       if(element.value && element.id) {
-        console.log(element.id + ": " + element.value)
+        console.log(element.id + ': ' + element.value)
         if(/^_key_/.test(element.id)) {
-          var key = element.id.replace(/^_key_/,"")
+          var key = element.id.replace(/^_key_/,'')
           data.properties[key] = element.value
-       //element of 'free tags'
+       // element of 'free tags'
         } else if (/^key[0-9]+$/.test(element.id) && element.name == 'freetags') {
-          var nr = element.id.replace(/^key/,"")
-          free_tags.keys[nr] = element.value
+          var nr = element.id.replace(/^key/,'')
+          freeTags.keys[nr] = element.value
         } else if (/^value[0-9]+$/.test(element.id) && element.name == 'freetags') {
-          var nr = element.id.replace(/^value/,"")
-          free_tags.values[nr] = element.value
+          var nr = element.id.replace(/^value/,'')
+          freeTags.values[nr] = element.value
         }
       }
     }
-    console.log(free_tags)
+    console.log(freeTags)
 
-    for (var keynr in free_tags.keys) {
-      var key = free_tags.keys[keynr]
-      if(key && free_tags.values[keynr]) //only take if key and value are not ""
-        data.properties[key] = free_tags.values[keynr]
+    for (var keynr in freeTags.keys) {
+      var key = freeTags.keys[keynr]
+      if(key && freeTags.values[keynr]) // only take if key and value are not ""
+        data.properties[key] = freeTags.values[keynr]
     }
 
     // drop-down
-    var all_selects = document.getElementsByTagName('select')
-    for(var i = 0; i < all_selects.length; i++) {
-      var element = all_selects[i]
+    var allSelects = document.getElementsByTagName('select')
+    for(var i = 0; i < allSelects.length; i++) {
+      var element = allSelects[i]
       if(/^_key_/.test(element.id) && element.value) {
-        var key = element.id.replace(/^_key_/,"")
+        var key = element.id.replace(/^_key_/,'')
         data.properties[key] = element.value
       }
     }
 
     // textarea
-    var all_textareas = document.getElementsByTagName('textarea')
-    console.log(all_textareas)
-    for(var i = 0; i < all_textareas.length; i++) {
-      var element = all_textareas[i]
+    var allTextareas = document.getElementsByTagName('textarea')
+    console.log(allTextareas)
+    for(var i = 0; i < allTextareas.length; i++) {
+      var element = allTextareas[i]
       if(/^_key_/.test(element.id) && element.value) {
-        var key = element.id.replace(/^_key_/,"")
+        var key = element.id.replace(/^_key_/,'')
         data.properties[key] = element.value
       }
     }
 
     console.log(data)
   }
-  document.getElementById("save").onclick = clickSubmit
+  document.getElementById('save').onclick = clickSubmit
 
-  console.log("editor initialize end")
+  console.log('editor initialize end')
 }

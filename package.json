@@ -1,17 +1,17 @@
 {
-  "name": "your-app",
-  "description": "Description",
-  "author": "Your Name",
-  "version": "0.0.1",
+  "name": "transformap-editor",
+  "description": "CRUD data.transformap.co interface",
+  "author": "Michael Maier, Jon Richter",
+  "version": "0.0.2",
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/TransforMap/transformap-editor.git"
   },
   "scripts": {
     "lint": "standard app/**/*js",
     "start": "brunch watch --server",
     "prod": "brunch build --production",
-    "postinstall": "cp -r node_modules/leaflet/dist/images public/; cp -r node_modules/leaflet-draw/dist/images public/"
+    "postinstall": "./scripts/postinstall"
   },
   "dependencies": {},
   "devDependencies": {
