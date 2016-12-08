@@ -32,6 +32,13 @@ label,input,textarea,select {
   content:":";
 }
 
+#forms .row#deleted {
+  color:red;
+  text-align:center;
+  margin-top: 1em;
+  display:none;
+}
+
 #forms .row * + * {
   margin-bottom:0.5em;
 }
@@ -41,6 +48,11 @@ label,input,textarea,select {
   height:2em;
   margin-left:2em;
 }
+#forms button#delete {
+  height:2em;
+  padding:0 1em;
+}
+
 #forms .row input,
 #forms .row * + textarea {
   width:15em;

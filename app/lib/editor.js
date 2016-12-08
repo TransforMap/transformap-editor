@@ -32,6 +32,11 @@ module.exports = function () {
 
   function fillForm (placeData) {
     currentData = placeData
+
+    if (currentData._deleted) {
+      document.getElementById('deleted').style.display = "block"
+    }
+
     if (currentData.properties) {
       for (var key in currentData.properties) {
         // ignore DB-generated fields
@@ -119,6 +124,25 @@ module.exports = function () {
     map.addControl(map.my_drawControl)
   }
 
+  function createCORSRequest (method, url) {
+    // taken from https://www.html5rocks.com/en/tutorials/cors/
+    var xhr = new XMLHttpRequest()
+    if ('withCredentials' in xhr) {
+      // Check if the XMLHttpRequest object has a "withCredentials" property.
+      // "withCredentials" only exists on XMLHTTPRequest2 objects.
+      xhr.open(method, url, true)
+    } else if (typeof XDomainRequest !== 'undefined') {
+      // Otherwise, check if XDomainRequest.
+      // XDomainRequest only exists in IE, and is IE's way of making CORS requests.
+      xhr = new XDomainRequest()
+      xhr.open(method, url)
+    } else {
+      // Otherwise, CORS is not supported by the browser.
+      xhr = null
+    }
+    return xhr
+  }
+
   function clickSubmit() {
     console.log('clickSubmit enter')
     const requiredFields = [ '_key_type_of_initiative','_key_name','_geometry_lat','_geometry_lon']
@@ -203,25 +227,6 @@ module.exports = function () {
 
     console.log(data)
 
-    function createCORSRequest (method, url) {
-      // tajen from https://www.html5rocks.com/en/tutorials/cors/
-      var xhr = new XMLHttpRequest()
-      if ('withCredentials' in xhr) {
-        // Check if the XMLHttpRequest object has a "withCredentials" property.
-        // "withCredentials" only exists on XMLHTTPRequest2 objects.
-        xhr.open(method, url, true)
-      } else if (typeof XDomainRequest !== 'undefined') {
-        // Otherwise, check if XDomainRequest.
-        // XDomainRequest only exists in IE, and is IE's way of making CORS requests.
-        xhr = new XDomainRequest()
-        xhr.open(method, url)
-      } else {
-        // Otherwise, CORS is not supported by the browser.
-        xhr = null
-      }
-      return xhr
-    }
-
     const uuid = document.getElementById('_id').value
     const sendData = JSON.stringify(data)
     console.log(sendData)
@@ -243,8 +248,33 @@ module.exports = function () {
         }
       }
     }
+    document.getElementById('deleted').style.display = "none"
   }
   document.getElementById('save').onclick = clickSubmit
+
+  function clickDelete() {
+    const uuid = document.getElementById('_id').value
+    if (!uuid) {
+      alert('nothing to delete')
+      return
+    }
+    var xhr = createCORSRequest('DELETE', endpoint + uuid)
+    xhr.send()
+    console.log(xhr)
+
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState == 4) {
+        if (xhr.status == 200) {
+          var retJson = JSON.parse(xhr.responseText)
+          console.log(retJson)
+        } else {
+          console.error(xhr)
+        }
+      }
+    }
+    document.getElementById('deleted').style.display = "block"
+  }
+  document.getElementById('delete').onclick = clickDelete
 
   console.log('editor initialize end')
 }

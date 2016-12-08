@@ -18,6 +18,7 @@ html(lang='en')
             label(for='_id') Object ID
             input(type='text' id='_id' disabled='true')
             button(type='button' id='save') Save
+            .row#deleted {{{ This object is in 'deleted' state. To undelete, click 'Save' }}}
         fieldset
           .row#name
             label(for='_key_name') Name
@@ -96,6 +97,7 @@ html(lang='en')
           .row
             input(type='text' id='key1' name='freetags')
             input(type='text' id='value1' name='freetags')
+      button(type='button' id='delete') Delete POI
 
             
     #map
