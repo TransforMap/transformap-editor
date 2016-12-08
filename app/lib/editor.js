@@ -127,7 +127,7 @@ module.exports = function () {
       var value = document.getElementById(id).value
       if(! value || !value.length) {
         console.error('submit: field ' + id + ' empty')
-        alert ('Error on submit: field ' + id.replace(/^_key_/, '') + ' is not allowed to be empty')
+        alert('Error on submit: field ' + id.replace(/^_key_/, '') + ' is not allowed to be empty')
         return false
       }
     }
@@ -151,7 +151,7 @@ module.exports = function () {
 
     console.log(allInputs)
 
-    for(var i = 0; i < allInputs.length; i++) {
+    for (var i = 0; i < allInputs.length; i++) {
       var element = allInputs[i]
       if (!element.type === 'text') {
         continue
@@ -203,30 +203,46 @@ module.exports = function () {
 
     console.log(data)
 
-    if (document.getElementById('_id').value) { // UPDATE on server
-      console.log ('not impl')
-    } else { // CREATE on server
-      var xhr = new XMLHttpRequest();
-      xhr.open('POST', endpoint, true);
-      xhr.setRequestHeader('Content-Type', 'application/json');
-      var sendData = JSON.stringify(data)
-      console.log(sendData)
-      xhr.send(sendData);
-      console.log(xhr);
+    function createCORSRequest (method, url) {
+      // tajen from https://www.html5rocks.com/en/tutorials/cors/
+      var xhr = new XMLHttpRequest()
+      if ('withCredentials' in xhr) {
+        // Check if the XMLHttpRequest object has a "withCredentials" property.
+        // "withCredentials" only exists on XMLHTTPRequest2 objects.
+        xhr.open(method, url, true)
+      } else if (typeof XDomainRequest !== 'undefined') {
+        // Otherwise, check if XDomainRequest.
+        // XDomainRequest only exists in IE, and is IE's way of making CORS requests.
+        xhr = new XDomainRequest()
+        xhr.open(method, url)
+      } else {
+        // Otherwise, CORS is not supported by the browser.
+        xhr = null
+      }
+      return xhr
+    }
 
-      xhr.onreadystatechange = function () {
-        if (xhr.readyState == 4) {
-          if (xhr.status == 200 ) {
-            var retJson = JSON.parse(xhr.responseText)
-            console.log(retJson)
-            document.getElementById('_id').value = retJson.id
-          } else {
-            console.error(xhr);
-          }
+    const uuid = document.getElementById('_id').value
+    const sendData = JSON.stringify(data)
+    console.log(sendData)
+
+    // PUT is for UPDATE, POST is for CREATE
+    var xhr = createCORSRequest(uuid ? 'PUT' : 'POST', endpoint + uuid)
+    xhr.setRequestHeader('Content-Type', 'application/json')
+    xhr.send(sendData)
+    console.log(xhr)
+
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState == 4) {
+        if (xhr.status == 200) {
+          var retJson = JSON.parse(xhr.responseText)
+          console.log(retJson)
+          document.getElementById('_id').value = retJson.id
+        } else {
+          console.error(xhr)
         }
       }
     }
-
   }
   document.getElementById('save').onclick = clickSubmit
 
