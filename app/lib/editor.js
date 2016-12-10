@@ -80,8 +80,6 @@ module.exports = function () {
     }
     typeOfInintiatives.sort(labelCompare)
 
-    console.log(typeOfInintiatives)
-
     typeOfInintiatives.forEach(function(entry) {
       var newOption = document.createElement('option')
       var optionValue = document.createAttribute('value')
@@ -294,13 +292,18 @@ module.exports = function () {
       var element = allSelects[i]
       if (/^_key_/.test(element.id) && element.value) {
         var key = element.id.replace(/^_key_/, '')
-        data.properties[key] = element.value
+
+        for(var childCounter = 0; childCounter < element.children.length; childCounter++) {
+          var child = element.children[childCounter]
+          if(child.selected == true) {
+            data.properties[key] = (data.properties[key] ? (data.properties[key] + ';') : '') + child.value
+          }
+        }
       }
     }
 
     // textarea
     var allTextareas = document.getElementsByTagName('textarea')
-    console.log(allTextareas)
     for (var i = 0; i < allTextareas.length; i++) {
       var element = allTextareas[i]
       if (/^_key_/.test(element.id) && element.value) {
