@@ -39,7 +39,7 @@ label,input,textarea,select {
   display:none;
 }
 
-#forms .row * + * {
+#forms .row > * + * {
   margin-bottom:0.5em;
 }
 

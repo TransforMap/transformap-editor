@@ -1,6 +1,7 @@
 const initMap = require('./map.js')
 const getUrlVars = require('./getUrlVars.js')
 const redFetch = require('./red_fetch.js')
+const taxonomy = require('./taxonomy.js')
 
 var map
 const endpoint = 'https://data.transformap.co/place/'
@@ -9,8 +10,6 @@ module.exports = function () {
   console.log('editor initialize start')
 
   map = initMap()
-
-  var lang = 'de'
 
   var urlVars = getUrlVars()
   var dataUrls
@@ -27,6 +26,91 @@ module.exports = function () {
       dataUrls = [ place ]
     }
   }
+
+  function createToiArray(toi_string) {
+    if(typeof(toi_string) !== 'string')
+      return [];
+    var toi_array = toi_string.split(';');
+    for(var i=0;i<toi_array.length;i++){
+      toi_array[i] = toi_array[i].trim();
+    }
+    return toi_array;
+  }
+
+  var lang = 'en'
+  var typeOfInintiatives = []
+  var toiHashtable = {}
+
+  function fillTOIs(data) {
+    var toiSelect = document.getElementById('_key_type_of_initiative')
+    var dataArray = data.results.bindings
+    var lastTypeOfInitiative = ''
+    dataArray.forEach(function(entry) {
+      if(!entry.type_of_initiative_tag) {
+        return
+      }
+      if(toiHashtable[entry.type_of_initiative_tag.value]) { // filter out duplicates
+        return
+      }
+      var label = {}
+      label[entry.itemLabel['xml:lang']] = entry.itemLabel.value
+
+      var currentObject = {
+        item: entry.item.value,
+        label: label,
+        type_of_initiative_tag: entry.type_of_initiative_tag.value
+      }
+      typeOfInintiatives.push(currentObject)
+      toiHashtable[entry.type_of_initiative_tag.value] = currentObject
+
+    })
+    function labelCompare(a,b){
+      // 'Others' cat should get sorted last
+      if(a.item == "https://base.transformap.co/entity/Q20") return 1;
+      if(b.item == "https://base.transformap.co/entity/Q20") return -1;
+
+      //in toi list, 'other*' should be last
+      if(a.type_of_initiative_tag && a.type_of_initiative_tag.match(/^other_/)) return 1;
+      if(b.type_of_initiative_tag && b.type_of_initiative_tag.match(/^other_/)) return -1;
+
+      if(a.label[lang] < b.label[lang])
+        return -1
+      else
+        return 1
+    }
+    typeOfInintiatives.sort(labelCompare)
+
+    console.log(typeOfInintiatives)
+
+    typeOfInintiatives.forEach(function(entry) {
+      var newOption = document.createElement('option')
+      var optionValue = document.createAttribute('value')
+        optionValue.value = entry.type_of_initiative_tag
+      newOption.setAttributeNode(optionValue)
+
+      if(currentData.properties.type_of_initiative) {
+        var tois = createToiArray(currentData.properties.type_of_initiative)
+        tois.forEach(function(toi) {
+          if(toi == entry.type_of_initiative_tag) {
+            var newSelected = document.createAttribute('selected')
+            newOption.setAttributeNode(newSelected)
+          }
+        })
+      }
+
+      var label = document.createTextNode(entry.label[lang]); //FIXME fallback langs
+      newOption.appendChild(label)
+
+      toiSelect.appendChild(newOption)
+    })
+
+  }
+
+  // load taxonomy from server
+  redFetch( [ taxonomy.getLangTaxURL(lang), "https://raw.githubusercontent.com/TransforMap/transformap-viewer-translations/master/taxonomy-backup/susy/taxonomy."+lang+".json" ],
+    fillTOIs,
+    function(error) { console.error("none of the taxonomy data urls available") } );
+
 
   var currentData = {}
 

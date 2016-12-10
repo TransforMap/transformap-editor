@@ -25,8 +25,8 @@ html(lang='en')
             input(type='text' id='_key_name')
           .row#toi
             label(for='_key_type_of_initiative') Type of Initiative
-            input(type='text' id='_key_type_of_initiative')
-            //fixme should be a multi-select populated from the taxonomy, possible with search
+            select(id='_key_type_of_initiative' multiple size='5')
+              option(value='') == Choose at least one type of initiative ==
           .row
             label(for='_key_SSEDAS_PARTNER') SUSY Partner
             select(id='_key_SSEDAS_PARTNER' name='SSEDAS_PARTNER')
