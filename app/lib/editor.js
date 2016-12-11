@@ -109,6 +109,39 @@ module.exports = function () {
     fillTOIs,
     function(error) { console.error("none of the taxonomy data urls available") } );
 
+  function addFreeTagsRow() {
+    var freetags = document.getElementById('freetags')
+
+    var lastRow = freetags.lastChild
+    while (lastRow.nodeType === 3) { // 3 = text-node
+      lastRow = lastRow.previousSibling
+    }
+
+    var keyNode = (lastRow.firstChild.nodeType === 1) ? lastRow.firstChild : lastRow.firstChild.nextSibling
+    var newNr = parseInt(keyNode.id.slice(-1)) + 1
+
+    var newRow = document.createElement('div')
+    var divClass = document.createAttribute('class')
+    divClass.value = 'row'
+    newRow.setAttributeNode(divClass)
+    var newKey = document.createElement('input')
+    var newValue = document.createElement('input')
+    var keyId = document.createAttribute('id')
+    keyId.value = 'key' + newNr
+    var valueId = document.createAttribute('id')
+    valueId.value = 'value' + newNr
+    newKey.setAttributeNode(keyId)
+    newValue.setAttributeNode(valueId)
+
+    var elementName = document.createAttribute('name')
+    elementName.value = 'freetags'
+    newKey.setAttributeNode(elementName)
+    newValue.setAttributeNode(elementName.cloneNode(true))
+
+    newRow.appendChild(newKey)
+    newRow.appendChild(newValue)
+    freetags.appendChild(newRow)
+  }
 
   var currentData = {}
 
@@ -146,24 +179,8 @@ module.exports = function () {
           keyNode.value = key
           var valueNode = (lastRow.lastChild.nodeType === 1) ? lastRow.lastChild : lastRow.lastChild.previousSibling
           valueNode.value = value
-          var newNr = parseInt(keyNode.id.slice(-1)) + 1
 
-          // append child+1
-          var newRow = document.createElement('div')
-          var divClass = document.createAttribute('class')
-          divClass.value = 'row'
-          newRow.setAttributeNode(divClass)
-          var newKey = document.createElement('input')
-          var newValue = document.createElement('input')
-          var keyId = document.createAttribute('id')
-          keyId.value = 'key' + newNr
-          var valueId = document.createAttribute('id')
-          valueId.value = 'value' + newNr
-          newKey.setAttributeNode(keyId)
-          newValue.setAttributeNode(valueId)
-          newRow.appendChild(newKey)
-          newRow.appendChild(newValue)
-          freetags.appendChild(newRow)
+          addFreeTagsRow()
         }
       }
     }
@@ -362,6 +379,7 @@ module.exports = function () {
     document.getElementById('deleted').style.display = "block"
   }
   document.getElementById('delete').onclick = clickDelete
+  document.getElementById('plus').onclick = addFreeTagsRow
 
   console.log('editor initialize end')
 }

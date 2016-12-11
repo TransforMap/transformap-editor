@@ -48,6 +48,17 @@ label,input,textarea,select {
   height:2em;
   margin-left:2em;
 }
+
+#forms #freetags p {
+  float:left;
+}
+#forms #freetags button#plus {
+  width:5em;
+  height:2em;
+  margin-left:2em;
+  margin-top:-0.5em;
+}
+
 #forms button#delete {
   height:2em;
   padding:0 1em;
