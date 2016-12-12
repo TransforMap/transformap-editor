@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>TransforMap Editor</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi">
+    <script src="/vendor.js"></script>
+    <script src="/app.js"></script>
+    <script>require('initialize')</script>
+    <link rel="stylesheet" href="/app.css">
+    <link rel="stylesheet" href="/vendor.css">
+  </head>
+  <body>
+    <div id="forms">
+      <form>
+        <fieldset>
+          <div class="row" id="id">
+            <label for="_id">Object ID</label>
+            <input type="text" id="_id" disabled="true">
+            <button type="button" id="save">Save</button>
+            <div class="row" id="deleted">{{{ This object is in 'deleted' state. To undelete, click 'Save' }}}</div>
+          </div>
+        </fieldset>
+        <fieldset>
+          <div class="row" id="name">
+            <label for="_key_name">Name</label>
+            <input type="text" id="_key_name">
+          </div>
+          <div class="row" id="toi">
+            <label for="_key_type_of_initiative">Type of Initiative</label>
+            <select id="_key_type_of_initiative" multiple size="5">
+              <option value="">== Choose at least one type of initiative ==</option>
+            </select>
+          </div>
+          <div class="row">
+            <label for="_key_SSEDAS_PARTNER">SUSY Partner</label>
+            <select id="_key_SSEDAS_PARTNER" name="SSEDAS_PARTNER">
+              <option value="">== Choose Partner ==</option>
+              <option value="BILS">BILSP</option>
+              <option value="CARDET">CARDET</option>
+              <option value="CERAI">CERAI</option>
+              <option value="COSPE">COSPE</option>
+              <option value="Demnet">Demnet</option>
+              <option value="Desa">DEŠA-Dubrovnik</option>
+              <option value="Ekumenickaakademie">Ekumenika Akademie Praha Europe</option>
+              <option value="FTH">Fair Trade Hellas</option>
+              <option value="FairTradePoland">Foundation of the Fair Trade Coalition</option>
+              <option value="greenliberty">Green Liberty</option>
+              <option value="INKOTA">INKOTA</option>
+              <option value="IMVF">Instituto Marques de Valle Flor  (IMFV)</option>
+              <option value="Kopin">KOPIN</option>
+              <option value="MirovniInstitut">Mirovni Institut</option>
+              <option value="Mondo">NGO Mondo</option>
+              <option value="Eetti">Pro Ethical Trade Finland</option>
+              <option value="RHSF">Ressources Humaines Sans Frontières</option>
+              <option value="SCCD">Slovak Centre for Communication  and Development</option>
+              <option value="SOSFAIM">SOS FAIM</option>
+              <option value="Suedwind">Südwind Agentur</option>
+              <option value="TERRAIII">Terra III Mileniul III Foundation</option>
+              <option value="CCUK">The Cooperative College</option>
+              <option value="ThinkGlobal">Think Global</option>
+              <option value="Waterford">Waterford One World Centre</option>
+            </select>
+          </div>
+        </fieldset>
+        <fieldset id="address">
+          <legend>Address</legend>
+          <div class="row">
+            <label for="_key_addr:country">Country</label>
+            <input type="text" id="_key_addr:country">
+          </div>
+          <div class="row">
+            <label for="_key_addr:city">City</label>
+            <input type="text" id="_key_addr:city">
+          </div>
+          <div class="row">
+            <label for="_key_addr:postcode">Postcode</label>
+            <input type="text" id="_key_addr:postcode">
+          </div>
+          <div class="row">
+            <label for="_key_addr:street">Street Name</label>
+            <input type="text" id="_key_addr:street">
+          </div>
+          <div class="row">
+            <label for="_key_addr:housenumber">House Number</label>
+            <input type="text" id="_key_addr:housenumber">
+          </div>
+          <!--fixme add support for addr:housename and addr:place-->
+          <div class="row" style="margin-top:1em">
+            <label for="_geometry_lon" title="X, WGS84, decimal degree">Longitude</label>
+            <input type="text" id="_geometry_lon">
+          </div>
+          <div class="row">
+            <label for="_geometry_lat" title="Y, WGS84, decimal degree">Latitude</label>
+            <input type="text" id="_geometry_lat">
+            <!--TODO add reset coords button-->
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend>Contact Data</legend>
+          <div class="row">
+            <label for="_key_contact:website">Website</label>
+            <input type="text" id="_key_contact:website">
+          </div>
+          <div class="row">
+            <label for="_key_contact:email">Email Address</label>
+            <input type="text" id="_key_contact:email">
+          </div>
+          <div class="row">
+            <label for="_key_contact:phone">Phone Number</label>
+            <input type="text" id="_key_contact:phone">
+          </div>
+          <div class="row">
+            <label for="_key_opening_hours">Opening Hours</label>
+            <input type="text" id="_key_opening_hours">
+          </div>
+          <!--fixme allow more than one field for each type-->
+        </fieldset>
+        <fieldset>
+          <legend>Additional Information</legend>
+          <div class="row">
+            <label for="_key_image">Link to image</label>
+            <input type="text" id="_key_image">
+          </div>
+          <div class="row">
+            <label for="_key_video">Link to video</label>
+            <input type="text" id="_key_video">
+          </div>
+          <div class="row">
+            <label for="_key_description">Description text</label>
+            <textarea id="_key_description" rows="4"></textarea>
+          </div>
+          <!--fixme different langs for description-->
+        </fieldset>
+        <fieldset id="freetags">
+          <legend>Free Tags</legend>
+          <!--fixme must add additional fields when user fills one-->
+          <div class="row header">
+            <p>Key</p>
+            <p>Value</p>
+            <button type="button" id="plus">Add</button>
+          </div>
+          <div class="row">
+            <input type="text" id="key1" name="freetags">
+            <input type="text" id="value1" name="freetags">
+          </div>
+        </fieldset>
+      </form>
+      <button type="button" id="delete">Delete POI</button>
+    </div>
+    <div id="map"></div>
+  </body>
+</html>
