@@ -1,5 +1,0 @@
-#!/usr/bin/env bash
-
-mkdir -p public
-cp -r node_modules/leaflet/dist/images/ public/
-cp -r node_modules/leaflet-draw/dist/images/ public/
