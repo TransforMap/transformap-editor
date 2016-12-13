@@ -370,7 +370,7 @@ module.exports = function () {
       map.my_drawControl = map.getDrawControl(true);
       map.addControl(map.my_drawControl);
     }
-    if (currentData.properties._id) document.getElementById('_id').value = currentData.properties._id;else if (currentData._id) document.getElementById('_id').value = currentData._id;
+    if (currentData.properties && currentData.properties._id) document.getElementById('_id').value = currentData.properties._id;else if (currentData._id) document.getElementById('_id').value = currentData._id;
   }
 
   if (place) {
