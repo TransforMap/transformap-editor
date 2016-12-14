@@ -247,7 +247,7 @@ module.exports = function () {
       optionValue.value = entry.type_of_initiative_tag;
       newOption.setAttributeNode(optionValue);
 
-      if (currentData.properties.type_of_initiative) {
+      if (currentData.properties && currentData.properties.type_of_initiative) {
         var tois = createToiArray(currentData.properties.type_of_initiative);
         tois.forEach(function (toi) {
           if (toi == entry.type_of_initiative_tag) {
