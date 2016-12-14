@@ -28,33 +28,19 @@ html(lang='en')
             select(id='_key_type_of_initiative' multiple size='5')
               option(value='') == Choose at least one type of initiative ==
           .row
-            label(for='_key_SSEDAS_PARTNER') SUSY Partner
-            select(id='_key_SSEDAS_PARTNER' name='SSEDAS_PARTNER')
-              option(value='') == Choose Partner ==
-              option(value='BILS') BILSP
-              option(value='CARDET') CARDET
-              option(value='CERAI') CERAI
-              option(value='COSPE') COSPE
-              option(value='Demnet') Demnet
-              option(value='Desa') DEŠA-Dubrovnik
-              option(value='Ekumenickaakademie') Ekumenika Akademie Praha Europe
-              option(value='FTH') Fair Trade Hellas
-              option(value='FairTradePoland') Foundation of the Fair Trade Coalition
-              option(value='greenliberty') Green Liberty
-              option(value='INKOTA') INKOTA
-              option(value='IMVF') Instituto Marques de Valle Flor  (IMFV)
-              option(value='Kopin') KOPIN
-              option(value='MirovniInstitut') Mirovni Institut
-              option(value='Mondo') NGO Mondo
-              option(value='Eetti') Pro Ethical Trade Finland
-              option(value='RHSF') Ressources Humaines Sans Frontières
-              option(value='SCCD') Slovak Centre for Communication  and Development
-              option(value='SOSFAIM') SOS FAIM
-              option(value='Suedwind') Südwind Agentur
-              option(value='TERRAIII') Terra III Mileniul III Foundation
-              option(value='CCUK') The Cooperative College
-              option(value='ThinkGlobal') Think Global
-              option(value='Waterford') Waterford One World Centre
+            label(for='_key_identity') Identity
+            select(id='_key_identity' name='Needs' multiple size='5')
+              option(value='') == Choose An Identity ==
+              option(value='collaborative_economy') Collaborative Economy
+              option(value='commons') Commons 
+              option(value='community_based_currencies') Community Based Currencies
+              option(value='demonetized_economy') Demonetized Economy
+              option(value='degrowth') Degrowth
+              option(value='economy_for_the_common_good') Economy for the Common Good
+              option(value='global_ecovillage_network') Global Ecovillage Network
+              option(value='permaculture') Permaculture
+              option(value='solidarity_economy') Solidarity Economy
+              option(value='transition_initiative') Transition Initiative
         fieldset#address
           legend Address
           .row
