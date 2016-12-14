@@ -17,7 +17,7 @@ To initially set coordinates, click “Draw a marker” in the bottom left corne
 
 ### SUSY Fork
 
-A fork tailored for the SUSY project has its repository [here](https://github.com/susy-partners/transformap-editor)
+A fork tailored for the SUSY project has its repository [here](https://github.com/susy-partners/transformap-editor).
 
 Its live instance is here: https://susy-partners.github.io/transformap-editor/
 
