@@ -381,5 +381,16 @@ module.exports = function () {
   document.getElementById('delete').onclick = clickDelete
   document.getElementById('plus').onclick = addFreeTagsRow
 
+  function clickSearch() {
+    const country = document.getElementById('_key_addr:country').value
+    const city = document.getElementById('_key_addr:city').value
+    const postcode = document.getElementById('_key_addr:postcode').value
+    const street = document.getElementById('_key_addr:street').value
+    const housenumber = document.getElementById('_key_addr:housenumber').value
+
+    alert(country+city+postcode+street+housenumber)
+  }
+  document.getElementById('coordsearch').onclick = clickSearch
+
   console.log('editor initialize end')
 }

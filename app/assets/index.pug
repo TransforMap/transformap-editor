@@ -62,6 +62,9 @@ html(lang='en')
             input(type='text' id='_key_addr:housenumber')
           //fixme add support for addr:housename and addr:place
           .row(style='margin-top:1em')
+            label Search for Coordinates from Address
+            button(type='button' id='coordsearch') Go!
+          .row(style='margin-top:1em')
             label(for='_geometry_lon' title='X, WGS84, decimal degree') Longitude
             input(type='text' id='_geometry_lon')
           .row
