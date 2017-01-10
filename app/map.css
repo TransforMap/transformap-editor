@@ -50,6 +50,11 @@ label,input,textarea,select {
   margin-right:2em;
 }
 
+#forms #coordsearch {
+  width:5em;
+  height:2em;
+}
+
 #forms #freetags p {
   float:left;
 }

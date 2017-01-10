@@ -388,7 +388,57 @@ module.exports = function () {
     const street = document.getElementById('_key_addr:street').value
     const housenumber = document.getElementById('_key_addr:housenumber').value
 
-    alert(country+city+postcode+street+housenumber)
+    var querystring = "q=" + housenumber + "+" + street + "," + city + "," + country
+    var querystring = "q="
+    if(street) {
+      if(housenumber) {
+        querystring += housenumber + "+"
+      }
+      querystring += street + ","
+    }
+    if(city) {
+      querystring += city + ','
+    }
+    querystring += country
+
+    var query = '//nominatim.openstreetmap.org/search?' + querystring + '&format=json&limit=1&email=mapping@transformap.co'
+    console.log(query)
+
+    redFetch([ query ],
+        function(successData) {
+          console.log(successData)
+          if(successData.length != 1) {
+            console.error('error in Nominatim return data: length != 1')
+            alert('Sorry, Nothing found')
+            return
+          }
+          var result = successData[0]
+          if(result.class == 'building' 
+              || result.class == 'amenity' 
+              || result.class == 'shop' 
+              || (result.class == 'place' && result.type == 'house')
+            ) {
+            console.log('address found exactly')
+            document.getElementById('_geometry_lon').value = result.lon
+            document.getElementById('_geometry_lat').value = result.lat
+
+          } else {
+            console.log('address not found exactly')
+            alert('Attention: The address was not found exactly, please place the marker manually!')
+          }
+
+          map.setView(new L.LatLng(result.lat, result.lon),18)
+
+
+
+
+ //         alert(successData)
+        },
+        function(error) {
+          console.log(error)
+          alert("Sorry, Address search did not work")
+        }
+        )
   }
   document.getElementById('coordsearch').onclick = clickSearch
 
