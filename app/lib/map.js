@@ -1,7 +1,6 @@
 const L = require('leaflet')
 const L_Hash = require('leaflet-hash')
 const L_Draw = require('leaflet-draw')
-const getUrlVars = require('./getUrlVars.js')
 
 var editableLayers
 var drawControl

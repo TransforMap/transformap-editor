@@ -1,3 +1,5 @@
+/* global alert, L, XMLHttpRequest, XDomainRequest */ // used by standardjs (linter)
+
 const initMap = require('./map.js')
 const getUrlVars = require('./getUrlVars.js')
 const redFetch = require('./red_fetch.js')
@@ -27,29 +29,27 @@ module.exports = function () {
     }
   }
 
-  function createToiArray(toi_string) {
-    if(typeof(toi_string) !== 'string')
-      return [];
-    var toi_array = toi_string.split(';');
-    for(var i=0;i<toi_array.length;i++){
-      toi_array[i] = toi_array[i].trim();
+  function createToiArray (toiString) {
+    if (typeof (toiString) !== 'string') { return [] }
+    var toiArray = toiString.split(';')
+    for (var i = 0; i < toiArray.length; i++) {
+      toiArray[i] = toiArray[i].trim()
     }
-    return toi_array;
+    return toiArray
   }
 
   var lang = 'en'
   var typeOfInintiatives = []
   var toiHashtable = {}
 
-  function fillTOIs(data) {
+  function fillTOIs (data) {
     var toiSelect = document.getElementById('_key_type_of_initiative')
     var dataArray = data.results.bindings
-    var lastTypeOfInitiative = ''
-    dataArray.forEach(function(entry) {
-      if(!entry.type_of_initiative_tag) {
+    dataArray.forEach(function (entry) {
+      if (!entry.type_of_initiative_tag) {
         return
       }
-      if(toiHashtable[entry.type_of_initiative_tag.value]) { // filter out duplicates
+      if (toiHashtable[entry.type_of_initiative_tag.value]) { // filter out duplicates
         return
       }
       var label = {}
@@ -62,54 +62,53 @@ module.exports = function () {
       }
       typeOfInintiatives.push(currentObject)
       toiHashtable[entry.type_of_initiative_tag.value] = currentObject
-
     })
-    function labelCompare(a,b){
+    function labelCompare (a, b) {
       // 'Others' cat should get sorted last
-      if(a.item == "https://base.transformap.co/entity/Q20") return 1;
-      if(b.item == "https://base.transformap.co/entity/Q20") return -1;
+      if (a.item === 'https://base.transformap.co/entity/Q20') return 1
+      if (b.item === 'https://base.transformap.co/entity/Q20') return -1
 
-      //in toi list, 'other*' should be last
-      if(a.type_of_initiative_tag && a.type_of_initiative_tag.match(/^other_/)) return 1;
-      if(b.type_of_initiative_tag && b.type_of_initiative_tag.match(/^other_/)) return -1;
+      // in toi list, 'other*' should be last
+      if (a.type_of_initiative_tag && a.type_of_initiative_tag.match(/^other_/)) return 1
+      if (b.type_of_initiative_tag && b.type_of_initiative_tag.match(/^other_/)) return -1
 
-      if(a.label[lang] < b.label[lang])
+      if (a.label[lang] < b.label[lang]) {
         return -1
-      else
+      } else {
         return 1
+      }
     }
     typeOfInintiatives.sort(labelCompare)
 
-    typeOfInintiatives.forEach(function(entry) {
+    typeOfInintiatives.forEach(function (entry) {
       var newOption = document.createElement('option')
       var optionValue = document.createAttribute('value')
-        optionValue.value = entry.type_of_initiative_tag
+      optionValue.value = entry.type_of_initiative_tag
       newOption.setAttributeNode(optionValue)
 
-      if(currentData.properties && currentData.properties.type_of_initiative) {
+      if (currentData.properties && currentData.properties.type_of_initiative) {
         var tois = createToiArray(currentData.properties.type_of_initiative)
-        tois.forEach(function(toi) {
-          if(toi == entry.type_of_initiative_tag) {
+        tois.forEach(function (toi) {
+          if (toi === entry.type_of_initiative_tag) {
             var newSelected = document.createAttribute('selected')
             newOption.setAttributeNode(newSelected)
           }
         })
       }
 
-      var label = document.createTextNode(entry.label[lang]); //FIXME fallback langs
+      var label = document.createTextNode(entry.label[lang]) // FIXME fallback langs
       newOption.appendChild(label)
 
       toiSelect.appendChild(newOption)
     })
-
   }
 
   // load taxonomy from server
-  redFetch( [ taxonomy.getLangTaxURL(lang), "https://raw.githubusercontent.com/TransforMap/transformap-viewer-translations/master/taxonomy-backup/susy/taxonomy."+lang+".json" ],
+  redFetch([ taxonomy.getLangTaxURL(lang), 'https://raw.githubusercontent.com/TransforMap/transformap-viewer-translations/master/taxonomy-backup/susy/taxonomy.' + lang + '.json' ],
     fillTOIs,
-    function(error) { console.error("none of the taxonomy data urls available") } );
+    function (error) { console.error('none of the taxonomy data urls available') })
 
-  function addFreeTagsRow() {
+  function addFreeTagsRow () {
     var freetags = document.getElementById('freetags')
 
     var lastRow = freetags.lastChild
@@ -149,7 +148,7 @@ module.exports = function () {
     currentData = placeData
 
     if (currentData._deleted) {
-      document.getElementById('deleted').style.display = "block"
+      document.getElementById('deleted').style.display = 'block'
     }
 
     if (currentData.properties) {
@@ -206,10 +205,11 @@ module.exports = function () {
       map.my_drawControl = map.getDrawControl(true)
       map.addControl(map.my_drawControl)
     }
-    if(currentData.properties && currentData.properties._id)
+    if (currentData.properties && currentData.properties._id) {
       document.getElementById('_id').value = currentData.properties._id
-    else if(currentData._id)
+    } else if (currentData._id) {
       document.getElementById('_id').value = currentData._id
+    }
   }
 
   if (place) {
@@ -242,13 +242,13 @@ module.exports = function () {
     return xhr
   }
 
-  function clickSubmit() {
+  function clickSubmit () {
     console.log('clickSubmit enter')
-    const requiredFields = [ '_key_type_of_initiative','_key_name','_geometry_lat','_geometry_lon']
-    for(var i = 0; i < requiredFields.length; i++) {
+    const requiredFields = [ '_key_type_of_initiative', '_key_name', '_geometry_lat', '_geometry_lon' ]
+    for (var i = 0; i < requiredFields.length; i++) {
       var id = requiredFields[i]
       var value = document.getElementById(id).value
-      if(! value || !value.length) {
+      if (!value || !value.length) {
         console.error('submit: field ' + id + ' empty')
         alert('Error on submit: field ' + id.replace(/^_key_/, '') + ' is not allowed to be empty')
         return false
@@ -310,9 +310,9 @@ module.exports = function () {
       if (/^_key_/.test(element.id) && element.value) {
         var key = element.id.replace(/^_key_/, '')
 
-        for(var childCounter = 0; childCounter < element.children.length; childCounter++) {
+        for (var childCounter = 0; childCounter < element.children.length; childCounter++) {
           var child = element.children[childCounter]
-          if(child.selected == true) {
+          if (child.selected === true) {
             data.properties[key] = (data.properties[key] ? (data.properties[key] + ';') : '') + child.value
           }
         }
@@ -342,8 +342,8 @@ module.exports = function () {
     console.log(xhr)
 
     xhr.onreadystatechange = function () {
-      if (xhr.readyState == 4) {
-        if (xhr.status == 200) {
+      if (xhr.readyState === 4) {
+        if (xhr.status === 200) {
           var retJson = JSON.parse(xhr.responseText)
           console.log(retJson)
           document.getElementById('_id').value = retJson.id
@@ -352,11 +352,11 @@ module.exports = function () {
         }
       }
     }
-    document.getElementById('deleted').style.display = "none"
+    document.getElementById('deleted').style.display = 'none'
   }
   document.getElementById('save').onclick = clickSubmit
 
-  function clickDelete() {
+  function clickDelete () {
     const uuid = document.getElementById('_id').value
     if (!uuid) {
       alert('nothing to delete')
@@ -367,8 +367,8 @@ module.exports = function () {
     console.log(xhr)
 
     xhr.onreadystatechange = function () {
-      if (xhr.readyState == 4) {
-        if (xhr.status == 200) {
+      if (xhr.readyState === 4) {
+        if (xhr.status === 200) {
           var retJson = JSON.parse(xhr.responseText)
           console.log(retJson)
         } else {
@@ -376,27 +376,26 @@ module.exports = function () {
         }
       }
     }
-    document.getElementById('deleted').style.display = "block"
+    document.getElementById('deleted').style.display = 'block'
   }
   document.getElementById('delete').onclick = clickDelete
   document.getElementById('plus').onclick = addFreeTagsRow
 
-  function clickSearch() {
+  function clickSearch () {
     const country = document.getElementById('_key_addr:country').value
     const city = document.getElementById('_key_addr:city').value
-    const postcode = document.getElementById('_key_addr:postcode').value
+    // const postcode = document.getElementById('_key_addr:postcode').value // postcode not used in nominatim, decreases result quality
     const street = document.getElementById('_key_addr:street').value
     const housenumber = document.getElementById('_key_addr:housenumber').value
 
-    var querystring = "q=" + housenumber + "+" + street + "," + city + "," + country
-    var querystring = "q="
-    if(street) {
-      if(housenumber) {
-        querystring += housenumber + "+"
+    var querystring = 'q='
+    if (street) {
+      if (housenumber) {
+        querystring += housenumber + '+'
       }
-      querystring += street + ","
+      querystring += street + ','
     }
-    if(city) {
+    if (city) {
       querystring += city + ','
     }
     querystring += country
@@ -405,41 +404,38 @@ module.exports = function () {
     console.log(query)
 
     redFetch([ query ],
-        function(successData) {
+        function (successData) {
           console.log(successData)
-          if(successData.length != 1) {
+          if (successData.length !== 1) {
             console.error('error in Nominatim return data: length != 1')
             alert('Sorry, Nothing found')
             return
           }
           var result = successData[0]
-          if(result.class == 'building' 
-              || result.class == 'amenity' 
-              || result.class == 'shop' 
-              || (result.class == 'place' && result.type == 'house')
+          if (result.class === 'building' ||
+              result.class === 'amenity' ||
+              result.class === 'shop' ||
+              (result.class === 'place' && result.type === 'house')
             ) {
             console.log('address found exactly')
             document.getElementById('_geometry_lon').value = result.lon
             document.getElementById('_geometry_lat').value = result.lat
 
-            //trigger update of place marker
+            // trigger update of place marker
             document.getElementById('_geometry_lat').focus()
             document.getElementById('_geometry_lon').focus()
-            map.setView(new L.LatLng(result.lat, result.lon),18)
+            map.setView(new L.LatLng(result.lat, result.lon), 18)
           } else {
-            map.setView(new L.LatLng(result.lat, result.lon),18)
+            map.setView(new L.LatLng(result.lat, result.lon), 18)
             console.log('address not found exactly')
-            setTimeout(function() { // wait for map to pan to location
+            setTimeout(function () { // wait for map to pan to location
               alert('Attention: The address was not found exactly, please place the marker manually!')
-            },400)
+            }, 400)
           }
-
-
-
         },
-        function(error) {
+        function (error) {
           console.log(error)
-          alert("Sorry, Address search did not work")
+          alert('Sorry, Address search did not work')
         }
         )
   }

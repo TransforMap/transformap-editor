@@ -10,13 +10,12 @@
  * To Public License, Version 2, as published by Sam Hocevar. See
  * http://www.wtfpl.net/ for more details. */
 
-
-function getLangTaxURL(lang) {
-  if(!lang) {
-    console.error("setFilterLang: no lang given");
-    return false;
+function getLangTaxURL (lang) {
+  if (!lang) {
+    console.error('setFilterLang: no lang given')
+    return false
   }
-  
+
   var tax_query =
     'prefix bd: <http://www.bigdata.com/rdf#> ' +
     'prefix wikibase: <http://wikiba.se/ontology#> ' +
@@ -28,12 +27,12 @@ function getLangTaxURL(lang) {
       '?item wdt:P8 ?subclass_of .' +
       'OPTIONAL { ?item wdt:P4 ?instance_of . }' +
       'OPTIONAL { ?item wdt:P15 ?type_of_initiative_tag }' +
-      'OPTIONAL { ?item schema:description ?description FILTER(LANG(?description) = "'+lang+'") }' +
+      'OPTIONAL { ?item schema:description ?description FILTER(LANG(?description) = "' + lang + '") }' +
       'OPTIONAL { ?wikipedia schema:about ?item . ?wikipedia schema:inLanguage "en"}' +
-      'SERVICE wikibase:label {bd:serviceParam wikibase:language "'+lang+'" }' +
-    '}';
-   
-   return 'https://query.base.transformap.co/bigdata/namespace/transformap/sparql?query=' +encodeURIComponent(tax_query) + "&format=json";
+      'SERVICE wikibase:label {bd:serviceParam wikibase:language "' + lang + '" }' +
+    '}'
+
+  return 'https://query.base.transformap.co/bigdata/namespace/transformap/sparql?query=' + encodeURIComponent(tax_query) + '&format=json'
 }
 
 module.exports = {
