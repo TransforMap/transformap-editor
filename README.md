@@ -30,6 +30,12 @@ Its live instance is here: https://susy-partners.github.io/transformap-editor/
 
 start the watching daemon: ```brunch watch --server -n```
 
+### Lint
+
+please run the linter after developing a feature:
+
+```npm run lint```
+
 # deployment to gh-pages
 
 * save the contents of the 'public' - folder
