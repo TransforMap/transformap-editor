@@ -36,6 +36,16 @@ please run the linter after developing a feature:
 
 ```npm run lint```
 
+if you want to automatically fix the most common things:
+
+```npm install standard --global```
+
+and run it:
+
+    cd app/
+    standard --fix
+
+
 # deployment to gh-pages
 
 * save the contents of the 'public' - folder
