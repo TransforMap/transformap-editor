@@ -163,6 +163,8 @@ document.addEventListener('DOMContentLoaded', function () {
 ;require.register("lib/editor.js", function(exports, require, module) {
 'use strict';
 
+/* global alert, L, XMLHttpRequest, XDomainRequest */ // used by standardjs (linter)
+
 var initMap = require('./map.js');
 var getUrlVars = require('./getUrlVars.js');
 var redFetch = require('./red_fetch.js');
@@ -192,13 +194,15 @@ module.exports = function () {
     }
   }
 
-  function createToiArray(toi_string) {
-    if (typeof toi_string !== 'string') return [];
-    var toi_array = toi_string.split(';');
-    for (var i = 0; i < toi_array.length; i++) {
-      toi_array[i] = toi_array[i].trim();
+  function createToiArray(toiString) {
+    if (typeof toiString !== 'string') {
+      return [];
     }
-    return toi_array;
+    var toiArray = toiString.split(';');
+    for (var i = 0; i < toiArray.length; i++) {
+      toiArray[i] = toiArray[i].trim();
+    }
+    return toiArray;
   }
 
   var lang = 'en';
@@ -208,7 +212,6 @@ module.exports = function () {
   function fillTOIs(data) {
     var toiSelect = document.getElementById('_key_type_of_initiative');
     var dataArray = data.results.bindings;
-    var lastTypeOfInitiative = '';
     dataArray.forEach(function (entry) {
       if (!entry.type_of_initiative_tag) {
         return;
@@ -230,14 +233,18 @@ module.exports = function () {
     });
     function labelCompare(a, b) {
       // 'Others' cat should get sorted last
-      if (a.item == "https://base.transformap.co/entity/Q20") return 1;
-      if (b.item == "https://base.transformap.co/entity/Q20") return -1;
+      if (a.item === 'https://base.transformap.co/entity/Q20') return 1;
+      if (b.item === 'https://base.transformap.co/entity/Q20') return -1;
 
-      //in toi list, 'other*' should be last
+      // in toi list, 'other*' should be last
       if (a.type_of_initiative_tag && a.type_of_initiative_tag.match(/^other_/)) return 1;
       if (b.type_of_initiative_tag && b.type_of_initiative_tag.match(/^other_/)) return -1;
 
-      if (a.label[lang] < b.label[lang]) return -1;else return 1;
+      if (a.label[lang] < b.label[lang]) {
+        return -1;
+      } else {
+        return 1;
+      }
     }
     typeOfInintiatives.sort(labelCompare);
 
@@ -250,14 +257,14 @@ module.exports = function () {
       if (currentData.properties && currentData.properties.type_of_initiative) {
         var tois = createToiArray(currentData.properties.type_of_initiative);
         tois.forEach(function (toi) {
-          if (toi == entry.type_of_initiative_tag) {
+          if (toi === entry.type_of_initiative_tag) {
             var newSelected = document.createAttribute('selected');
             newOption.setAttributeNode(newSelected);
           }
         });
       }
 
-      var label = document.createTextNode(entry.label[lang]); //FIXME fallback langs
+      var label = document.createTextNode(entry.label[lang]); // FIXME fallback langs
       newOption.appendChild(label);
 
       toiSelect.appendChild(newOption);
@@ -265,8 +272,8 @@ module.exports = function () {
   }
 
   // load taxonomy from server
-  redFetch([taxonomy.getLangTaxURL(lang), "https://raw.githubusercontent.com/TransforMap/transformap-viewer-translations/master/taxonomy-backup/susy/taxonomy." + lang + ".json"], fillTOIs, function (error) {
-    console.error("none of the taxonomy data urls available");
+  redFetch([taxonomy.getLangTaxURL(lang), 'https://raw.githubusercontent.com/TransforMap/transformap-viewer-translations/master/taxonomy-backup/susy/taxonomy.' + lang + '.json'], fillTOIs, function (error) {
+    console.error('none of the taxonomy data urls available');
   });
 
   function addFreeTagsRow() {
@@ -310,7 +317,7 @@ module.exports = function () {
     currentData = placeData;
 
     if (currentData._deleted) {
-      document.getElementById('deleted').style.display = "block";
+      document.getElementById('deleted').style.display = 'block';
     }
 
     if (currentData.properties) {
@@ -370,7 +377,11 @@ module.exports = function () {
       map.my_drawControl = map.getDrawControl(true);
       map.addControl(map.my_drawControl);
     }
-    if (currentData.properties && currentData.properties._id) document.getElementById('_id').value = currentData.properties._id;else if (currentData._id) document.getElementById('_id').value = currentData._id;
+    if (currentData.properties && currentData.properties._id) {
+      document.getElementById('_id').value = currentData.properties._id;
+    } else if (currentData._id) {
+      document.getElementById('_id').value = currentData._id;
+    }
   }
 
   if (place) {
@@ -470,7 +481,7 @@ module.exports = function () {
 
         for (var childCounter = 0; childCounter < element.children.length; childCounter++) {
           var child = element.children[childCounter];
-          if (child.selected == true) {
+          if (child.selected === true) {
             data.properties[key] = (data.properties[key] ? data.properties[key] + ';' : '') + child.value;
           }
         }
@@ -500,8 +511,8 @@ module.exports = function () {
     console.log(xhr);
 
     xhr.onreadystatechange = function () {
-      if (xhr.readyState == 4) {
-        if (xhr.status == 200) {
+      if (xhr.readyState === 4) {
+        if (xhr.status === 200) {
           var retJson = JSON.parse(xhr.responseText);
           console.log(retJson);
           document.getElementById('_id').value = retJson.id;
@@ -510,7 +521,7 @@ module.exports = function () {
         }
       }
     };
-    document.getElementById('deleted').style.display = "none";
+    document.getElementById('deleted').style.display = 'none';
   }
   document.getElementById('save').onclick = clickSubmit;
 
@@ -525,8 +536,8 @@ module.exports = function () {
     console.log(xhr);
 
     xhr.onreadystatechange = function () {
-      if (xhr.readyState == 4) {
-        if (xhr.status == 200) {
+      if (xhr.readyState === 4) {
+        if (xhr.status === 200) {
           var retJson = JSON.parse(xhr.responseText);
           console.log(retJson);
         } else {
@@ -534,10 +545,64 @@ module.exports = function () {
         }
       }
     };
-    document.getElementById('deleted').style.display = "block";
+    document.getElementById('deleted').style.display = 'block';
   }
   document.getElementById('delete').onclick = clickDelete;
   document.getElementById('plus').onclick = addFreeTagsRow;
+
+  function clickSearch() {
+    var country = document.getElementById('_key_addr:country').value;
+    var city = document.getElementById('_key_addr:city').value;
+    // const postcode = document.getElementById('_key_addr:postcode').value // postcode not used in nominatim, decreases result quality
+    var street = document.getElementById('_key_addr:street').value;
+    var housenumber = document.getElementById('_key_addr:housenumber').value;
+
+    var querystring = 'q=';
+    if (street) {
+      if (housenumber) {
+        querystring += housenumber + '+';
+      }
+      querystring += street + ',';
+    }
+    if (city) {
+      querystring += city + ',';
+    }
+    querystring += country;
+
+    var query = '//nominatim.openstreetmap.org/search?' + querystring + '&format=json&limit=1&email=mapping@transformap.co';
+    console.log(query);
+
+    redFetch([query], function (successData) {
+      console.log(successData);
+      if (successData.length !== 1) {
+        console.error('error in Nominatim return data: length != 1');
+        alert('Sorry, Nothing found');
+        return;
+      }
+      var result = successData[0];
+      if (result.class === 'building' || result.class === 'amenity' || result.class === 'shop' || result.class === 'place' && result.type === 'house') {
+        console.log('address found exactly');
+        document.getElementById('_geometry_lon').value = result.lon;
+        document.getElementById('_geometry_lat').value = result.lat;
+
+        // trigger update of place marker
+        document.getElementById('_geometry_lat').focus();
+        document.getElementById('_geometry_lon').focus();
+        map.setView(new L.LatLng(result.lat, result.lon), 18);
+      } else {
+        map.setView(new L.LatLng(result.lat, result.lon), 18);
+        console.log('address not found exactly');
+        setTimeout(function () {
+          // wait for map to pan to location
+          alert('Attention: The address was not found exactly, please place the marker manually!');
+        }, 400);
+      }
+    }, function (error) {
+      console.log(error);
+      alert('Sorry, Address search did not work');
+    });
+  }
+  document.getElementById('coordsearch').onclick = clickSearch;
 
   console.log('editor initialize end');
 };
@@ -577,7 +642,6 @@ module.exports = getUrlVars;
 var L = require('leaflet');
 var L_Hash = require('leaflet-hash');
 var L_Draw = require('leaflet-draw');
-var getUrlVars = require('./getUrlVars.js');
 
 var editableLayers;
 var drawControl;
@@ -888,13 +952,13 @@ module.exports = redundantFetch;
 
 function getLangTaxURL(lang) {
   if (!lang) {
-    console.error("setFilterLang: no lang given");
+    console.error('setFilterLang: no lang given');
     return false;
   }
 
   var tax_query = 'prefix bd: <http://www.bigdata.com/rdf#> ' + 'prefix wikibase: <http://wikiba.se/ontology#> ' + 'prefix wdt: <http://base.transformap.co/prop/direct/>' + 'prefix wd: <http://base.transformap.co/entity/>' + 'SELECT ?item ?itemLabel ?instance_of ?subclass_of ?type_of_initiative_tag ?wikipedia ?description ' + 'WHERE {' + '?item wdt:P8* wd:Q8 .' + '?item wdt:P8 ?subclass_of .' + 'OPTIONAL { ?item wdt:P4 ?instance_of . }' + 'OPTIONAL { ?item wdt:P15 ?type_of_initiative_tag }' + 'OPTIONAL { ?item schema:description ?description FILTER(LANG(?description) = "' + lang + '") }' + 'OPTIONAL { ?wikipedia schema:about ?item . ?wikipedia schema:inLanguage "en"}' + 'SERVICE wikibase:label {bd:serviceParam wikibase:language "' + lang + '" }' + '}';
 
-  return 'https://query.base.transformap.co/bigdata/namespace/transformap/sparql?query=' + encodeURIComponent(tax_query) + "&format=json";
+  return 'https://query.base.transformap.co/bigdata/namespace/transformap/sparql?query=' + encodeURIComponent(tax_query) + '&format=json';
 }
 
 module.exports = {
