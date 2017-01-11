@@ -422,17 +422,20 @@ module.exports = function () {
             document.getElementById('_geometry_lon').value = result.lon
             document.getElementById('_geometry_lat').value = result.lat
 
+            //trigger update of place marker
+            document.getElementById('_geometry_lat').focus()
+            document.getElementById('_geometry_lon').focus()
+            map.setView(new L.LatLng(result.lat, result.lon),18)
           } else {
+            map.setView(new L.LatLng(result.lat, result.lon),18)
             console.log('address not found exactly')
-            alert('Attention: The address was not found exactly, please place the marker manually!')
+            setTimeout(function() { // wait for map to pan to location
+              alert('Attention: The address was not found exactly, please place the marker manually!')
+            },400)
           }
 
-          map.setView(new L.LatLng(result.lat, result.lon),18)
 
 
-
-
- //         alert(successData)
         },
         function(error) {
           console.log(error)
