@@ -43,7 +43,8 @@ label,input,textarea,select {
   margin-bottom:0.5em;
 }
 
-#forms .row * + #_id + button { /* 'Save'-Button */
+#forms .row * + #_id + button,
+#save { /* 'Save'-Button */
   width:5em;
   height:2em;
   margin-left:2em;

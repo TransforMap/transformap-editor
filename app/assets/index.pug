@@ -18,7 +18,7 @@ html(lang='en')
           .row#id
             label(for='_id') Object ID
             input(type='text' id='_id' disabled='true')
-            button(type='button' id='save') Save
+            button(type=button onClick='history.go()') Reset
             a(href='https://github.com/TransforMap/transformap-editor/blob/master/HELP.md' id='help' target='_blank') Help
             .row#deleted {{{ This object is in 'deleted' state. To undelete, click 'Save' }}}
         fieldset
@@ -111,6 +111,7 @@ html(lang='en')
             input(type='text' id='key1' name='freetags')
             input(type='text' id='value1' name='freetags')
       button(type='button' id='delete') Delete POI
+      button(type='button' id='save') Save
 
             
     #map
