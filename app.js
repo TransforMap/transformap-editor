@@ -739,7 +739,7 @@ function initMap() {
     var layer = e.layer;
 
     if (type === 'marker') {
-      layer.bindPopup('A popup!');
+      layer.bindPopup('Press the edit button to move me. <img style="width:30px;height:30px;background-position:-150px -1px;background-image:url(\'images/spritesheet.svg\');background-size: 270px 30px;"> <br><br> Find it on the bottom left corner of the map.');
     }
 
     editableLayers.addLayer(layer);
