@@ -15,11 +15,13 @@ html(lang='en')
       h1 TransforMap Editor
       form
         fieldset
+          .row#menu
+            button(type=button onClick='history.go()') Reset
+            a(href='.' id='newbutton' title='Create a new POI') New
+            a(href='https://github.com/TransforMap/transformap-editor/blob/master/HELP.md' id='help' target='_blank') Help
           .row#id
             label(for='_id') Object ID
             input(type='text' id='_id' disabled='true')
-            button(type=button onClick='history.go()') Reset
-            a(href='https://github.com/TransforMap/transformap-editor/blob/master/HELP.md' id='help' target='_blank') Help
             .row#deleted {{{ This object is in 'deleted' state. To undelete, click 'Save' }}}
         fieldset
           .row#name
