@@ -43,11 +43,24 @@ label,input,textarea,select {
   margin-bottom:0.5em;
 }
 
-#forms .row * + #_id + button { /* 'Save'-Button */
+#forms .row button,
+#save { /* 'Save'-Button */
   width:5em;
   height:2em;
   margin-left:2em;
   margin-right:2em;
+}
+#newbutton {
+  display:inline-block;
+  width:5em;
+  height:1.7em;
+  margin-left:2em;
+  border:1px solid black;
+  line-height:1.7em;
+  text-align:center;
+  margin-right:2em;
+  background:#eee;
+  border-radius:2px;
 }
 
 #forms #coordsearch {
