@@ -5,6 +5,7 @@ const L_Draw = require('leaflet-draw')
 var editableLayers
 var drawControl
 var placeMarker
+var popupText = 'Press the edit button to move me. <img style="width:30px;height:30px;background-position:-150px -1px;background-image:url(\'images/spritesheet.svg\');background-size: 270px 30px;"> <br><br> Find it on the bottom left corner of the map.'
 
 function getDrawControl (allowNewMarker) {
   var markerValue = allowNewMarker ? { icon: new placeMarker() } : false
@@ -103,7 +104,7 @@ function initMap () {
     var layer = e.layer
 
     if (type === 'marker') {
-      layer.bindPopup('Press the edit button to move me. <img style="width:30px;height:30px;background-position:-150px -1px;background-image:url(\'images/spritesheet.svg\');background-size: 270px 30px;"> <br><br> Find it on the bottom left corner of the map.')
+      layer.bindPopup(popupText)
     }
 
     editableLayers.addLayer(layer)
@@ -125,7 +126,7 @@ function initMap () {
   })
 
   map.my_editableLayers = editableLayers
-  map.my_drawControl = drawControl
+ // map.my_drawControl = drawControl
   map.my_placeMarker = placeMarker
   map.getDrawControl = getDrawControl
 
@@ -136,8 +137,28 @@ function initMap () {
 
     if (lat && lon) {
       const coords = L.latLng(lat, lon)
-      map.my_current_marker.setLatLng(coords)
+      if(map.my_current_marker) {
+        map.my_current_marker.setLatLng(coords)
+      } else {
+        map.my_current_marker = new L.marker([lat, lon], { icon: new map.my_placeMarker() })
+        map.my_current_marker.bindPopup(popupText)
+        map.my_editableLayers.addLayer(map.my_current_marker)
+        map.removeControl(map.my_drawControl)
+        map.my_drawControl = getDrawControl(false)
+        map.addControl(map.my_drawControl)
+      }
+         
       map.panTo(coords)
+    }
+    else
+    {
+      //delete marker
+      console.log('no coords, remove marker')
+      map.my_current_marker.remove()
+      delete(map.my_current_marker)
+      map.removeControl(map.my_drawControl)
+      map.my_drawControl = getDrawControl(true) // allow "add marker" again
+      map.addControl(map.my_drawControl)
     }
   }
   document.getElementById('_geometry_lat').onblur = map.updateMarkerFromForm

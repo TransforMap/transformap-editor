@@ -430,6 +430,10 @@ module.exports = function () {
             console.log('address not found exactly')
             setTimeout(function () { // wait for map to pan to location
               alert('Attention: The address was not found exactly, please place the marker manually!')
+              document.getElementById('_geometry_lon').value = ''
+              document.getElementById('_geometry_lat').value = ''
+              document.getElementById('_geometry_lon').focus()
+              document.getElementById('_geometry_lat').focus()
             }, 400)
           }
         },
