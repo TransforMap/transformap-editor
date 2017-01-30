@@ -50,7 +50,8 @@ label,input,textarea,select {
   margin-left:2em;
   margin-right:2em;
 }
-#newbutton {
+#newbutton,
+#resetbutton {
   display:inline-block;
   width:5em;
   height:1.7em;
