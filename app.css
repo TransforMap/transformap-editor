@@ -11,6 +11,28 @@ label,input,textarea,select {
   padding:10px;
   float:left;
 }
+#forms #forkme_container {
+  width:100%;
+  text-align:right;
+  position:relative;
+  right:0;
+}
+#forms #forkme {
+  display:block;
+  height:33px;
+  transform: rotate(45deg);
+  overflow:hidden;
+  position:absolute;
+  right:-50px;
+  top:20px;
+  width:200px;
+}
+#forms #forkme img {
+  transform: rotate(-45deg);
+  margin-top:-33px;
+  margin-right:22px;
+}
+
 #forms fieldset {
   padding:10px;
   margin-bottom:10px;
