@@ -626,6 +626,21 @@ module.exports = function () {
   }
   document.onkeypress = stopRKey;
 
+  function updateLinkPosition() {
+    var centre = map.getCenter();
+    var targetlocation = '#' + map.getZoom() + '/' + centre.lat + '/' + centre.lng;
+
+    var maplink = document.getElementById('gotomap');
+    var href = maplink.getAttribute('href');
+    var splitstr = href.split('#');
+    href = maplink.getAttribute('href').split('#')[0] + targetlocation;
+    maplink.setAttribute('href', href);
+
+    var newlink = document.getElementById('newbutton');
+    newlink.setAttribute('href', './' + targetlocation);
+  }
+  map.on('moveend', updateLinkPosition);
+
   console.log('editor initialize end');
 };
 });
