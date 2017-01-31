@@ -515,7 +515,12 @@ module.exports = function () {
         if (xhr.status === 200) {
           var retJson = JSON.parse(xhr.responseText);
           console.log(retJson);
-          document.getElementById('_id').value = retJson.id;
+          if (retJson.id) {
+            document.getElementById('_id').value = retJson.id;
+            alert('Save successful');
+          } else {
+            alert('Error: something wrent wrong on saving: ' + JSON.stringify(retJson));
+          }
         } else {
           console.error(xhr);
         }
