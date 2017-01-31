@@ -367,6 +367,10 @@ module.exports = function () {
       alert('nothing to delete')
       return
     }
+    if(!confirm('Do you really want to delete this POI? It will be only marked as deleted and can restored later if you save the current Browser URL.')) {
+      console.log('user aborted delete')
+      return
+    }
     var xhr = createCORSRequest('DELETE', endpoint + uuid)
     xhr.send()
     console.log(xhr)
