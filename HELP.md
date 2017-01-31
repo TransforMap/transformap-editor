@@ -42,7 +42,7 @@ Go to the Susy-Editor [Editor] (https://susy-partners.github.io/transformap-edit
 - Link to image: Here you can link an image (logo or photo to describe the activity), that is then displayed in the description of the initiative. *If the initiative has a website with a logo or photo on it, you can also link to that (note: you need to link directly to the file, not to the site, the file is on). If there is none, you can also upload one.*
 - Upload here: Upload an image via the media manager, then copy&paste the link in the "Link to image" field of the map editor 
 - Link to video: You can also link a video, that is then displayed. *(Important note: This might not work currently, but we are on it.)*
-- Description text: Please put the english description text of the initiative here. Stay below 350 signs.
+- Description text: Please put the english description text of the initiative here. Stay below 250 signs.
 
 ### Free Tagging:
 
