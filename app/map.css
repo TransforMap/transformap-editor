@@ -5,7 +5,9 @@
 label,input,textarea,select {
   font-size:1em;
 }
-
+h1 {
+	color: #1F3050;
+}
 #forms {
   width:49%;
   padding:10px;
@@ -36,6 +38,9 @@ label,input,textarea,select {
 #forms fieldset {
   padding:10px;
   margin-bottom:10px;
+  border-radius: 5px;
+  border-color: #1F3050;
+  border-width: 1px;
 }
 #forms .row label,
 #forms .row > p:first-child,
