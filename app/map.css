@@ -108,6 +108,9 @@ label {
     #forms, #map {
      width: 100%;
    }
+   #map {
+     position: static;
+   }
    #save {
      margin-right: 20px;
    }
