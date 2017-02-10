@@ -5,9 +5,9 @@ module.exports = {
       'leaflet-draw': ['dist/leaflet.draw.css'],
       'bootstrap-css': [
     	  'lib/buttons.css',
-    	  'lib/forms.css'
+    	  'lib/forms.css',
    	  ],
-    }
+    },
   },
 
   files: {

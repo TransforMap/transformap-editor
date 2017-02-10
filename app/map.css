@@ -2,37 +2,39 @@
   margin:0;
   padding:0;
 }
+body, select {
+	font-family: 'Open Sans', sans-serif;
+}
 label,input,textarea,select {
   font-size:1em;
 }
 h1 {
 	color: #1F3050;
+	border-bottom: 1px solid #e5e5e5;
+}
+a {
+	text-decoration: none;
+}
+#menu a {
+	margin-right: 10px;
+}
+#menu {
+	margin-bottom: 10px;
 }
 #forms {
   width:49%;
   padding:10px;
   float:left;
 }
-#forms #forkme_container {
-  width:100%;
-  text-align:right;
-  position:relative;
-  right:0;
+#forkme, #gotomap, #help, #resetbutton {
+	float: right;
 }
-#forms #forkme {
-  display:block;
-  height:33px;
-  transform: rotate(45deg);
-  overflow:hidden;
-  position:absolute;
-  right:-50px;
-  top:20px;
-  width:200px;
+select {
+	width: auto ! important;
 }
-#forms #forkme img {
-  transform: rotate(-45deg);
-  margin-top:-33px;
-  margin-right:22px;
+label {
+	font-weight: normal ! important;
+	line-height: 30px;
 }
 
 #forms fieldset {
@@ -66,55 +68,27 @@ h1 {
   display:none;
 }
 
-#forms .row > * + * {
-  margin-bottom:0.5em;
-}
-
-#forms .row button,
-#save { /* 'Save'-Button */
-  width:5em;
-  height:2em;
-  margin-left:2em;
-  margin-right:2em;
-}
-#newbutton,
-#resetbutton {
-  display:inline-block;
-  width:5em;
-  height:1.7em;
-  margin-left:2em;
-  border:1px solid black;
-  line-height:1.7em;
-  text-align:center;
-  margin-right:2em;
-  background:#eee;
-  border-radius:2px;
-}
-
-#forms #coordsearch {
-  width:5em;
-  height:2em;
+#forms .row > * {
+  margin-bottom :0.5em;
 }
 
 #forms #freetags p {
   float:left;
 }
 #forms #freetags button#plus {
-  width:5em;
-  height:2em;
-  margin-left:2em;
   margin-top:-0.5em;
+  margin-left: 0.5em;
 }
-
-#forms button#delete {
-  height:2em;
-  padding:0 1em;
+#forms #freetags .row {
+	clear: both;
+}
+#save {
+	float: right;
 }
 
 #forms .row input,
 #forms .row * + textarea {
   width:15em;
-  padding:0.2em;
 }
 #forms .row #_id {
   width:18em;
@@ -124,5 +98,17 @@ h1 {
 #map {
   width: 49%;
   height: 90vh;
-  border:1px solid black
+  border:1px solid #e5e5e5;
+  position: fixed;
+  top: 0;
+  right: 0;
+}
+
+@media only screen and (max-device-width: 768px) and (orientation : portrait) {
+    #forms, #map {
+     width: 100%;
+   }
+   #save {
+     margin-right: 20px;
+   }
 }
