@@ -2,35 +2,50 @@
   margin:0;
   padding:0;
 }
-body, select {
+body, select, textarea {
 	font-family: 'Open Sans', sans-serif;
 }
 label,input,textarea,select {
   font-size:1em;
+}
+select {
+	width: 300px ! important;
+}
+textarea {
+	width: 273px ! important;
 }
 h1 {
 	color: #1F3050;
 	border-bottom: 1px solid #e5e5e5;
 }
 a {
+	color: #5cb85c;
 	text-decoration: none;
+}
+a:hover {
+	color: #1F3050;
 }
 #menu a {
 	margin-right: 10px;
 }
+#menu a:first-child {
+	margin-right: 0;
+}
 #menu {
-	margin-bottom: 10px;
+	width: 100%;
 }
 #forms {
   width:49%;
   padding:10px;
   float:left;
 }
-#forkme, #gotomap, #help, #resetbutton {
-	float: right;
+input.form-control {
+	padding-top: 0 ! important;
+    padding-bottom: 0 ! important;
+    display: inline; /* to make upload link appear next to input field */
 }
-select {
-	width: auto ! important;
+#newbutton, #gotomap, #help, #resetbutton {
+	float: right;
 }
 label {
 	font-weight: normal ! important;
@@ -84,8 +99,12 @@ label {
 }
 #save {
 	float: right;
+	margin-top: -16px;
 }
-
+fieldset.no-padding {
+	padding-left: 0 ! important;
+    padding-right: 0 ! important;
+}
 #forms .row input,
 #forms .row * + textarea {
   width:15em;
@@ -104,14 +123,47 @@ label {
   right: 0;
 }
 
-@media only screen and (max-device-width: 768px) and (orientation : portrait) {
-    #forms, #map {
+@media only screen and (max-device-width: 640px) {
+   #forms {
+     width: 94%;
+     padding: 3%;
+   }
+   #map {
      width: 100%;
+     border: none;
+   }
+   #menu a {
+     margin-right: 5px;
+   }
+   textarea, select {
+     width: 90% ! important;
+   }
+   #forkme {
+     font-size: 13px;
    }
    #map {
      position: static;
    }
    #save {
-     margin-right: 20px;
+   }
+   #forms .row label {
+     text-align: left;
+     margin-bottom: 0;
+   }
+   h1 {
+    font-size: 28px;
+   }
+   legend {
+     margin-bottom: 10px ! important;
+   }
+   #forms #freetags .row > p:first-child {
+     min-width: auto ! important;
+   }
+   #forms #freetags input {
+     min-width: 36% ! important;
+     width: 36% ! important;
+   }
+   .leaflet-bottom {
+     max-width: 80%;
    }
 }

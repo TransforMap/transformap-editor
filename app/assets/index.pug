@@ -15,41 +15,17 @@ html(lang='en')
     #forms
       h1 TransforMap Editor
       form
-        fieldset
+        fieldset.no-padding
           .row#menu
-            a(href='.' id='newbutton' title='Create a new POI' class='btn btn-success') New
-            a(href="https://github.com/TransforMap/transformap-editor/" target="_blank" id="forkme" class='btn btn-default') Fork me on Github!
-            a(href='https://github.com/TransforMap/transformap-editor/blob/master/HELP.md' class='btn btn-default' id='help' target='_blank') Help
             a(href='http://viewer.transformap.co/editable.html?background=mapnik#5/50.458/10.261' class='btn btn-default' id='gotomap' target='_blank') → Go to Map
+            a(href='https://github.com/TransforMap/transformap-editor/blob/master/HELP.md' class='btn btn-default' id='help' target='_blank') Help
+            a(href='.' id='newbutton' title='Create a new POI' class='btn btn-success') New
             a(href='' id='resetbutton' class='btn btn-danger') Reset
-          .row#id
-            label(for='_id') Object ID
-            input(type='text' id='_id' disabled='true' class='form-control')
-            .row#deleted {{{ This object is in 'deleted' state. To undelete, click 'Save' }}}
-        fieldset
+        fieldset#address
+          legend Name and address
           .row#name
             label(for='_key_name') Name
             input(type='text' id='_key_name' class='form-control')
-          .row#toi
-            label(for='_key_type_of_initiative') Type of Initiative
-            select(id='_key_type_of_initiative' multiple size='5' class='form-control')
-              option(value='') == Choose at least one type of initiative ==
-          .row
-            label(for='_key_identity') Identity
-            select(id='_key_identity' name='Needs' multiple size='5' class='form-control')
-              option(value='') == Choose An Identity ==
-              option(value='collaborative_economy') Collaborative Economy
-              option(value='commons') Commons 
-              option(value='community_based_currencies') Community Based Currencies
-              option(value='demonetized_economy') Demonetized Economy
-              option(value='degrowth') Degrowth
-              option(value='economy_for_the_common_good') Economy for the Common Good
-              option(value='global_ecovillage_network') Global Ecovillage Network
-              option(value='permaculture') Permaculture
-              option(value='solidarity_economy') Solidarity Economy
-              option(value='transition_initiative') Transition Initiative
-        fieldset#address
-          legend Address
           .row
             label(for='_key_addr:country') Country
             input(type='text' id='_key_addr:country' class='form-control')
@@ -77,6 +53,28 @@ html(lang='en')
             label(for='_geometry_lat' title='Y, WGS84, decimal degree') Latitude
             input(type='text' id='_geometry_lat' class='form-control')
             //TODO add reset coords button
+          .row
+            label(for='_key_description') Description text
+            textarea(id='_key_description' rows='6' class='form-control')
+            //fixme different langs for description
+          .row#toi
+            label(for='_key_type_of_initiative') Type of Initiative
+            select(id='_key_type_of_initiative' multiple size='5' class='form-control')
+              option(value='') == Choose at least one type of initiative ==
+          .row
+            label(for='_key_identity') Identity
+            select(id='_key_identity' name='Needs' multiple size='5' class='form-control')
+              option(value='') == Choose An Identity ==
+              option(value='collaborative_economy') Collaborative Economy
+              option(value='commons') Commons 
+              option(value='community_based_currencies') Community Based Currencies
+              option(value='demonetized_economy') Demonetized Economy
+              option(value='degrowth') Degrowth
+              option(value='economy_for_the_common_good') Economy for the Common Good
+              option(value='global_ecovillage_network') Global Ecovillage Network
+              option(value='permaculture') Permaculture
+              option(value='solidarity_economy') Solidarity Economy
+              option(value='transition_initiative') Transition Initiative
         fieldset
           legend Contact Data
           .row
@@ -104,10 +102,6 @@ html(lang='en')
           .row
             label(for='_key_video') Link to video
             input(type='text' id='_key_video' class='form-control')
-          .row
-            label(for='_key_description') Description text
-            textarea(id='_key_description' rows='4' class='form-control')
-          //fixme different langs for description
         fieldset#freetags
           legend Free Tags
           //fixme must add additional fields when user fills one
@@ -118,8 +112,15 @@ html(lang='en')
           .row
             input(type='text' id='key1' name='freetags' class='form-control')
             input(type='text' id='value1' name='freetags' class='form-control')
-      button(type='button' id='delete' class='btn btn-danger') Delete POI
+        fieldset
+          legend Object information
+          .row#id
+            label(for='_id') Object ID
+            input(type='text' id='_id' disabled='true' class='form-control')
+            .row#deleted {{{ This object is in 'deleted' state. To undelete, click 'Save' }}}
+          
+      button(type='button' id='delete' class='btn btn-danger btn-sm') Delete POI
       button(type='button' id='save' class='btn btn-success btn-lg') Save
-
+      a(href="https://github.com/TransforMap/transformap-editor/" target="_blank" id="forkme") Fork me on Github!
             
     #map
