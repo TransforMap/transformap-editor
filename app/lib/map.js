@@ -78,8 +78,8 @@ function initMap () {
 
   map = L.map('map', {
     zoomControl: true,
-    center: center ? center : new L.LatLng(51.1657, 10.4515),
-    zoom: zoom ? zoom : 15,
+    center: center ? center : new L.LatLng(28.6, 9),
+    zoom: zoom ? zoom : 2,
     layers: defaultlayer
   })
 
