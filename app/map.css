@@ -50,6 +50,7 @@ input.form-control {
 label {
 	font-weight: normal ! important;
 	line-height: 30px;
+	margin-bottom: 0 ! important;
 }
 
 #forms fieldset {
