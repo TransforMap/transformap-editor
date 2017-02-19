@@ -124,7 +124,13 @@ module.exports = function () {
     divClass.value = 'row'
     newRow.setAttributeNode(divClass)
     var newKey = document.createElement('input')
+    var bootstrapClass = document.createAttribute('class')
+    bootstrapClass.value = 'form-control';
+    newKey.setAttributeNode(bootstrapClass);
+    var bootstrapClass = document.createAttribute('class')
+    bootstrapClass.value = 'form-control';
     var newValue = document.createElement('input')
+    newValue.setAttributeNode(bootstrapClass);
     var keyId = document.createAttribute('id')
     keyId.value = 'key' + newNr
     var valueId = document.createAttribute('id')
