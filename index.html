@@ -8,36 +8,75 @@
     <script src="vendor.js"></script>
     <script src="app.js"></script>
     <script>require('initialize')</script>
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="app.css">
     <link rel="stylesheet" href="vendor.css">
   </head>
   <body>
     <div id="forms">
-      <div id="forkme_container"><a href="https://github.com/TransforMap/transformap-editor/" target="_blank" id="forkme"><img src="https://camo.githubusercontent.com/e7bbb0521b397edbd5fe43e7f760759336b5e05f/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677265656e5f3030373230302e706e67" alt="Fork me on GitHub"></a></div>
       <h1>TransforMap Editor</h1>
       <form>
-        <fieldset>
-          <div class="row" id="menu"><a href="" id="resetbutton">Reset</a><a href="." id="newbutton" title="Create a new POI">New</a><a href="https://github.com/TransforMap/transformap-editor/blob/master/HELP.md" id="help" target="_blank">Help</a><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><a href="http://viewer.transformap.co/editable.html?background=mapnik#5/50.458/10.261" id="gotomap" target="_blank">→ Go to Map</a></div>
-          <div class="row" id="id">
-            <label for="_id">Object ID</label>
-            <input type="text" id="_id" disabled="true">
-            <div class="row" id="deleted">{{{ This object is in 'deleted' state. To undelete, click 'Save' }}}</div>
+        <fieldset class="no-padding">
+          <div class="row" id="menu"><a class="btn btn-default" href="http://viewer.transformap.co/editable.html?background=mapnik#5/50.458/10.261" id="gotomap" target="_blank">→ Go to Map</a><a class="btn btn-default" href="https://github.com/TransforMap/transformap-editor/blob/master/HELP.md" id="help" target="_blank">Help</a><a class="btn btn-success" href="." id="newbutton" title="Create a new POI">New</a><a class="btn btn-danger" href="" id="resetbutton">Reset</a></div>
+        </fieldset>
+        <fieldset id="address">
+          <legend>Name and address</legend>
+          <div class="row" id="name">
+            <label for="_key_name">Name</label>
+            <input class="form-control" type="text" id="_key_name">
+          </div>
+          <div class="row">
+            <label for="_key_addr:country">Country</label>
+            <input class="form-control" type="text" id="_key_addr:country">
+          </div>
+          <div class="row">
+            <label for="_key_addr:city">City</label>
+            <input class="form-control" type="text" id="_key_addr:city">
+          </div>
+          <div class="row">
+            <label for="_key_addr:postcode">Postcode</label>
+            <input class="form-control" type="text" id="_key_addr:postcode">
+          </div>
+          <div class="row">
+            <label for="_key_addr:street">Street Name</label>
+            <input class="form-control" type="text" id="_key_addr:street">
+          </div>
+          <div class="row">
+            <label for="_key_addr:housenumber">House Number</label>
+            <input class="form-control" type="text" id="_key_addr:housenumber">
+          </div>
+          <!--fixme add support for addr:housename and addr:place-->
+          <div class="row" style="margin-top:1em">
+            <label>Search for Coordinates from Address</label>
+            <button class="btn btn-success" type="button" id="coordsearch">Go!</button>
+            <Search>using OpenStreetMap</Search>
+          </div>
+          <div class="row" style="margin-top:1em">
+            <label for="_geometry_lon" title="X, WGS84, decimal degree">Longitude</label>
+            <input class="form-control" type="text" id="_geometry_lon">
+          </div>
+          <div class="row">
+            <label for="_geometry_lat" title="Y, WGS84, decimal degree">Latitude</label>
+            <input class="form-control" type="text" id="_geometry_lat">
+            <!--TODO add reset coords button-->
           </div>
         </fieldset>
         <fieldset>
-          <div class="row" id="name">
-            <label for="_key_name">Name</label>
-            <input type="text" id="_key_name">
+          <legend>Description</legend>
+          <div class="row">
+            <label for="_key_description">Description text</label>
+            <textarea class="form-control" id="_key_description" rows="6"></textarea>
+            <!--fixme different langs for description-->
           </div>
           <div class="row" id="toi">
             <label for="_key_type_of_initiative">Type of Initiative</label>
-            <select id="_key_type_of_initiative" multiple size="5">
+            <select class="form-control" id="_key_type_of_initiative" multiple size="5">
               <option value="">== Choose at least one type of initiative ==</option>
             </select>
           </div>
           <div class="row">
             <label for="_key_identity">Identity</label>
-            <select id="_key_identity" name="Needs" multiple size="5">
+            <select class="form-control" id="_key_identity" name="Needs" multiple size="5">
               <option value="">== Choose An Identity ==</option>
               <option value="collaborative_economy">Collaborative Economy</option>
               <option value="commons">Commons </option>
@@ -52,61 +91,23 @@
             </select>
           </div>
         </fieldset>
-        <fieldset id="address">
-          <legend>Address</legend>
-          <div class="row">
-            <label for="_key_addr:country">Country</label>
-            <input type="text" id="_key_addr:country">
-          </div>
-          <div class="row">
-            <label for="_key_addr:city">City</label>
-            <input type="text" id="_key_addr:city">
-          </div>
-          <div class="row">
-            <label for="_key_addr:postcode">Postcode</label>
-            <input type="text" id="_key_addr:postcode">
-          </div>
-          <div class="row">
-            <label for="_key_addr:street">Street Name</label>
-            <input type="text" id="_key_addr:street">
-          </div>
-          <div class="row">
-            <label for="_key_addr:housenumber">House Number</label>
-            <input type="text" id="_key_addr:housenumber">
-          </div>
-          <!--fixme add support for addr:housename and addr:place-->
-          <div class="row" style="margin-top:1em">
-            <label>Search for Coordinates from Address</label>
-            <button type="button" id="coordsearch">Go!</button>
-            <Search>using OpenStreetMap</Search>
-          </div>
-          <div class="row" style="margin-top:1em">
-            <label for="_geometry_lon" title="X, WGS84, decimal degree">Longitude</label>
-            <input type="text" id="_geometry_lon">
-          </div>
-          <div class="row">
-            <label for="_geometry_lat" title="Y, WGS84, decimal degree">Latitude</label>
-            <input type="text" id="_geometry_lat">
-            <!--TODO add reset coords button-->
-          </div>
-        </fieldset>
         <fieldset>
           <legend>Contact Data</legend>
           <div class="row">
             <label for="_key_contact:website">Website</label>
-            <input type="text" id="_key_contact:website">
+            <input class="form-control" type="text" id="_key_contact:website">
           </div>
           <div class="row">
             <label for="_key_contact:email">Email Address</label>
-            <input type="text" id="_key_contact:email">
+            <input class="form-control" type="text" id="_key_contact:email">
           </div>
           <div class="row">
             <label for="_key_contact:phone">Phone Number</label>
-            <input type="text" id="_key_contact:phone">
+            <input class="form-control" type="text" id="_key_contact:phone">
           </div>
           <div class="row">
             <label for="_key_opening_hours">Opening Hours</label>
-            <input type="text" id="_key_opening_hours">
+            <input class="form-control" type="text" id="_key_opening_hours">
           </div>
           <!--fixme allow more than one field for each type-->
         </fieldset>
@@ -114,17 +115,12 @@
           <legend>Additional Information</legend>
           <div class="row">
             <label for="_key_image">Link to image</label>
-            <input type="text" id="_key_image"><span>&nbsp;Upload&nbsp;</span><a href="https://base.transformap.co/wiki/Special:Upload" target="_blank">here</a><span>.</span>
+            <input class="form-control" type="text" id="_key_image"><span>&nbsp;Upload&nbsp;</span><a href="https://base.transformap.co/wiki/Special:Upload" target="_blank">here</a><span>.</span>
           </div>
           <div class="row">
             <label for="_key_video">Link to video</label>
-            <input type="text" id="_key_video">
+            <input class="form-control" type="text" id="_key_video">
           </div>
-          <div class="row">
-            <label for="_key_description">Description text</label>
-            <textarea id="_key_description" rows="4"></textarea>
-          </div>
-          <!--fixme different langs for description-->
         </fieldset>
         <fieldset id="freetags">
           <legend>Free Tags</legend>
@@ -132,16 +128,24 @@
           <div class="row header">
             <p>Key</p>
             <p>Value</p>
-            <button type="button" id="plus">Add</button>
+            <button class="btn btn-success" type="button" id="plus">Add</button>
           </div>
           <div class="row">
-            <input type="text" id="key1" name="freetags">
-            <input type="text" id="value1" name="freetags">
+            <input class="form-control" type="text" id="key1" name="freetags">
+            <input class="form-control" type="text" id="value1" name="freetags">
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend>Object information</legend>
+          <div class="row" id="id">
+            <label for="_id">Object ID</label>
+            <input class="form-control" type="text" id="_id" disabled="true">
+            <div class="row" id="deleted">{{{ This object is in 'deleted' state. To undelete, click 'Save' }}}</div>
           </div>
         </fieldset>
       </form>
-      <button type="button" id="delete">Delete POI</button>
-      <button type="button" id="save">Save</button>
+      <button class="btn btn-danger btn-sm" type="button" id="delete">Delete POI</button>
+      <button class="btn btn-success btn-lg" type="button" id="save">Save</button><a href="https://github.com/TransforMap/transformap-editor/" target="_blank" id="forkme">Fork me on Github!</a>
     </div>
     <div id="map"></div>
   </body>
