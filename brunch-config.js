@@ -2,8 +2,12 @@ module.exports = {
   npm: {
     styles: {
       leaflet: ['dist/leaflet.css'],
-      'leaflet-draw': ['dist/leaflet.draw.css']
-    }
+      'leaflet-draw': ['dist/leaflet.draw.css'],
+      'bootstrap-css': [
+    	  'lib/buttons.css',
+    	  'lib/forms.css',
+   	  ],
+    },
   },
 
   files: {
