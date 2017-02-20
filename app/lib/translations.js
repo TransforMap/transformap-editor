@@ -24,7 +24,7 @@ function getLangs () {
   if(language.indexOf("en") == -1)
       language.push("en");
 
-  //console.log(language);
+  console.log(language);
   return language;
 }
 
@@ -54,7 +54,12 @@ function resetLang() {
 
 /* get languages for UI from our Wikibase, and pick languages that are translated there */
 
+var supported_languages = [],
+    langnames = [],
+    abbr_langnames = {},
+    langnames_abbr = {};
 function initializeLanguageSwitcher(returned_data){
+  var lang;
   for(lang in returned_data.entities.Q5.labels) { //Q5 is arbitrary. Choose one that gets translated for sure.
     supported_languages.push(lang);
   }
@@ -82,23 +87,100 @@ function initializeLanguageSwitcher(returned_data){
     resetLang();
     setFallbackLangs();
     
-    //no JQUERY! 
-    // #menu .append
-    $("#map-menu-container .top").append(
-        "<div id=languageSelector onClick=\"$('#languageSelector ul').toggleClass('open');\">" +
-          "<span lang=en>Choose Language:</span>" +
-          "<ul></ul>" +
-        "</div>");
-    
     langnames.forEach(function (item) {
       var langcode = langnames_abbr[item];
       var is_default = (langcode == current_lang) ? " class=default" : "";
       console.log("adding lang '" + langcode + "' (" + item + ")"); 
-      $("#languageSelector ul").append("<li targetlang=" + langcode + is_default + " onClick='switchToLang(\""+langcode+"\");'>"+item+"</li>");
+      $("#languageSelector ul").append("<li targetlang=" + langcode + is_default + " onClick='window.translations.switchToLang(\""+langcode+"\");'>"+item+"</li>");
     });
   });
 }
-redundantFetch( [ "https://base.transformap.co/wiki/Special:EntityData/Q5.json", "https://raw.githubusercontent.com/TransforMap/transformap-viewer/Q5-fallback.json", "Q5-fallback.json" ],
-  initializeLanguageSwitcher,
-  function(error) { console.error("none of the lang init data urls available") } );
 
+function switchToLang(lang) {
+  $("#languageSelector li.default").removeClass("default");
+  $("#languageSelector li[targetlang="+lang+"]").addClass("default");
+  current_lang = lang;
+  setFallbackLangs();
+/*
+  //updateTranslatedTexts();
+
+  if(! dictionary[lang]) {
+    var dict_uri = "https://raw.githubusercontent.com/TransforMap/transformap-viewer-translations/master/json/"+lang+".json";
+
+    $.ajax({
+      url: dict_uri,
+      context: { lang: current_lang },
+      success: function(returned_data) {
+        var trans_jsonobj = JSON.parse(returned_data);
+
+        if(! dictionary[this.lang])
+          dictionary[this.lang] = {};
+        for (item in trans_jsonobj) {
+          var index = reverse_dic[item];
+          dictionary[this.lang][index] = trans_jsonobj[item];
+        }
+
+        console.log("successfully fetched " + this.lang);
+        //updateTranslatedTexts();
+
+      }
+    });
+
+  }
+
+  // As rebuilding the filters does not yet support advanced mode by default,
+  // we switch to simple mode, as language switching is a very rare case.
+  if(getFilterMode() == "advanced")
+    toggleAdvancedFilterMode();
+
+  resetFilter();
+  setFilterLang(lang);
+*/
+  console.log("new lang:" +lang);
+}
+
+// if wishedLang is in supported, OK
+// shorten wishedLang and see if in supported
+// take fallback
+function selectAllowedLang(wishedLang) {
+  console.log("selectAllowedLang(" + wishedLang + ") called")
+  if(wishedLang) {
+    if(supported_languages.indexOf(wishedLang) != -1) {
+      current_lang = wishedLang
+      return current_lang
+    }
+    console.log("not in supported, try shorten")
+    var short_lang = wishedLang.match(/^([a-zA-Z]*)-/)[1];
+    console.log("short: " + short_lang)
+    if(short_lang) {
+      if(supported_languages.indexOf(short_lang) != -1) {
+        current_lang = short_lang
+        console.log("current_lang set to " + short_lang)
+        return current_lang
+      }
+    }
+  }
+  setFallbackLangs()
+  if(fallback_langs[0]) {
+    if(supported_languages.indexOf(fallback_langs[0]) != -1) {
+      current_lang = fallback_langs[0]
+      return current_lang
+    }
+  }
+  current_lang = 'en'
+  return current_lang
+}
+
+var browser_languages = getLangs(),
+    current_lang = browser_languages[0],
+    fallback_langs = [];
+
+module.exports = {
+  getLangs: getLangs,
+  initializeLanguageSwitcher: initializeLanguageSwitcher,
+  supported_languages: supported_languages,
+  browser_languages: browser_languages,
+  current_lang: current_lang,
+  switchToLang: switchToLang,
+  selectAllowedLang: selectAllowedLang
+}

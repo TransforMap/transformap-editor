@@ -4,6 +4,8 @@ const initMap = require('./map.js')
 const getUrlVars = require('./getUrlVars.js')
 const redFetch = require('./red_fetch.js')
 const taxonomy = require('./taxonomy.js')
+const translations = require('./translations.js')
+window.translations = translations
 
 var map
 const endpoint = 'https://data.transformap.co/place/'
@@ -38,11 +40,15 @@ module.exports = function () {
     return toiArray
   }
 
-  var lang = 'en'
+  var lang = translations.selectAllowedLang(translations.current_lang)
+  var startlang = lang
+  console.log("lang on start: " + lang)
+  console.log(translations.supported_languages)
   var typeOfInintiatives = []
   var toiHashtable = {}
 
   function fillTOIs (data) {
+    $('#_key_type_of_initiative').empty()
     var toiSelect = document.getElementById('_key_type_of_initiative')
     var dataArray = data.results.bindings
     dataArray.forEach(function (entry) {
@@ -228,6 +234,31 @@ module.exports = function () {
     map.my_drawControl = map.getDrawControl(true)
     map.addControl(map.my_drawControl)
   }
+
+  //add languageswitcher
+  var menu = document.getElementById('menu')
+  $('#menu').append(
+      '<div id=languageSelector onClick="$(\'#languageSelector ul\').toggleClass(\'open\');">' +
+        '<span lang=en>Choose Language:</span>' +
+        '<ul></ul>' +
+      '</div>')
+
+  function initializeTranslatedTOIs(Q5data) {
+    translations.initializeLanguageSwitcher(Q5data)
+
+    
+    if(
+      redFetch([ taxonomy.getLangTaxURL(lang), 'https://raw.githubusercontent.com/TransforMap/transformap-viewer-translations/master/taxonomy-backup/susy/taxonomy.' + lang + '.json' ],
+        fillTOIs,
+        function (error) { console.error('none of the taxonomy data urls available') })
+
+
+  }
+
+  redFetch( [ "https://base.transformap.co/wiki/Special:EntityData/Q5.json", "https://raw.githubusercontent.com/TransforMap/transformap-viewer/Q5-fallback.json" ],
+    initializeTranslatedTOIs,
+    function(error) { console.error("none of the lang init data urls available") } );
+
 
   function createCORSRequest (method, url) {
     // taken from https://www.html5rocks.com/en/tutorials/cors/
