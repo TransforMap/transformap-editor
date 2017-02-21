@@ -40,9 +40,8 @@ module.exports = function () {
     return toiArray
   }
 
-  var lang = translations.selectAllowedLang(translations.current_lang)
-  var startLang = lang
-  console.log("lang on start: " + lang)
+  var startLang = translations.selectAllowedLang(translations.current_lang)
+  console.log("lang on start: " + startLang)
   console.log(translations.supported_languages)
   var typeOfInintiatives = []
   var toiHashtable = {}
@@ -55,6 +54,7 @@ module.exports = function () {
 
     var toiSelect = document.getElementById('_key_type_of_initiative')
     var dataArray = data.results.bindings
+    const current_lang = dataArray[0].itemLabel['xml:lang']
     dataArray.forEach(function (entry) {
       if (!entry.type_of_initiative_tag) {
         return
@@ -63,7 +63,7 @@ module.exports = function () {
         return
       }
       var label = {}
-      label[entry.itemLabel['xml:lang']] = entry.itemLabel.value
+      label[current_lang] = entry.itemLabel.value
 
       var currentObject = {
         item: entry.item.value,
@@ -82,7 +82,7 @@ module.exports = function () {
       if (a.type_of_initiative_tag && a.type_of_initiative_tag.match(/^other_/)) return 1
       if (b.type_of_initiative_tag && b.type_of_initiative_tag.match(/^other_/)) return -1
 
-      if (a.label[lang] < b.label[lang]) {
+      if (a.label[current_lang] < b.label[current_lang]) {
         return -1
       } else {
         return 1
@@ -106,7 +106,7 @@ module.exports = function () {
         })
       }
 
-      var label = document.createTextNode(entry.label[lang]) // FIXME fallback langs
+      var label = document.createTextNode(entry.label[current_lang]) // FIXME fallback langs
       newOption.appendChild(label)
 
       toiSelect.appendChild(newOption)
@@ -114,7 +114,7 @@ module.exports = function () {
   }
 
   // load taxonomy from server
-  redFetch([ taxonomy.getLangTaxURL(lang), 'https://raw.githubusercontent.com/TransforMap/transformap-viewer-translations/master/taxonomy-backup/susy/taxonomy.' + lang + '.json' ],
+  redFetch([ taxonomy.getLangTaxURL(startLang), 'https://raw.githubusercontent.com/TransforMap/transformap-viewer-translations/master/taxonomy-backup/susy/taxonomy.' + startLang + '.json' ],
     fillTOIs,
     function (error) { console.error('none of the taxonomy data urls available') })
 
@@ -251,11 +251,11 @@ module.exports = function () {
     translations.initializeLanguageSwitcher(Q5data)
     
     var nowPossibleLang = translations.selectAllowedLang(translations.current_lang)
+    translations.current_lang = nowPossibleLang
     console.log("lang now: " + nowPossibleLang)
     if(startLang != nowPossibleLang) {
       console.log("new lang detected, reloading TOIs")
-      lang = nowPossibleLang
-      redFetch([ taxonomy.getLangTaxURL(lang), 'https://raw.githubusercontent.com/TransforMap/transformap-viewer-translations/master/taxonomy-backup/susy/taxonomy.' + lang + '.json' ],
+      redFetch([ taxonomy.getLangTaxURL(nowPossibleLang), 'https://raw.githubusercontent.com/TransforMap/transformap-viewer-translations/master/taxonomy-backup/susy/taxonomy.' + nowPossibleLang + '.json' ],
         fillTOIs,
         function (error) { console.error('none of the taxonomy data urls available') })
     }
