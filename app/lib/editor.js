@@ -41,7 +41,7 @@ module.exports = function () {
   }
 
   var lang = translations.selectAllowedLang(translations.current_lang)
-  var startlang = lang
+  var startLang = lang
   console.log("lang on start: " + lang)
   console.log(translations.supported_languages)
   var typeOfInintiatives = []
@@ -49,6 +49,10 @@ module.exports = function () {
 
   function fillTOIs (data) {
     $('#_key_type_of_initiative').empty()
+
+    typeOfInintiatives = []
+    toiHashtable = {}
+
     var toiSelect = document.getElementById('_key_type_of_initiative')
     var dataArray = data.results.bindings
     dataArray.forEach(function (entry) {
@@ -245,14 +249,16 @@ module.exports = function () {
 
   function initializeTranslatedTOIs(Q5data) {
     translations.initializeLanguageSwitcher(Q5data)
-
     
-    if(
+    var nowPossibleLang = translations.selectAllowedLang(translations.current_lang)
+    console.log("lang now: " + nowPossibleLang)
+    if(startLang != nowPossibleLang) {
+      console.log("new lang detected, reloading TOIs")
+      lang = nowPossibleLang
       redFetch([ taxonomy.getLangTaxURL(lang), 'https://raw.githubusercontent.com/TransforMap/transformap-viewer-translations/master/taxonomy-backup/susy/taxonomy.' + lang + '.json' ],
         fillTOIs,
         function (error) { console.error('none of the taxonomy data urls available') })
-
-
+    }
   }
 
   redFetch( [ "https://base.transformap.co/wiki/Special:EntityData/Q5.json", "https://raw.githubusercontent.com/TransforMap/transformap-viewer/Q5-fallback.json" ],
