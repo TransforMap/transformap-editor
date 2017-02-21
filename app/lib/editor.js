@@ -113,11 +113,6 @@ module.exports = function () {
     })
   }
 
-  // load taxonomy from server
-  redFetch([ taxonomy.getLangTaxURL(startLang), 'https://raw.githubusercontent.com/TransforMap/transformap-viewer-translations/master/taxonomy-backup/susy/taxonomy.' + startLang + '.json' ],
-    fillTOIs,
-    function (error) { console.error('none of the taxonomy data urls available') })
-
   function addFreeTagsRow () {
     var freetags = document.getElementById('freetags')
 
@@ -252,14 +247,15 @@ module.exports = function () {
     
     var nowPossibleLang = translations.selectAllowedLang(translations.current_lang)
     translations.current_lang = nowPossibleLang
-    console.log("lang now: " + nowPossibleLang)
-    if(startLang != nowPossibleLang) {
-      console.log("new lang detected, reloading TOIs")
-      redFetch([ taxonomy.getLangTaxURL(nowPossibleLang), 'https://raw.githubusercontent.com/TransforMap/transformap-viewer-translations/master/taxonomy-backup/susy/taxonomy.' + nowPossibleLang + '.json' ],
+    fetchAndSetNewTranslation(nowPossibleLang)
+  }
+
+  function fetchAndSetNewTranslation(lang) {
+    redFetch([ taxonomy.getLangTaxURL(lang), 'https://raw.githubusercontent.com/TransforMap/transformap-viewer-translations/master/taxonomy-backup/susy/taxonomy.' + lang + '.json' ],
         fillTOIs,
         function (error) { console.error('none of the taxonomy data urls available') })
-    }
   }
+  translations.fetchAndSetNewTranslation = fetchAndSetNewTranslation
 
   redFetch( [ "https://base.transformap.co/wiki/Special:EntityData/Q5.json", "https://raw.githubusercontent.com/TransforMap/transformap-viewer/Q5-fallback.json" ],
     initializeTranslatedTOIs,

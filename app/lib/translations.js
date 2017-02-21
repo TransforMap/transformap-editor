@@ -100,6 +100,8 @@ function switchToLang(lang) {
   $("#languageSelector li.default").removeClass("default");
   $("#languageSelector li[targetlang="+lang+"]").addClass("default");
   current_lang = lang;
+  window.translations.current_lang = lang;
+  window.translations.fetchAndSetNewTranslation(lang);
   setFallbackLangs();
 /*
   //updateTranslatedTexts();
