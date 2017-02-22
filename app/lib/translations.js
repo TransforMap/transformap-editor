@@ -152,13 +152,16 @@ function selectAllowedLang(wishedLang) {
       return current_lang
     }
     console.log("not in supported, try shorten")
-    var short_lang = wishedLang.match(/^([a-zA-Z]*)-/)[1];
-    console.log("short: " + short_lang)
-    if(short_lang) {
-      if(supported_languages.indexOf(short_lang) != -1) {
-        current_lang = short_lang
-        console.log("current_lang set to " + short_lang)
-        return current_lang
+    var matches = wishedLang.match(/^([a-zA-Z]*)-/)
+    if(matches && matches[1]) {
+      var short_lang = matches[1];
+      console.log("short: " + short_lang)
+      if(short_lang) {
+        if(supported_languages.indexOf(short_lang) != -1) {
+          current_lang = short_lang
+          console.log("current_lang set to " + short_lang)
+          return current_lang
+        }
       }
     }
   }
