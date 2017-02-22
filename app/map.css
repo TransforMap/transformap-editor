@@ -118,6 +118,7 @@ fieldset.no-padding {
 #forms #languageSelector {
 /*  height: 34px; */
   width:fit-content;
+  max-width:17em; /* for firefox which does calculate fit-content wrong */
   padding: 6px 12px;
   font-size: 14px;
   line-height: 1.42857143;
