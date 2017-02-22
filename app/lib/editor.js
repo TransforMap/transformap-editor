@@ -406,7 +406,7 @@ module.exports = function () {
       alert('nothing to delete')
       return
     }
-    if(!confirm('Do you really want to delete this POI? It will be only marked as deleted and can restored later if you save the current Browser URL.')) {
+    if(!confirm('Do you really want to delete this POI? It will be only marked as deleted and can be restored later if you save the current Browser URL.')) {
       console.log('user aborted delete')
       return
     }
