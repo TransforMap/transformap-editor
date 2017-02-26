@@ -4,6 +4,8 @@ const initMap = require('./map.js')
 const getUrlVars = require('./getUrlVars.js')
 const redFetch = require('./red_fetch.js')
 const taxonomy = require('./taxonomy.js')
+const translations = require('./translations.js')
+window.translations = translations
 
 var map
 const endpoint = 'https://data.transformap.co/place/'
@@ -38,13 +40,21 @@ module.exports = function () {
     return toiArray
   }
 
-  var lang = 'en'
+  var startLang = translations.selectAllowedLang(translations.current_lang)
+  console.log("lang on start: " + startLang)
+  console.log(translations.supported_languages)
   var typeOfInintiatives = []
   var toiHashtable = {}
 
   function fillTOIs (data) {
+    $('#_key_type_of_initiative').empty()
+
+    typeOfInintiatives = []
+    toiHashtable = {}
+
     var toiSelect = document.getElementById('_key_type_of_initiative')
     var dataArray = data.results.bindings
+    const current_lang = dataArray[0].itemLabel['xml:lang']
     dataArray.forEach(function (entry) {
       if (!entry.type_of_initiative_tag) {
         return
@@ -53,7 +63,7 @@ module.exports = function () {
         return
       }
       var label = {}
-      label[entry.itemLabel['xml:lang']] = entry.itemLabel.value
+      label[current_lang] = entry.itemLabel.value
 
       var currentObject = {
         item: entry.item.value,
@@ -72,7 +82,7 @@ module.exports = function () {
       if (a.type_of_initiative_tag && a.type_of_initiative_tag.match(/^other_/)) return 1
       if (b.type_of_initiative_tag && b.type_of_initiative_tag.match(/^other_/)) return -1
 
-      if (a.label[lang] < b.label[lang]) {
+      if (a.label[current_lang] < b.label[current_lang]) {
         return -1
       } else {
         return 1
@@ -96,17 +106,12 @@ module.exports = function () {
         })
       }
 
-      var label = document.createTextNode(entry.label[lang]) // FIXME fallback langs
+      var label = document.createTextNode(entry.label[current_lang]) // FIXME fallback langs
       newOption.appendChild(label)
 
       toiSelect.appendChild(newOption)
     })
   }
-
-  // load taxonomy from server
-  redFetch([ taxonomy.getLangTaxURL(lang), 'https://raw.githubusercontent.com/TransforMap/transformap-viewer-translations/master/taxonomy-backup/susy/taxonomy.' + lang + '.json' ],
-    fillTOIs,
-    function (error) { console.error('none of the taxonomy data urls available') })
 
   function addFreeTagsRow () {
     var freetags = document.getElementById('freetags')
@@ -228,6 +233,34 @@ module.exports = function () {
     map.my_drawControl = map.getDrawControl(true)
     map.addControl(map.my_drawControl)
   }
+
+  //add languageswitcher
+  var menu = document.getElementById('menu')
+  $('#menu').append(
+      '<div id=languageSelector onClick="$(\'#languageSelector ul\').toggleClass(\'open\');">' +
+        '<span lang=en>Choose Language:</span>' +
+        '<ul></ul>' +
+      '</div>')
+
+  function initializeTranslatedTOIs(Q5data) {
+    translations.initializeLanguageSwitcher(Q5data)
+    
+    var nowPossibleLang = translations.selectAllowedLang(translations.current_lang)
+    translations.current_lang = nowPossibleLang
+    fetchAndSetNewTranslation(nowPossibleLang)
+  }
+
+  function fetchAndSetNewTranslation(lang) {
+    redFetch([ taxonomy.getLangTaxURL(lang), 'https://raw.githubusercontent.com/TransforMap/transformap-viewer-translations/master/taxonomy-backup/susy/taxonomy.' + lang + '.json' ],
+        fillTOIs,
+        function (error) { console.error('none of the taxonomy data urls available') })
+  }
+  translations.fetchAndSetNewTranslation = fetchAndSetNewTranslation
+
+  redFetch( [ "https://base.transformap.co/wiki/Special:EntityData/Q5.json", "https://raw.githubusercontent.com/TransforMap/transformap-viewer/Q5-fallback.json" ],
+    initializeTranslatedTOIs,
+    function(error) { console.error("none of the lang init data urls available") } );
+
 
   function createCORSRequest (method, url) {
     // taken from https://www.html5rocks.com/en/tutorials/cors/
@@ -373,7 +406,7 @@ module.exports = function () {
       alert('nothing to delete')
       return
     }
-    if(!confirm('Do you really want to delete this POI? It will be only marked as deleted and can restored later if you save the current Browser URL.')) {
+    if(!confirm('Do you really want to delete this POI? It will be only marked as deleted and can be restored later if you save the current Browser URL.')) {
       console.log('user aborted delete')
       return
     }
@@ -460,10 +493,10 @@ module.exports = function () {
   }
   document.getElementById('coordsearch').onclick = clickSearch
 
- function stopRKey(evt) { 
+ function stopRKey(evt) {
     var evt = (evt) ? evt : ((event) ? event : null)
     var node = (evt.target) ? evt.target : ((evt.srcElement) ? evt.srcElement : null)
-    if ((evt.keyCode == 13) && (node.type == 'text'))  {
+    if ((evt.keyCode == 13) && (node.type == 'text')) {
       return false
     } 
   }
