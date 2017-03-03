@@ -145,9 +145,13 @@
         </fieldset>
         <fieldset>
           <legend>Object information</legend>
+          <div class="row" id="osm">
+            <label for="_key_osm">Link to OSM object</label>
+            <input class="form-control" type="text" id="_key_osm"><span>&nbsp;</span><a id="osmlink" target="_blank">OSM</a>
+          </div>
           <div class="row" id="id">
             <label for="_id">Object ID</label>
-            <input class="form-control" type="text" id="_id" disabled="true">
+            <input class="form-control" type="text" id="_id" disabled="true"><span>&nbsp;</span><a id="transformapapilink" target="_blank">JSON</a>
             <div class="row" id="deleted">{{{ This object is in 'deleted' state. To undelete, click 'Save' }}}</div>
           </div>
         </fieldset>

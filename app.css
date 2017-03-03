@@ -110,6 +110,9 @@ fieldset.no-padding {
 #forms .row * + textarea {
   width:15em;
 }
+#forms .row #_key_osm {
+  width:23em;
+}
 #forms .row #_id {
   width:18em;
   text-align:center;

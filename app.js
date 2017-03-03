@@ -390,8 +390,13 @@ module.exports = function () {
     }
     if (currentData.properties && currentData.properties._id) {
       document.getElementById('_id').value = currentData.properties._id;
+      $('#transformapapilink').attr('href', endpoint + currentData.properties._id);
     } else if (currentData._id) {
       document.getElementById('_id').value = currentData._id;
+      $('#transformapapilink').attr('href', endpoint + currentData._id);
+    }
+    if (currentData.properties.osm) {
+      $('#osmlink').attr('href', currentData.properties.osm);
     }
   }
 
@@ -551,6 +556,8 @@ module.exports = function () {
           console.log(retJson);
           if (retJson.id) {
             document.getElementById('_id').value = retJson.id;
+            $('#transformapapilink').attr('href', endpoint + retJson.id);
+            $('#osmlink').attr('href', $('#_key_osm').attr('value'));
             alert('Save successful');
           } else {
             alert('Error: something wrent wrong on saving: ' + JSON.stringify(retJson));
@@ -570,7 +577,7 @@ module.exports = function () {
       alert('nothing to delete');
       return;
     }
-    if (!confirm('Do you really want to delete this POI? It will be only marked as deleted and can restored later if you save the current Browser URL.')) {
+    if (!confirm('Do you really want to delete this POI? It will be only marked as deleted and can be restored later if you save the current Browser URL.')) {
       console.log('user aborted delete');
       return;
     }
