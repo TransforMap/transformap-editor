@@ -123,9 +123,16 @@ html(lang='en')
             input(type='text' id='value1' name='freetags' class='form-control')
         fieldset
           legend Object information
+          .row#osm
+            label(for='_key_osm') Link to OSM object
+            input(type='text' id='_key_osm' class='form-control')
+            span &nbsp;
+            a(id='osmlink' target='_blank') OSM
           .row#id
             label(for='_id') Object ID
             input(type='text' id='_id' disabled='true' class='form-control')
+            span &nbsp;
+            a(id='transformapapilink' target='_blank') JSON
             .row#deleted {{{ This object is in 'deleted' state. To undelete, click 'Save' }}}
           
       button(type='button' id='delete' class='btn btn-danger btn-sm') Delete POI
