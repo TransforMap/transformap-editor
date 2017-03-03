@@ -426,7 +426,7 @@ module.exports = function () {
   function fetchAndSetNewTranslation(lang) {
     redFetch([taxonomy.getLangTaxURL(lang), 'https://raw.githubusercontent.com/TransforMap/transformap-viewer-translations/master/taxonomy-backup/susy/taxonomy.' + lang + '.json'], fillTOIs, function (error) {
       console.error('none of the taxonomy data urls available');
-    });
+    }, { cacheBusting: false });
   }
   translations.fetchAndSetNewTranslation = fetchAndSetNewTranslation;
 
@@ -896,7 +896,7 @@ module.exports = initMap;
  *
  * Give it an array of resources, that can be fetched from different urls.
  * Will try to fetch them in the provided order.
- * Execute success_function on the first successful fetch, and error_function only if all resources fail to fetch.
+ * Execute successFunction on the first successful fetch, and errorFunction only if all resources fail to fetch.
  */
 
 /* This program is free software. It comes without any warranty, to
@@ -911,7 +911,7 @@ module.exports = initMap;
 */
 
 var processStatus = function processStatus(response) {
-  // status "0" to handle local files fetching (e.g. Cordova/Phonegap etc.)
+  // status '0' to handle local files fetching (e.g. Cordova/Phonegap etc.)
   if (response.status === 200 || response.status === 0) {
     return Promise.resolve(response);
   } else {
@@ -964,7 +964,7 @@ var getWrappedFetch = function getWrappedFetch() {
 
 var getJSON = function getJSON(params) {
   var wrappedFetch = getWrappedFetch(params.cacheBusting ? params.url + '?' + new Date().getTime() : params.url, {
-    method: 'get', // optional, "GET" is default value
+    method: 'get', // optional, 'GET' is default value
     headers: {
       'Accept': 'application/json'
     }
@@ -991,7 +991,7 @@ function myGetJSON(url, successFunction, errorFunction) {
   });
 }
 
-function redundantFetch(dataUrlArray, successFunction, errorFunction) {
+function redundantFetch(dataUrlArray, successFunction, errorFunction, params) {
   if (!(!!dataUrlArray && Array === dataUrlArray.constructor)) {
     console.error('redundantFetch: argument is no array');
     console.error(dataUrlArray);
@@ -1017,11 +1017,11 @@ function redundantFetch(dataUrlArray, successFunction, errorFunction) {
   } else {
     localSuccessFunction = successFunction;
     localErrorFunction = function localErrorFunction(error) {
-      redundantFetch(dataUrlArray, successFunction, errorFunction);
+      redundantFetch(dataUrlArray, successFunction, errorFunction, params);
     };
   }
 
-  var getJSONparams = { url: currentUrl, cacheBusting: true };
+  var getJSONparams = { url: currentUrl, cacheBusting: params && params.cacheBusting === false ? false : true };
   getJSON(getJSONparams).then(function (data) {
     localSuccessFunction(data);console.log('rfetch: success on ');console.log(data);
   }, function (error) {
@@ -1053,7 +1053,7 @@ function getLangTaxURL(lang) {
     return false;
   }
 
-  var tax_query = 'prefix bd: <http://www.bigdata.com/rdf#> ' + 'prefix wikibase: <http://wikiba.se/ontology#> ' + 'prefix wdt: <http://base.transformap.co/prop/direct/>' + 'prefix wd: <http://base.transformap.co/entity/>' + 'SELECT ?item ?itemLabel ?instance_of ?subclass_of ?type_of_initiative_tag ?wikipedia ?description ' + 'WHERE {' + '?item wdt:P8* wd:Q8 .' + '?item wdt:P8 ?subclass_of .' + 'OPTIONAL { ?item wdt:P4 ?instance_of . }' + 'OPTIONAL { ?item wdt:P15 ?type_of_initiative_tag }' + 'OPTIONAL { ?item schema:description ?description FILTER(LANG(?description) = "' + lang + '") }' + 'OPTIONAL { ?wikipedia schema:about ?item . ?wikipedia schema:inLanguage "en"}' + 'SERVICE wikibase:label {bd:serviceParam wikibase:language "' + lang + '" }' + '}';
+  var tax_query = 'prefix bd: <http://www.bigdata.com/rdf#> ' + 'prefix wikibase: <http://wikiba.se/ontology#> ' + 'prefix wdt: <https://base.transformap.co/prop/direct/>' + 'prefix wd: <https://base.transformap.co/entity/>' + 'SELECT ?item ?itemLabel ?instance_of ?subclass_of ?type_of_initiative_tag ?wikipedia ?description ' + 'WHERE {' + '?item wdt:P8* wd:Q8 .' + '?item wdt:P8 ?subclass_of .' + 'OPTIONAL { ?item wdt:P4 ?instance_of . }' + 'OPTIONAL { ?item wdt:P15 ?type_of_initiative_tag }' + 'OPTIONAL { ?item schema:description ?description FILTER(LANG(?description) = "' + lang + '") }' + 'OPTIONAL { ?wikipedia schema:about ?item . ?wikipedia schema:inLanguage "en"}' + 'SERVICE wikibase:label {bd:serviceParam wikibase:language "' + lang + '" }' + '}';
 
   return 'https://query.base.transformap.co/bigdata/namespace/transformap/sparql?query=' + encodeURIComponent(tax_query) + '&format=json';
 }
