@@ -46,6 +46,93 @@ module.exports = function () {
   var typeOfInintiatives = []
   var toiHashtable = {}
 
+  function fillTransforMapTax (data) {
+    console.log('fillTransforMapTax called')
+
+    var dataArray = data.results.bindings
+    const current_lang = dataArray[0].itemLabel['xml:lang']
+
+    var needs = []
+    var interactions = []
+    var identities = []
+
+    dataArray.forEach(function (entry) {
+      if (!entry.subclass_of) {
+        return
+      }
+      var label = {}
+      label[current_lang] = entry.itemLabel.value
+      var currentObject = {
+        item: entry.item.value,
+        label: label
+      }
+      if(entry.subclass_of.value == 'https://base.transformap.co/entity/Q146') {
+        currentObject['needs_tag'] = entry.needs_tag.value
+        needs.push(currentObject)
+      } else if (entry.subclass_of.value == 'https://base.transformap.co/entity/Q150') {
+        currentObject['interaction_tag'] = entry.interaction_tag.value
+        interactions.push(currentObject)
+      } else if (entry.subclass_of.value == 'https://base.transformap.co/entity/Q176') {
+        currentObject['identity_tag'] = entry.identity_tag.value
+        identities.push(currentObject)
+      }
+    });
+
+    //needs
+    $('#_key_provides').empty()
+    needs.forEach(function (entry) {
+      var newOption = $('<option>')
+      newOption.attr('value', entry.needs_tag)
+
+      if (currentData.properties && currentData.properties.provides) {
+        var needs_array = createToiArray(currentData.properties.provides)
+        needs_array.forEach(function (need) {
+          if (need === entry.needs_tag) {
+            newOption.attr('selected','selected')
+          }
+        })
+      }
+      newOption.append(entry.label[current_lang])
+      $('#_key_provides').append(newOption)
+    })
+
+    //interaction
+    $('#_key_interaction').empty()
+    interactions.forEach(function (entry) {
+      var newOption = $('<option>')
+      newOption.attr('value', entry.interaction_tag)
+
+      if (currentData.properties && currentData.properties.interaction) {
+        var interactions_array = createToiArray(currentData.properties.interaction)
+        interactions_array.forEach(function (interact) {
+          if (interact === entry.interaction_tag) {
+            newOption.attr('selected','selected')
+          }
+        })
+      }
+      newOption.append(entry.label[current_lang])
+      $('#_key_interaction').append(newOption)
+    })
+
+    //identity
+    $('#_key_identity').empty()
+    identities.forEach(function (entry) {
+      var newOption = $('<option>')
+      newOption.attr('value', entry.identity_tag)
+
+      if (currentData.properties && currentData.properties.identity) {
+        var identity_array = createToiArray(currentData.properties.identity)
+        identity_array.forEach(function (identity) {
+          if (identity === entry.identity_tag) {
+            newOption.attr('selected','selected')
+          }
+        })
+      }
+      newOption.append(entry.label[current_lang])
+      $('#_key_identity').append(newOption)
+    })
+  }
+
   function fillTOIs (data) {
     $('#_key_type_of_initiative').empty()
 
@@ -256,8 +343,12 @@ module.exports = function () {
   }
 
   function fetchAndSetNewTranslation(lang) {
-    redFetch([ taxonomy.getLangTaxURL(lang), 'https://raw.githubusercontent.com/TransforMap/transformap-viewer-translations/master/taxonomy-backup/susy/taxonomy.' + lang + '.json' ],
+    redFetch([ taxonomy.getLangTaxURL(lang, 'Q8'), 'https://raw.githubusercontent.com/TransforMap/transformap-viewer-translations/master/taxonomy-backup/susy/taxonomy.' + lang + '.json' ],
         fillTOIs,
+        function (error) { console.error('none of the taxonomy data urls available') },
+        { cacheBusting: false })
+    redFetch([ taxonomy.getLangTaxURL(lang, 'Q4'), 'https://raw.githubusercontent.com/TransforMap/transformap-viewer-translations/master/taxonomy-backup/susy/taxonomy.' + lang + '.json' ],
+        fillTransforMapTax,
         function (error) { console.error('none of the taxonomy data urls available') },
         { cacheBusting: false })
   }

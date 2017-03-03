@@ -71,19 +71,17 @@ html(lang='en')
             select(id='_key_type_of_initiative' multiple size='5' class='form-control')
               option(value='') == Choose at least one type of initiative ==
           .row
+            label(for='_key_provides') Fulfils Needs
+            select(id='_key_provides' name='Needs' multiple size='5' class='form-control')
+              option(value='') == Choose all Needs fulfilled ==
+          .row
+            label(for='_key_interaction') Interaction
+            select(id='_key_interaction' name='Interaction' multiple size='5' class='form-control')
+              option(value='') == Choose any Interactions ==
+          .row
             label(for='_key_identity') Identity
-            select(id='_key_identity' name='Needs' multiple size='5' class='form-control')
+            select(id='_key_identity' name='Identity' multiple size='5' class='form-control')
               option(value='') == Choose An Identity ==
-              option(value='collaborative_economy') Collaborative Economy
-              option(value='commons') Commons 
-              option(value='community_based_currencies') Community Based Currencies
-              option(value='demonetized_economy') Demonetized Economy
-              option(value='degrowth') Degrowth
-              option(value='economy_for_the_common_good') Economy for the Common Good
-              option(value='global_ecovillage_network') Global Ecovillage Network
-              option(value='permaculture') Permaculture
-              option(value='solidarity_economy') Solidarity Economy
-              option(value='transition_initiative') Transition Initiative
         fieldset
           legend Contact Data
           .row
