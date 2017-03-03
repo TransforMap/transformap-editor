@@ -258,7 +258,8 @@ module.exports = function () {
   function fetchAndSetNewTranslation(lang) {
     redFetch([ taxonomy.getLangTaxURL(lang), 'https://raw.githubusercontent.com/TransforMap/transformap-viewer-translations/master/taxonomy-backup/susy/taxonomy.' + lang + '.json' ],
         fillTOIs,
-        function (error) { console.error('none of the taxonomy data urls available') })
+        function (error) { console.error('none of the taxonomy data urls available') },
+        { cacheBusting: false })
   }
   translations.fetchAndSetNewTranslation = fetchAndSetNewTranslation
 

@@ -6,7 +6,7 @@
  *
  * Give it an array of resources, that can be fetched from different urls.
  * Will try to fetch them in the provided order.
- * Execute success_function on the first successful fetch, and error_function only if all resources fail to fetch.
+ * Execute successFunction on the first successful fetch, and errorFunction only if all resources fail to fetch.
  */
 
 /* This program is free software. It comes without any warranty, to
@@ -21,7 +21,7 @@
 */
 
 var processStatus = function (response) {
-    // status "0" to handle local files fetching (e.g. Cordova/Phonegap etc.)
+  // status '0' to handle local files fetching (e.g. Cordova/Phonegap etc.)
   if (response.status === 200 || response.status === 0) {
     return Promise.resolve(response)
   } else {
@@ -77,7 +77,7 @@ var getJSON = function (params) {
   var wrappedFetch = getWrappedFetch(
         params.cacheBusting ? params.url + '?' + new Date().getTime() : params.url,
     {
-      method: 'get', // optional, "GET" is default value
+      method: 'get', // optional, 'GET' is default value
       headers: {
         'Accept': 'application/json'
       }
@@ -105,7 +105,7 @@ function myGetJSON (url, successFunction, errorFunction) {
   )
 }
 
-function redundantFetch (dataUrlArray, successFunction, errorFunction) {
+function redundantFetch (dataUrlArray, successFunction, errorFunction, params) {
   if (!(!!dataUrlArray && Array === dataUrlArray.constructor)) {
     console.error('redundantFetch: argument is no array')
     console.error(dataUrlArray)
@@ -130,11 +130,11 @@ function redundantFetch (dataUrlArray, successFunction, errorFunction) {
   } else {
     localSuccessFunction = successFunction
     localErrorFunction = function (error) {
-      redundantFetch(dataUrlArray, successFunction, errorFunction)
+      redundantFetch(dataUrlArray, successFunction, errorFunction, params)
     }
   }
 
-  var getJSONparams = { url: currentUrl, cacheBusting: true }
+  var getJSONparams = { url: currentUrl, cacheBusting: ((params && params.cacheBusting === false) ? false : true) }
   getJSON(getJSONparams).then(
     function (data) { localSuccessFunction(data); console.log('rfetch: success on '); console.log(data) },
     function (error) { localErrorFunction(error); console.log('rfetch: fail on '); console.log(error) }

@@ -19,8 +19,8 @@ function getLangTaxURL (lang) {
   var tax_query =
     'prefix bd: <http://www.bigdata.com/rdf#> ' +
     'prefix wikibase: <http://wikiba.se/ontology#> ' +
-    'prefix wdt: <http://base.transformap.co/prop/direct/>' +
-    'prefix wd: <http://base.transformap.co/entity/>' +
+    'prefix wdt: <https://base.transformap.co/prop/direct/>' +
+    'prefix wd: <https://base.transformap.co/entity/>' +
     'SELECT ?item ?itemLabel ?instance_of ?subclass_of ?type_of_initiative_tag ?wikipedia ?description ' +
     'WHERE {' +
       '?item wdt:P8* wd:Q8 .' +
