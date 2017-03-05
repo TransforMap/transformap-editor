@@ -34,6 +34,15 @@ a:hover {
 #menu {
 	width: 100%;
 }
+.bootstrap-select {
+    width: 21em ! important;
+}
+.bootstrap-select .dropdown-menu {
+    overflow-x: hidden;
+}
+.bootstrap-select .bs-searchbox .form-control {
+    width: 100% ! important;
+}
 #forms {
   width:49%;
   padding:10px;
