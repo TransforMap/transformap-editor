@@ -10,12 +10,16 @@ html(lang='en')
     script require('initialize')
     script(defer='defer' src='https://cdnjs.cloudflare.com/ajax/libs/jquery/1.10.2/jquery.js')
     script(src='https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js')
+    script(defer='defer' src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js')
+    script(defer='defer' src='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/bootstrap-select.min.js')
     script.
       if(! Modernizr.promises) {
         document.write('<script src="https://www.promisejs.org/polyfills/promise-7.0.4.min.js"></sc' + 'ript>')
         document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/2.0.2/fetch.min.js"></sc' + 'ript>')
       }
     link(href='//fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css')
+    link(rel='stylesheet', href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/css/bootstrap.min.css")
+    link(rel='stylesheet', href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/css/bootstrap-select.min.css")
     link(rel='stylesheet', href="app.css")
     link(rel='stylesheet', href="vendor.css")
   body
@@ -68,19 +72,19 @@ html(lang='en')
             //fixme different langs for description
           .row#toi
             label(for='_key_type_of_initiative') Type of Initiative
-            select(id='_key_type_of_initiative' multiple size='5' class='form-control')
+            select(id='_key_type_of_initiative' multiple size='5' class='selectpicker show-tick' data-live-search='true')
               option(value='') == Choose at least one type of initiative ==
           .row
             label(for='_key_provides') Fulfils Needs
-            select(id='_key_provides' name='Needs' multiple size='5' class='form-control')
+            select(id='_key_provides' name='Needs' multiple size='5' class='selectpicker show-tick' data-live-search='true')
               option(value='') == Choose all Needs fulfilled ==
           .row
             label(for='_key_interaction') Interaction
-            select(id='_key_interaction' name='Interaction' multiple size='5' class='form-control')
+            select(id='_key_interaction' name='Interaction' multiple size='5' class='selectpicker show-tick' data-live-search='true')
               option(value='') == Choose any Interactions ==
           .row
             label(for='_key_identity') Identity
-            select(id='_key_identity' name='Identity' multiple size='5' class='form-control')
+            select(id='_key_identity' name='Identity' multiple size='5' class='selectpicker show-tick' data-live-search='true')
               option(value='') == Choose An Identity ==
         fieldset
           legend Contact Data
