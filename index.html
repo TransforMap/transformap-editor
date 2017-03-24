@@ -10,6 +10,8 @@
     <script>require('initialize')</script>
     <script defer="defer" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.10.2/jquery.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+    <script defer="defer" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script defer="defer" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/bootstrap-select.min.js"></script>
     <script>
       if(! Modernizr.promises) {
         document.write('<script src="https://www.promisejs.org/polyfills/promise-7.0.4.min.js"></sc' + 'ript>')
@@ -17,6 +19,8 @@
       }
     </script>
     <link href="//fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/css/bootstrap-select.min.css">
     <link rel="stylesheet" href="app.css">
     <link rel="stylesheet" href="vendor.css">
   </head>
@@ -78,25 +82,28 @@
           </div>
           <div class="row" id="toi">
             <label for="_key_type_of_initiative">Type of Initiative</label>
-            <select class="form-control" id="_key_type_of_initiative" multiple size="5">
+            <select class="selectpicker show-tick" id="_key_type_of_initiative" multiple size="5" data-live-search="true">
               <option value="">== Choose at least one type of initiative ==</option>
             </select>
           </div>
+        </fieldset>
+        <fieldset>
+          <legend>TransforMap Taxonomy</legend>
           <div class="row">
             <label for="_key_provides">Fulfils Needs</label>
-            <select class="form-control" id="_key_provides" name="Needs" multiple size="5">
+            <select class="selectpicker show-tick" id="_key_provides" name="Needs" multiple size="5" data-live-search="true">
               <option value="">== Choose all Needs fulfilled ==</option>
             </select>
           </div>
           <div class="row">
             <label for="_key_interaction">Interaction</label>
-            <select class="form-control" id="_key_interaction" name="Interaction" multiple size="5">
+            <select class="selectpicker show-tick" id="_key_interaction" name="Interaction" multiple size="5" data-live-search="true">
               <option value="">== Choose any Interactions ==</option>
             </select>
           </div>
           <div class="row">
             <label for="_key_identity">Identity</label>
-            <select class="form-control" id="_key_identity" name="Identity" multiple size="5">
+            <select class="selectpicker show-tick" id="_key_identity" name="Identity" multiple size="5" data-live-search="true">
               <option value="">== Choose An Identity ==</option>
             </select>
           </div>

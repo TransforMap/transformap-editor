@@ -261,6 +261,7 @@ module.exports = function () {
       }
       newOption.append(entry.label[current_lang]);
       $('#_key_provides').append(newOption);
+      $('#_key_provides').selectpicker('refresh');
     });
 
     //interaction
@@ -279,6 +280,7 @@ module.exports = function () {
       }
       newOption.append(entry.label[current_lang]);
       $('#_key_interaction').append(newOption);
+      $('#_key_interaction').selectpicker('refresh');
     });
 
     //identity
@@ -297,6 +299,7 @@ module.exports = function () {
       }
       newOption.append(entry.label[current_lang]);
       $('#_key_identity').append(newOption);
+      $('#_key_identity').selectpicker('refresh');
     });
   }
 
@@ -365,6 +368,7 @@ module.exports = function () {
       newOption.appendChild(label);
 
       toiSelect.appendChild(newOption);
+      $('#_key_type_of_initiative').selectpicker('refresh');
     });
   }
 
