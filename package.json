@@ -1,7 +1,7 @@
 {
   "name": "transformap-editor",
   "description": "CRUD data.transformap.co interface",
-  "author": "Michael Maier, Jon Richter",
+  "author": "Michael Maier, Jon Richter, Alex Corbi",
   "version": "0.0.2",
   "repository": {
     "type": "git",

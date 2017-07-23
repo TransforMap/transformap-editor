@@ -1,0 +1,95 @@
+/*
+ * This library handles calls to the transformap data api for the transformap editor
+ *
+ * Fri  21 Jul 14:30:00 UTC+1 2017
+ * Alex Corbi (alexcorbi@posteo.net), WTFPL
+
+ * This program is free software. It comes without any warranty, to
+ * the extent permitted by applicable law. You can redistribute it
+ * and/or modify it under the terms of the Do What The Fuck You Want
+ * To Public License, Version 2, as published by Sam Hocevar. See
+ * http://www.wtfpl.net/ for more details. */
+
+const utils = require('./utils.js')
+
+const endpoint = 'https://data.transformap.co/place/'
+
+/* returns the API's endpoint */
+function getDataEndpoint () {
+  return endpoint;
+}
+
+/* 
+ * creates (if uuid is not set) or updates (if it is) a POI with the data passed as parameter
+ * Params: 
+ *  - uuid: POI's uuid, null if does not exist
+ *  - data: to create or update POI
+ *  - callback: function to be called upon success. Receives the uuid of the POI
+ * Returns: false if invalid call
+*/
+function createOrUpdatePOI (uuid, data, callback) {
+  
+  if (!data) {
+    console.error('updateOrCreatePOI: no data given')
+    return false
+  }
+
+  // PUT is for UPDATE, POST is for CREATE
+  var xhr = utils.createCORSRequest(uuid ? 'PUT' : 'POST', endpoint + uuid)
+  xhr.setRequestHeader('Content-Type', 'application/json')
+  xhr.send(data)
+  console.log(xhr)
+
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4) {
+      if (xhr.status === 200) {
+        var retJson = JSON.parse(xhr.responseText)
+        console.log(retJson)
+        if(retJson.id) {
+          callback(retJson.id);          
+          alert('Save successful')
+        } else {
+          alert('Error: something wrent wrong on saving: ' + JSON.stringify(retJson) )
+        }
+      } else {
+        console.error(xhr)
+      }
+    }
+  }
+}
+
+/* 
+ * Deletes the POI corresponding to the uuid passed as parameter
+ * Params: 
+ *  - uuid: POI's uuid, null if does not exist
+ *  - callback: function to be called upon success. Receives the uuid of the POI
+ * Returns: false if invalid call
+*/
+function deletePOI (uuid, callback) {
+  
+  if (!uuid) {
+    console.error('deletePOI: no uuid given')
+    return false
+  }
+  
+  var xhr = utils.createCORSRequest('DELETE', endpoint + uuid)
+  xhr.send()
+  console.log(xhr)
+
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4) {
+      if (xhr.status === 200) {
+        callback(uuid)
+      } else {
+        console.error(xhr)
+      }
+    }
+  }
+  
+}
+
+module.exports = {
+  getDataEndpoint: getDataEndpoint,
+  createOrUpdatePOI: createOrUpdatePOI,
+  deletePOI: deletePOI
+}

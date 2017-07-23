@@ -1,0 +1,23 @@
+{
+  "name": "transformap-editor",
+  "description": "CRUD data.transformap.co interface",
+  "main": "",
+  "authors": [
+    "Michael Maier",
+    "Jon Richter",
+    "Alex Corbi"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/transformap/transformap-editor",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "devDependencies": {
+    "mocking_bird": "^1.0.2"
+  }
+}

@@ -1,28 +1,28 @@
 /* global alert, L, XMLHttpRequest, XDomainRequest */ // used by standardjs (linter)
 
 const initMap = require('./map.js')
-const getUrlVars = require('./getUrlVars.js')
+const utils = require('./utils.js')
 const redFetch = require('./red_fetch.js')
 const taxonomy = require('./taxonomy.js')
 const translations = require('./translations.js')
+const dataApi = require('./transformap_data_api.js')
 window.translations = translations
 
 var map
-const endpoint = 'https://data.transformap.co/place/'
 
 module.exports = function () {
   console.log('editor initialize start')
 
   map = initMap()
 
-  var urlVars = getUrlVars()
+  var urlVars = utils.getUrlVars()
   var dataUrls
   const place = urlVars['place']
   if (place) {
     if (/^[0-9a-f-]{32,36}$/i.test(place)) {
       const normalizedPlace = place.replace(/-/, '')
       if (normalizedPlace.length === 32) {
-        dataUrls = [ endpoint + place, 'http://192.168.0.2:6000/place/' + place, place ]
+        dataUrls = [ dataApi.getDataEndpoint() + place, 'http://192.168.0.2:6000/place/' + place, place ]
       } else {
         dataUrls = [ place ]
       }
@@ -244,6 +244,7 @@ module.exports = function () {
     newRow.appendChild(newValue)
     freetags.appendChild(newRow)
   }
+  document.getElementById('plus').onclick = addFreeTagsRow
 
   var currentData = {}
 
@@ -310,10 +311,10 @@ module.exports = function () {
     }
     if (currentData.properties && currentData.properties._id) {
       document.getElementById('_id').value = currentData.properties._id
-      $('#transformapapilink').attr('href', endpoint + currentData.properties._id)
+      $('#transformapapilink').attr('href', dataApi.getDataEndpoint() + currentData.properties._id)
     } else if (currentData._id) {
       document.getElementById('_id').value = currentData._id
-      $('#transformapapilink').attr('href', endpoint + currentData._id)
+      $('#transformapapilink').attr('href', dataApi.getDataEndpoint() + currentData._id)
     }
     if(currentData.properties.osm) {
       $('#osmlink').attr('href', currentData.properties.osm)
@@ -362,26 +363,6 @@ module.exports = function () {
   redFetch( [ "https://base.transformap.co/wiki/Special:EntityData/Q5.json", "https://raw.githubusercontent.com/TransforMap/transformap-viewer/Q5-fallback.json" ],
     initializeTranslatedTOIs,
     function(error) { console.error("none of the lang init data urls available") } );
-
-
-  function createCORSRequest (method, url) {
-    // taken from https://www.html5rocks.com/en/tutorials/cors/
-    var xhr = new XMLHttpRequest()
-    if ('withCredentials' in xhr) {
-      // Check if the XMLHttpRequest object has a "withCredentials" property.
-      // "withCredentials" only exists on XMLHTTPRequest2 objects.
-      xhr.open(method, url, true)
-    } else if (typeof XDomainRequest !== 'undefined') {
-      // Otherwise, check if XDomainRequest.
-      // XDomainRequest only exists in IE, and is IE's way of making CORS requests.
-      xhr = new XDomainRequest()
-      xhr.open(method, url)
-    } else {
-      // Otherwise, CORS is not supported by the browser.
-      xhr = null
-    }
-    return xhr
-  }
 
   function clickSubmit () {
     console.log('clickSubmit enter')
@@ -475,63 +456,36 @@ module.exports = function () {
     const uuid = document.getElementById('_id').value
     const sendData = JSON.stringify(data)
     console.log(sendData)
-
-    // PUT is for UPDATE, POST is for CREATE
-    var xhr = createCORSRequest(uuid ? 'PUT' : 'POST', endpoint + uuid)
-    xhr.setRequestHeader('Content-Type', 'application/json')
-    xhr.send(sendData)
-    console.log(xhr)
-
-    xhr.onreadystatechange = function () {
-      if (xhr.readyState === 4) {
-        if (xhr.status === 200) {
-          var retJson = JSON.parse(xhr.responseText)
-          console.log(retJson)
-          if(retJson.id) {
-            document.getElementById('_id').value = retJson.id
-            $('#transformapapilink').attr('href', endpoint + retJson.id)
-            $('#osmlink').attr('href', $('#_key_osm').attr('value') )
-            alert('Save successful')
-          } else {
-            alert('Error: something wrent wrong on saving: ' + JSON.stringify(retJson) )
-          }
-        } else {
-          console.error(xhr)
-        }
-      }
-    }
+    
+    dataAPI.createOrUpdatePOI(uuid,sendData,clickSubmitSuccess)
+    
     document.getElementById('deleted').style.display = 'none'
   }
   document.getElementById('save').onclick = clickSubmit
+  
+  function clickSubmitSuccess(uuid){
+    document.getElementById('_id').value = uuid
+    $('#transformapapilink').attr('href', dataAPI.getDataEndpoint() + uuid)
+    $('#osmlink').attr('href', $('#_key_osm').attr('value') )
+  }
 
   function clickDelete () {
     const uuid = document.getElementById('_id').value
-    if (!uuid) {
-      alert('nothing to delete')
-      return
-    }
+    
     if(!confirm('Do you really want to delete this POI? It will be only marked as deleted and can be restored later if you save the current Browser URL.')) {
       console.log('user aborted delete')
       return
     }
-    var xhr = createCORSRequest('DELETE', endpoint + uuid)
-    xhr.send()
-    console.log(xhr)
-
-    xhr.onreadystatechange = function () {
-      if (xhr.readyState === 4) {
-        if (xhr.status === 200) {
-          var retJson = JSON.parse(xhr.responseText)
-          console.log(retJson)
-        } else {
-          console.error(xhr)
-        }
-      }
-    }
+    
+    dataAPI.deletePOI(uuid,clickDeleteSuccess)
+    
     document.getElementById('deleted').style.display = 'block'
   }
   document.getElementById('delete').onclick = clickDelete
-  document.getElementById('plus').onclick = addFreeTagsRow
+  
+  function clickDeleteSuccess(uuid){
+    console.log("Successfully deleted POI: " + uuid)
+  }
 
   function clickSearch () {
     const country = document.getElementById('_key_addr:country').value
@@ -555,49 +509,46 @@ module.exports = function () {
     var query = '//nominatim.openstreetmap.org/search?' + querystring + '&format=json&limit=1&email=mapping@transformap.co'
     console.log(query)
 
-    redFetch([ query ],
-        function (successData) {
-          console.log(successData)
-          if (successData.length !== 1) {
-            console.error('error in Nominatim return data: length != 1')
-            alert('Sorry, Nothing found')
-            return
-          }
-          var result = successData[0]
-          if (result.class === 'building' ||
-              result.class === 'amenity' ||
-              result.class === 'shop' ||
-              (result.class === 'place' && result.type === 'house')
-            ) {
-            console.log('address found exactly')
-            document.getElementById('_geometry_lon').value = result.lon
-            document.getElementById('_geometry_lat').value = result.lat
+    redFetch([ query ], function (successData) {
+      console.log(successData)
+      if (successData.length !== 1) {
+        console.error('error in Nominatim return data: length != 1')
+        alert('Sorry, Nothing found')
+        return
+      }
+      var result = successData[0]
+      if (result.class === 'building' ||
+          result.class === 'amenity' ||
+          result.class === 'shop' ||
+          (result.class === 'place' && result.type === 'house')
+        ) {
+        console.log('address found exactly')
+        document.getElementById('_geometry_lon').value = result.lon
+        document.getElementById('_geometry_lat').value = result.lat
 
-            // trigger update of place marker
-            document.getElementById('_geometry_lat').focus()
-            document.getElementById('_geometry_lon').focus()
-            map.setView(new L.LatLng(result.lat, result.lon), 18)
-          } else {
-            map.setView(new L.LatLng(result.lat, result.lon), 18)
-            console.log('address not found exactly')
-            setTimeout(function () { // wait for map to pan to location
-              alert('Attention: The address was not found exactly, please place the marker manually!')
-              document.getElementById('_geometry_lon').value = ''
-              document.getElementById('_geometry_lat').value = ''
-              document.getElementById('_geometry_lon').focus()
-              document.getElementById('_geometry_lat').focus()
-            }, 400)
-          }
-        },
-        function (error) {
-          console.log(error)
-          alert('Sorry, Address search did not work')
-        }
-        )
+        // trigger update of place marker
+        document.getElementById('_geometry_lat').focus()
+        document.getElementById('_geometry_lon').focus()
+        map.setView(new L.LatLng(result.lat, result.lon), 18)
+      } else {
+        map.setView(new L.LatLng(result.lat, result.lon), 18)
+        console.log('address not found exactly')
+        setTimeout(function () { // wait for map to pan to location
+          alert('Attention: The address was not found exactly, please place the marker manually!')
+          document.getElementById('_geometry_lon').value = ''
+          document.getElementById('_geometry_lat').value = ''
+          document.getElementById('_geometry_lon').focus()
+          document.getElementById('_geometry_lat').focus()
+        }, 400)
+      }
+    },function (error) {
+      console.log(error)
+      alert('Sorry, Address search did not work')
+    })
   }
   document.getElementById('coordsearch').onclick = clickSearch
 
- function stopRKey(evt) {
+  function stopRKey(evt) {
     var evt = (evt) ? evt : ((event) ? event : null)
     var node = (evt.target) ? evt.target : ((evt.srcElement) ? evt.srcElement : null)
     if ((evt.keyCode == 13) && (node.type == 'text')) {
@@ -618,8 +569,6 @@ module.exports = function () {
 
     var newlink = document.getElementById('newbutton')
     newlink.setAttribute('href','./' + targetlocation)
-
-
   }
   map.on('moveend', updateLinkPosition);
 
