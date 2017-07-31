@@ -16,126 +16,96 @@ const endpoint = ''
 
 /* returns the API's endpoint */
 function getMMSEndpoint () {
-  return endpoint;
+  return endpoint
 }
 
-/* 
+/*
  * Retrieves the list of media files associated with a POI
- * Params: 
+ * Params:
  *  - uuid: POI's uuid
  *  - callback: function to be called upon success.
  * Returns: false if invalid call
 */
 function retrieveMediaFilesForPOI (uuid, callback) {
-  
   if (!uuid) {
     console.error('retrieveMediaFilesForPOI: no uuid given')
     return false
   }
 }
 
-/* 
+/*
  * Creates a new media file for a certain POI
- * Params: 
+ * Params:
  *  - uuid: POIs uuid
  *  - data: the metadata to create the media file with
  *  - assetUrl: the URL of the asset to create the media file with
  *  - callback: function to be called upon success.
  * Returns: false if invalid call
 */
-function createNewMEdiaFileForPOI (uuid, data, assetUrl, callback) {
-  
+function createNewMediaFileForPOI (uuid, data, assetUrl, callback) {
   if (!uuid) {
     console.error('createNewMEdiaFileForPOI: no uuid given')
     return false
   }
-  
+
   if (!data) {
     console.error('createNewMEdiaFileForPOI: no data given')
     return false
   }
-  
+
   if (!assetUrl) {
     console.error('createNewMEdiaFileForPOI: no assetUrl given')
     return false
   }
-  
 }
 
-/* 
+/*
  * Retrieves the metadata of a particular media file
- * Params: 
+ * Params:
  *  - mediaId: Media file's uuid
  *  - callback: function to be called upon success.
  * Returns: false if invalid call
 */
 function retrieveMetadataForMediaFile (mediaUuid, callback) {
-  
   if (!mediaUuid) {
     console.error('retrieveMetadataForMediaFile: no mediaUuid given')
     return false
   }
 }
 
-/* 
+/*
  * Updates the metadata of a particular media file
- * Params: 
+ * Params:
  *  - mediaId: Media file's uuid
  *  - data: the metadata to update the media file with
  *  - callback: function to be called upon success.
  * Returns: false if invalid call
 */
 function updateMedataForMediaFile (mediaUuid, data, callback) {
-  
   if (!mediaUuid) {
     console.error('retrieveMetadataForMediaFiles: no mediaUuid given')
     return false
   }
-  
+
   if (!data) {
     console.error('retrieveMetadataForMediaFiles: no data given')
     return false
   }
-  
 }
 
-/* 
- * Updates the URL of the asset of a particular media file
- * Params: 
- *  - mediaId: Media file's uuid
- *  - assetUrl: The URL of the asset to update the media file with
- *  - callback: function to be called upon success.
- * Returns: false if invalid call
-*/
-function updateAssetForMediaFile (mediaUuid, assetUrl, callback) {
-  
-  if (!mediaUuid) {
-    console.error('retrieveMetadataForMediaFiles: no mediaUuid given')
-    return false
-  }
-  
-  if (!assetUrl) {
-    console.error('retrieveMetadataForMediaFiles: no assetUrl given')
-    return false
-  }
-}
-
-/* 
+/*
  * Deletes a media file moving it to a moderated trash
- * Params: 
+ * Params:
  *  - mediaId: Media file's uuid
  *  - callback: function to be called upon success.
  * Returns: false if invalid call
 */
 function deleteMediaFile (mediaUuid, callback) {
-  
   if (!mediaUuid) {
     console.error('retrieveMetadataForMediaFiles: no mediaUuid given')
     return false
   }
-  
 }
-
 
 module.exports = {
   getMMSEndpoint: getMMSEndpoint,

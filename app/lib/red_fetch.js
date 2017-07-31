@@ -134,7 +134,7 @@ function redundantFetch (dataUrlArray, successFunction, errorFunction, params) {
     }
   }
 
-  var getJSONparams = { url: currentUrl, cacheBusting: ((params && params.cacheBusting === false) ? false : true) }
+  var getJSONparams = { url: currentUrl, cacheBusting: (!((params && params.cacheBusting === false))) }
   getJSON(getJSONparams).then(
     function (data) { localSuccessFunction(data); console.log('rfetch: success on '); console.log(data) },
     function (error) { localErrorFunction(error); console.log('rfetch: fail on '); console.log(error) }

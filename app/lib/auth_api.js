@@ -16,27 +16,27 @@ const endpoint = ''
 
 /* returns the API's endpoint */
 function getAuthEndpoint () {
-  return endpoint;
+  return endpoint
 }
 
-/* 
+/*
  * Retrieves the auth token from the RP
- * Params: 
+ * Params:
  *  - callback: function to be called upon success.
  * Returns: false if invalid call
 */
 function retrieveAuthToken (callback) {
-  
+
 }
 
-/* 
+/*
  * Decouples the auth token from the current session
- * Params: 
+ * Params:
  *  - callback: function to be called upon success.
  * Returns: false if invalid call
 */
 function logout (callback) {
-  
+
 }
 
 module.exports = {

@@ -18,6 +18,5 @@
     "tests"
   ],
   "devDependencies": {
-    "mocking_bird": "^1.0.2"
   }
 }

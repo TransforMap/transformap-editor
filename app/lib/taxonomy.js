@@ -12,14 +12,12 @@
 
 /* takes the language (string:"iso"), and the wished taxonomy (string: "Qnn") */
 function getLangTaxURL (lang, taxonomy) {
-
   if (!lang) {
     console.error('setFilterLang: no lang given')
     return false
   }
 
-  if(!taxonomy)
-    taxonomy = "Q8";
+  if (!taxonomy) { taxonomy = 'Q8' }
 
   var tax_query =
     'prefix bd: <http://www.bigdata.com/rdf#> ' +
@@ -28,7 +26,7 @@ function getLangTaxURL (lang, taxonomy) {
     'prefix wd: <https://base.transformap.co/entity/>' +
     'SELECT ?item ?itemLabel ?instance_of ?subclass_of ?type_of_initiative_tag ?interaction_tag ?needs_tag ?identity_tag ?wikipedia ?description ' +
     'WHERE {' +
-      '?item wdt:P8* wd:'+taxonomy+' .' +
+      '?item wdt:P8* wd:' + taxonomy + ' .' +
       '?item wdt:P8 ?subclass_of .' +
       'OPTIONAL { ?item wdt:P4 ?instance_of . }' +
       'OPTIONAL { ?item wdt:P15 ?type_of_initiative_tag }' +

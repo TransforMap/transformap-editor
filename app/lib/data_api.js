@@ -16,19 +16,18 @@ const endpoint = 'https://data.transformap.co/place/'
 
 /* returns the API's endpoint */
 function getDataEndpoint () {
-  return endpoint;
+  return endpoint
 }
 
-/* 
- * creates (if uuid is not set) or updates (if it is) a POI with the data passed as parameter
- * Params: 
+/*
+ * Creates (if uuid is not set) or updates (if it is) a POI with the data passed as parameter
+ * Params:
  *  - uuid: POI's uuid, null if does not exist
  *  - data: to create or update POI
  *  - callback: function to be called upon success. Receives the uuid of the POI
  * Returns: false if invalid call
 */
 function createOrUpdatePOI (uuid, data, callback) {
-  
   if (!data) {
     console.error('updateOrCreatePOI: no data given')
     return false
@@ -45,11 +44,11 @@ function createOrUpdatePOI (uuid, data, callback) {
       if (xhr.status === 200) {
         var retJson = JSON.parse(xhr.responseText)
         console.log(retJson)
-        if(retJson.id) {
-          callback(retJson.id);          
+        if (retJson.id) {
+          callback(retJson.id)
           alert('Save successful')
         } else {
-          alert('Error: something wrent wrong on saving: ' + JSON.stringify(retJson) )
+          alert('Error: something wrent wrong on saving: ' + JSON.stringify(retJson))
         }
       } else {
         console.error(xhr)
@@ -58,20 +57,19 @@ function createOrUpdatePOI (uuid, data, callback) {
   }
 }
 
-/* 
+/*
  * Deletes the POI corresponding to the uuid passed as parameter
- * Params: 
+ * Params:
  *  - uuid: POI's uuid, null if does not exist
  *  - callback: function to be called upon success. Receives the uuid of the POI
  * Returns: false if invalid call
 */
 function deletePOI (uuid, callback) {
-  
   if (!uuid) {
     console.error('deletePOI: no uuid given')
     return false
   }
-  
+
   var xhr = utils.createCORSRequest('DELETE', endpoint + uuid)
   xhr.send()
   console.log(xhr)
@@ -85,7 +83,6 @@ function deletePOI (uuid, callback) {
       }
     }
   }
-  
 }
 
 module.exports = {

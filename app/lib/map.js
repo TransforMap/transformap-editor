@@ -78,8 +78,8 @@ function initMap () {
 
   map = L.map('map', {
     zoomControl: true,
-    center: center ? center : new L.LatLng(28.6, 9),
-    zoom: zoom ? zoom : 2,
+    center: center || new L.LatLng(28.6, 9),
+    zoom: zoom || 2,
     layers: defaultlayer
   })
 
@@ -137,7 +137,7 @@ function initMap () {
 
     if (lat && lon) {
       const coords = L.latLng(lat, lon)
-      if(map.my_current_marker) {
+      if (map.my_current_marker) {
         map.my_current_marker.setLatLng(coords)
       } else {
         map.my_current_marker = new L.marker([lat, lon], { icon: new map.my_placeMarker() })
@@ -147,15 +147,13 @@ function initMap () {
         map.my_drawControl = getDrawControl(false)
         map.addControl(map.my_drawControl)
       }
-         
+
       map.panTo(coords)
-    }
-    else
-    {
-      //delete marker
+    } else {
+      // delete marker
       console.log('no coords, remove marker')
       map.my_current_marker.remove()
-      delete(map.my_current_marker)
+      delete (map.my_current_marker)
       map.removeControl(map.my_drawControl)
       map.my_drawControl = getDrawControl(true) // allow "add marker" again
       map.addControl(map.my_drawControl)

@@ -5,7 +5,7 @@ const utils = require('./utils.js')
 const redFetch = require('./red_fetch.js')
 const taxonomy = require('./taxonomy.js')
 const translations = require('./translations.js')
-const dataApi = require('./transformap_data_api.js')
+const dataApi = require('./data_api.js')
 window.translations = translations
 
 var map
@@ -41,7 +41,7 @@ module.exports = function () {
   }
 
   var startLang = translations.selectAllowedLang(translations.current_lang)
-  console.log("lang on start: " + startLang)
+  console.log('lang on start: ' + startLang)
   console.log(translations.supported_languages)
   var typeOfInintiatives = []
   var toiHashtable = {}
@@ -51,7 +51,7 @@ module.exports = function () {
 
     var dataArray = data.results.bindings
     const current_lang = dataArray[0].itemLabel['xml:lang']
-    
+
     var needs = []
     var interactions = []
     var identities = []
@@ -66,7 +66,7 @@ module.exports = function () {
         item: entry.item.value,
         label: label
       }
-      if(entry.subclass_of.value == 'https://base.transformap.co/entity/Q146') {
+      if (entry.subclass_of.value == 'https://base.transformap.co/entity/Q146') {
         currentObject['needs_tag'] = entry.needs_tag.value
         needs.push(currentObject)
       } else if (entry.subclass_of.value == 'https://base.transformap.co/entity/Q150') {
@@ -76,9 +76,9 @@ module.exports = function () {
         currentObject['identity_tag'] = entry.identity_tag.value
         identities.push(currentObject)
       }
-    });
+    })
 
-    //needs
+    // needs
     $('#_key_provides').empty()
     needs.forEach(function (entry) {
       var newOption = $('<option>')
@@ -88,7 +88,7 @@ module.exports = function () {
         var needs_array = createToiArray(currentData.properties.provides)
         needs_array.forEach(function (need) {
           if (need === entry.needs_tag) {
-            newOption.attr('selected','selected')
+            newOption.attr('selected', 'selected')
           }
         })
       }
@@ -97,7 +97,7 @@ module.exports = function () {
       $('#_key_provides').selectpicker('refresh')
     })
 
-    //interaction
+    // interaction
     $('#_key_interaction').empty()
     interactions.forEach(function (entry) {
       var newOption = $('<option>')
@@ -107,7 +107,7 @@ module.exports = function () {
         var interactions_array = createToiArray(currentData.properties.interaction)
         interactions_array.forEach(function (interact) {
           if (interact === entry.interaction_tag) {
-            newOption.attr('selected','selected')
+            newOption.attr('selected', 'selected')
           }
         })
       }
@@ -116,7 +116,7 @@ module.exports = function () {
       $('#_key_interaction').selectpicker('refresh')
     })
 
-    //identity
+    // identity
     $('#_key_identity').empty()
     identities.forEach(function (entry) {
       var newOption = $('<option>')
@@ -126,7 +126,7 @@ module.exports = function () {
         var identity_array = createToiArray(currentData.properties.identity)
         identity_array.forEach(function (identity) {
           if (identity === entry.identity_tag) {
-            newOption.attr('selected','selected')
+            newOption.attr('selected', 'selected')
           }
         })
       }
@@ -201,7 +201,6 @@ module.exports = function () {
 
       toiSelect.appendChild(newOption)
       $('#_key_type_of_initiative').selectpicker('refresh')
-
     })
   }
 
@@ -222,12 +221,12 @@ module.exports = function () {
     newRow.setAttributeNode(divClass)
     var newKey = document.createElement('input')
     var bootstrapClass = document.createAttribute('class')
-    bootstrapClass.value = 'form-control';
-    newKey.setAttributeNode(bootstrapClass);
+    bootstrapClass.value = 'form-control'
+    newKey.setAttributeNode(bootstrapClass)
     var bootstrapClass = document.createAttribute('class')
-    bootstrapClass.value = 'form-control';
+    bootstrapClass.value = 'form-control'
     var newValue = document.createElement('input')
-    newValue.setAttributeNode(bootstrapClass);
+    newValue.setAttributeNode(bootstrapClass)
     var keyId = document.createAttribute('id')
     keyId.value = 'key' + newNr
     var valueId = document.createAttribute('id')
@@ -316,7 +315,7 @@ module.exports = function () {
       document.getElementById('_id').value = currentData._id
       $('#transformapapilink').attr('href', dataApi.getDataEndpoint() + currentData._id)
     }
-    if(currentData.properties.osm) {
+    if (currentData.properties.osm) {
       $('#osmlink').attr('href', currentData.properties.osm)
     }
   }
@@ -332,7 +331,7 @@ module.exports = function () {
     map.addControl(map.my_drawControl)
   }
 
-  //add languageswitcher
+  // add languageswitcher
   var menu = document.getElementById('menu')
   $('#menu').append(
       '<div id=languageSelector onClick="$(\'#languageSelector ul\').toggleClass(\'open\');">' +
@@ -340,15 +339,15 @@ module.exports = function () {
         '<ul></ul>' +
       '</div>')
 
-  function initializeTranslatedTOIs(Q5data) {
+  function initializeTranslatedTOIs (Q5data) {
     translations.initializeLanguageSwitcher(Q5data)
-    
+
     var nowPossibleLang = translations.selectAllowedLang(translations.current_lang)
     translations.current_lang = nowPossibleLang
     fetchAndSetNewTranslation(nowPossibleLang)
   }
 
-  function fetchAndSetNewTranslation(lang) {
+  function fetchAndSetNewTranslation (lang) {
     redFetch([ taxonomy.getLangTaxURL(lang, 'Q8'), 'https://raw.githubusercontent.com/TransforMap/transformap-viewer-translations/master/taxonomy-backup/susy/taxonomy.' + lang + '.json' ],
         fillTOIs,
         function (error) { console.error('none of the taxonomy data urls available') },
@@ -360,9 +359,9 @@ module.exports = function () {
   }
   translations.fetchAndSetNewTranslation = fetchAndSetNewTranslation
 
-  redFetch( [ "https://base.transformap.co/wiki/Special:EntityData/Q5.json", "https://raw.githubusercontent.com/TransforMap/transformap-viewer/Q5-fallback.json" ],
+  redFetch([ 'https://base.transformap.co/wiki/Special:EntityData/Q5.json', 'https://raw.githubusercontent.com/TransforMap/transformap-viewer/Q5-fallback.json' ],
     initializeTranslatedTOIs,
-    function(error) { console.error("none of the lang init data urls available") } );
+    function (error) { console.error('none of the lang init data urls available') })
 
   function clickSubmit () {
     console.log('clickSubmit enter')
@@ -456,35 +455,35 @@ module.exports = function () {
     const uuid = document.getElementById('_id').value
     const sendData = JSON.stringify(data)
     console.log(sendData)
-    
-    dataAPI.createOrUpdatePOI(uuid,sendData,clickSubmitSuccess)
-    
+
+    dataAPI.createOrUpdatePOI(uuid, sendData, clickSubmitSuccess)
+
     document.getElementById('deleted').style.display = 'none'
   }
   document.getElementById('save').onclick = clickSubmit
-  
-  function clickSubmitSuccess(uuid){
+
+  function clickSubmitSuccess (uuid) {
     document.getElementById('_id').value = uuid
     $('#transformapapilink').attr('href', dataAPI.getDataEndpoint() + uuid)
-    $('#osmlink').attr('href', $('#_key_osm').attr('value') )
+    $('#osmlink').attr('href', $('#_key_osm').attr('value'))
   }
 
   function clickDelete () {
     const uuid = document.getElementById('_id').value
-    
-    if(!confirm('Do you really want to delete this POI? It will be only marked as deleted and can be restored later if you save the current Browser URL.')) {
+
+    if (!confirm('Do you really want to delete this POI? It will be only marked as deleted and can be restored later if you save the current Browser URL.')) {
       console.log('user aborted delete')
       return
     }
-    
-    dataAPI.deletePOI(uuid,clickDeleteSuccess)
-    
+
+    dataAPI.deletePOI(uuid, clickDeleteSuccess)
+
     document.getElementById('deleted').style.display = 'block'
   }
   document.getElementById('delete').onclick = clickDelete
-  
-  function clickDeleteSuccess(uuid){
-    console.log("Successfully deleted POI: " + uuid)
+
+  function clickDeleteSuccess (uuid) {
+    console.log('Successfully deleted POI: ' + uuid)
   }
 
   function clickSearch () {
@@ -541,36 +540,36 @@ module.exports = function () {
           document.getElementById('_geometry_lat').focus()
         }, 400)
       }
-    },function (error) {
+    }, function (error) {
       console.log(error)
       alert('Sorry, Address search did not work')
     })
   }
   document.getElementById('coordsearch').onclick = clickSearch
 
-  function stopRKey(evt) {
-    var evt = (evt) ? evt : ((event) ? event : null)
+  function stopRKey (evt) {
+    var evt = (evt) || ((event) || null)
     var node = (evt.target) ? evt.target : ((evt.srcElement) ? evt.srcElement : null)
     if ((evt.keyCode == 13) && (node.type == 'text')) {
       return false
-    } 
+    }
   }
   document.onkeypress = stopRKey
 
-  function updateLinkPosition() {
+  function updateLinkPosition () {
     var centre = map.getCenter()
     var targetlocation = '#' + map.getZoom() + '/' + centre.lat + '/' + centre.lng
 
     var maplink = document.getElementById('gotomap')
-    var href = maplink.getAttribute ('href')
+    var href = maplink.getAttribute('href')
     var splitstr = href.split('#')
-    href = maplink.getAttribute ('href').split('#')[0] + targetlocation
-    maplink.setAttribute('href',href);
+    href = maplink.getAttribute('href').split('#')[0] + targetlocation
+    maplink.setAttribute('href', href)
 
     var newlink = document.getElementById('newbutton')
-    newlink.setAttribute('href','./' + targetlocation)
+    newlink.setAttribute('href', './' + targetlocation)
   }
-  map.on('moveend', updateLinkPosition);
+  map.on('moveend', updateLinkPosition)
 
   console.log('editor initialize end')
 }
