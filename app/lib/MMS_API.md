@@ -9,52 +9,54 @@ Retrieves the list of media files associated with a POI
 **Payload**: No
 **Expected response**: A JSON string containing an array of media file metadata. Each object will contain the currently active version of the media file's metadata, if available.
 
-```json 
+```json
 [
   {
-  "mediaId": "d07d6ab3-4e3f-44ce-accc-b3efc96b3f04",
-  "title": "some title",
-  "description": "some description",
-  "assetUrl": "https://someDomain/someImage.png",
-  "versionDate": "2017-07-30T16:01:34+00:00"
+    "mediaId": "d07d6ab3-4e3f-44ce-accc-b3efc96b3f04",
+    "ipfs": "QmVXmy59f5QqKDGyhpHbRiGnba5SfHaooDPCWhd8Xtgwz2",
+    "mimetype": "image/jpeg",
+    "name": "Chaotic connectome replacement image for the large image on the main screen",
+    "description": "some description",
+    "versionDate": "2017-07-30T16:01:34+00:00"
   },
   {
-  "mediaId": "211345a8-0e28-43ae-99a9-7300040c6399",
-  "title": "some other title",
-  "description": "some other description",
-  "assetUrl": "https://someDomain/someImage.png",
-  "versionDate": "2017-07-30T16:01:34+00:00"
+    "mediaId": "0a6afb5c-70b1-40f7-8f46-8dd7e0d94060",
+    "mimetype": "image.png",
+    "name": "Transformap Base",
+    "url": "https://base.transformap.co/images/transformap.png",
+    "versionDate": "2017-07-30T16:01:34+00:00"
   }
 ]
 ```
 
 ## createNewMediaFileForPOI
 
-Creates a new media file for a certain POI
+Uploads a new media file
 
-**Endpoint**: /place/{uuid}/media/
+**Endpoint**: /media/
 **Request method**: POST
 **Payload**: A JSON string containing the metadata of the media file to create
 
-```json 
+```json
 {  
-  "title": "some title",
+  "name": "some title",
   "description": "some description",
-  "assetUrl": "https://someDomain/someImage.png"
+  "mimetype": "image.png",
+  "url": "https://base.transformap.co/images/transformap.png"
 }
 ```
 
 **Expected response**: The complete metadata definition of the media file.
 
-```json 
+```json
 {
-  "mediaId": "d07d6ab3-4e3f-44ce-accc-b3efc96b3f04",
-  "status": "active",
-  "title": "some title",
+  "mediaId": "0a6afb5c-70b1-40f7-8f46-8dd7e0d94060",
+  "name": "some title",
   "description": "some description",
-  "assetUrl": "https://someDomain/someImage.png",
-  "versionDate": "2017-07-30T16:01:34+00:00",
-  "versions": []
+  "mimetype": "image.png",
+  "assignedTo": [],
+  "url": "https://base.transformap.co/images/transformap.png",
+  "versionDate": "2017-07-30T16:01:34+00:00"
 }
 ```
 
@@ -62,27 +64,20 @@ Creates a new media file for a certain POI
 
 Retrieves the metadata of a particular media file, including all versions
 
-**Endpoint**: /place/{uuid}/media/{mediaId}
+**Endpoint**: /media/{mediaId}
 **Request method**: GET
 **Payload**: No
 **Expected response**: The complete metadata definition of the media file.
 
-```json 
+```json
 {
-  "mediaId": "d07d6ab3-4e3f-44ce-accc-b3efc96b3f04",
-  "status": "active",
-  "title": "some title",
+  "mediaId": "0a6afb5c-70b1-40f7-8f46-8dd7e0d94060",
+  "name": "some title",
   "description": "some description",
-  "assetUrl": "https://someDomain/someImage.png",
-  "versionDate": "2017-07-30T16:01:34+00:00",
-  "versions": [
-    {
-      "title": "previous title",
-      "description": "some description",
-      "assetUrl": "https://someDomain/someImage.png",
-      "versionDate": "2017-06-30T16:01:34+00:00"
-    }
-  ]
+  "mimetype": "image.png",
+  "assignedTo": ["0a6afb5c-70b1-40f7-8f46-8dd7e0d94060"],
+  "url": "https://base.transformap.co/images/transformap.png",
+  "versionDate": "2017-07-30T16:01:34+00:00"
 }
 ```
 
@@ -90,36 +85,26 @@ Retrieves the metadata of a particular media file, including all versions
 
 Updates the metadata of a particular media file
 
-**Endpoint**: /place/{uuid}/media/{mediaId}
+**Endpoint**: /media/{mediaId}
 **Request method**: PUT
 **Payload**: A JSON string containing the metadata of the media file to update with.
 
-```json 
+```json
 {  
-  "title": "some new title",
-  "description": "some new description",
-  "assetUrl": "https://someDomain/someNewImage.png"
+  "name": "some new title"
 }
 ```
 
 **Expected response**: The complete metadata definition of the media file.
 
-```json 
+```json
 {
-  "mediaId": "d07d6ab3-4e3f-44ce-accc-b3efc96b3f04",
-  "status": "active",
-  "title": "some new title",
-  "description": "some new description",
-  "assetUrl": "https://someDomain/someNewImage.png",
-  "versionDate": "2017-08-30T16:01:34+00:00",
-  "versions": [
-    {
-      "title": "previous title",
-      "description": "previous description",
-      "assetUrl": "https://someDomain/someOtherImage.png",
-      "versionDate": "2017-06-30T16:01:34+00:00"
-    }
-  ]
+  "mediaId": "0a6afb5c-70b1-40f7-8f46-8dd7e0d94060",
+  "name": "some new title",
+  "description": "some description",
+  "mimetype": "image.png",
+  "url": "https://base.transformap.co/images/transformap.png",
+  "versionDate": "2017-07-30T16:01:34+00:00"
 }
 ```
 
@@ -127,26 +112,24 @@ Updates the metadata of a particular media file
 
 Deletes a media file moving it to a moderated trash
 
-**Endpoint**: /place/{uuid}/media/{mediaId}
+**Endpoint**: /media/{mediaId}
 **Request method**: DELETE
 **Payload**: No
 **Expected response**: The complete metadata definition of the media file.
 
-```json 
+```json
 {
   "mediaId": "d07d6ab3-4e3f-44ce-accc-b3efc96b3f04",
-  "status": "deleted",
-  "title": "some new title",
+  "deleted": true,
+  "name": "some new title",
+  "assignedTo": ["0a6afb5c-70b1-40f7-8f46-8dd7e0d94060"],
   "description": "some new description",
-  "assetUrl": "https://someDomain/someNewImage.png",
-  "versionDate": "2017-08-30T16:01:34+00:00",
-  "versions": [
-    {
-      "title": "previous title",
-      "description": "previous description",
-      "assetUrl": "https://someDomain/someOtherImage.png",
-      "versionDate": "2017-06-30T16:01:34+00:00"
-    }
-  ]
+  "mimetype": "image.png",
+  "url": "https://base.transformap.co/images/transformap.png",
+  "versionDate": "2017-07-30T16:01:34+00:00"
 }
 ```
+
+## retrieveJournaledMediaFilesForPOI
+
+TBD
