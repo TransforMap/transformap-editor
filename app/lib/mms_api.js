@@ -12,7 +12,7 @@
 
 const utils = require('./utils.js')
 
-const endpoint = ''
+const endpoint = 'https://data.transformap.co/media/'
 
 /* returns the API's endpoint */
 function getMMSEndpoint () {
@@ -110,9 +110,8 @@ function deleteMediaFile (mediaUuid, callback) {
 module.exports = {
   getMMSEndpoint: getMMSEndpoint,
   retrieveMediaFilesForPOI: retrieveMediaFilesForPOI,
-  createNewMEdiaFileForPOI: createNewMEdiaFileForPOI,
+  createNewMEdiaFileForPOI: createNewMediaFileForPOI,
   retrieveMetadataForMediaFile: retrieveMetadataForMediaFile,
   updateMedataForMediaFile: updateMedataForMediaFile,
-  updateAssetForMediaFile: updateAssetForMediaFile,
   deleteMediaFile: deleteMediaFile
 }
