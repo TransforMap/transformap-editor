@@ -13,9 +13,9 @@ var map
 var urlVars = utils.getUrlVars()
 
 if ($ENVSTATIC_MOCK_AJAX === "true"){
-  console.log("Integrating xhook and mocking ajax calls")
+  console.log("integrating xhook and mocking ajax calls")
   require('xhook')
-  require('../test/intercept_ajax.js')
+  require('../fixtures/intercept_ajax.js')
 }
 
 module.exports = function () {
