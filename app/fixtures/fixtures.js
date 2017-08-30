@@ -40,5 +40,8 @@ module.exports = {
     "assignedTo": [],
     "url": "https://base.transformap.co/images/transformap.png",
     "versionDate": "2017-07-30T16:01:34+00:00"
+  },
+  validAuthToken: {
+    "token": "d07d6ab3-4e3f-44ce-accc-b3efc96b3f04"
   }
 }

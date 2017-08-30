@@ -16,6 +16,12 @@ xhook.after(function(request, response) {
       response.text = JSON.stringify(fixtures.mediaFileMetadataComplete)
     }
 
+    // /auth/
+    if(request.url.match(".*?/auth/")){
+      response.status = 200;
+      response.text = JSON.stringify(fixtures.validAuthToken)
+    }
+
   }else if (request.method === "POST"){
 
     // /media
@@ -55,6 +61,11 @@ xhook.after(function(request, response) {
     if(request.url.match(".*?/place/(.*)")){
       response.status = 200;
       //TBD
+    }
+
+    // /auth/{token}
+    if(request.url.match(".*?/auth/(.*)")){
+      response.status = 200;
     }
   }
 

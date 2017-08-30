@@ -9,7 +9,7 @@ Retrieves the auth token from the RP
 **Payload**: No
 **Expected response**: A JSON string containing the auth token
 
-```json 
+```json
 {
   "token": "d07d6ab3-4e3f-44ce-accc-b3efc96b3f04"
 }
@@ -17,10 +17,9 @@ Retrieves the auth token from the RP
 
 ## logout
 
-Decouples the auth token from the current session
+Decouples the auth token from the current session and invalidates existing authorization token
 
-**Endpoint**: /auth/
-**Request method**: GET
+**Endpoint**: /auth/{token}
+**Request method**: DELETE
 **Payload**: No
 **Expected response**: No
-
