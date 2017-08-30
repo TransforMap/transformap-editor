@@ -1,6 +1,5 @@
 var fixtures = require('./fixtures.js')
 
-//hook and modify 'responseText' of 'example2.txt'
 xhook.after(function(request, response) {
 
   if (request.method === "GET"){
