@@ -6,16 +6,23 @@ const redFetch = require('./red_fetch.js')
 const taxonomy = require('./taxonomy.js')
 const translations = require('./translations.js')
 const dataApi = require('./data_api.js')
+
 window.translations = translations
 
 var map
+var urlVars = utils.getUrlVars()
+
+if ($ENVSTATIC_MOCK_AJAX === "true"){
+  console.log("Integrating xhook and mocking ajax calls")
+  require('xhook')
+  require('../test/intercept_ajax.js')
+}
 
 module.exports = function () {
   console.log('editor initialize start')
 
   map = initMap()
 
-  var urlVars = utils.getUrlVars()
   var dataUrls
   const place = urlVars['place']
   if (place) {
@@ -286,6 +293,15 @@ module.exports = function () {
         }
       }
     }
+
+    dataApi.retrieveMediaFilesForPOI(currentData._id, function(mediaFiles){
+      var mediaList = document.getElementById('media')
+      for (var i=0; i < mediaFiles.length; i++){
+        var metadata = mediaFiles[i]
+        $('#media').append("<h4>"+metadata.name+"</h4>")
+      }
+    })
+
     if (currentData.geometry && currentData.geometry.coordinates) {
       var lon = currentData.geometry.coordinates[0]
       var lat = currentData.geometry.coordinates[1]
@@ -308,6 +324,7 @@ module.exports = function () {
       map.my_drawControl = map.getDrawControl(true)
       map.addControl(map.my_drawControl)
     }
+
     if (currentData.properties && currentData.properties._id) {
       document.getElementById('_id').value = currentData.properties._id
       $('#transformapapilink').attr('href', dataApi.getDataEndpoint() + currentData.properties._id)
@@ -315,9 +332,11 @@ module.exports = function () {
       document.getElementById('_id').value = currentData._id
       $('#transformapapilink').attr('href', dataApi.getDataEndpoint() + currentData._id)
     }
+
     if (currentData.properties.osm) {
       $('#osmlink').attr('href', currentData.properties.osm)
     }
+
   }
 
   if (place) {

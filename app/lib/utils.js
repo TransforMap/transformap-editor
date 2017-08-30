@@ -41,7 +41,13 @@ function getUrlVars () {
   return vars
 }
 
+function getUrlPath(url){
+  var reg = /.+?\:\/\/.+?(\/.+?)(?:#|\?|$)/;
+  return reg.exec(url)[1]
+}
+
 module.exports = {
   createCORSRequest: createCORSRequest,
-  getUrlVars: getUrlVars
+  getUrlVars: getUrlVars,
+  getUrlPath: getUrlPath
 }

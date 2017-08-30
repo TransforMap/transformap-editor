@@ -20,29 +20,14 @@ function getMMSEndpoint () {
 }
 
 /*
- * Retrieves the list of media files associated with a POI
- * Params:
- *  - uuid: POI's uuid
- *  - callback: function to be called upon success.
- * Returns: false if invalid call
-*/
-function retrieveMediaFilesForPOI (uuid, callback) {
-  if (!uuid) {
-    console.error('retrieveMediaFilesForPOI: no uuid given')
-    return false
-  }
-}
-
-/*
  * Creates a new media file for a certain POI
  * Params:
  *  - uuid: POIs uuid
  *  - data: the metadata to create the media file with
- *  - assetUrl: the URL of the asset to create the media file with
  *  - callback: function to be called upon success.
  * Returns: false if invalid call
 */
-function createNewMediaFileForPOI (uuid, data, assetUrl, callback) {
+function createNewMediaFileForPOI (uuid, data, callback) {
   if (!uuid) {
     console.error('createNewMEdiaFileForPOI: no uuid given')
     return false
@@ -53,9 +38,18 @@ function createNewMediaFileForPOI (uuid, data, assetUrl, callback) {
     return false
   }
 
-  if (!assetUrl) {
-    console.error('createNewMEdiaFileForPOI: no assetUrl given')
-    return false
+  var xhr = utils.createCORSRequest('POST', getMMSEndpoint())
+  xhr.setRequestHeader('Content-Type', 'application/json')
+  xhr.send(data)
+
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4) {
+      if (xhr.status === 200) {
+        callback(xhr.responseText)
+      } else {
+        console.error(xhr)
+      }
+    }
   }
 }
 
@@ -66,10 +60,24 @@ function createNewMediaFileForPOI (uuid, data, assetUrl, callback) {
  *  - callback: function to be called upon success.
  * Returns: false if invalid call
 */
-function retrieveMetadataForMediaFile (mediaUuid, callback) {
-  if (!mediaUuid) {
-    console.error('retrieveMetadataForMediaFile: no mediaUuid given')
+function retrieveMetadataForMediaFile (mediaId, callback) {
+  if (!mediaId) {
+    console.error('retrieveMetadataForMediaFile: no mediaId given')
     return false
+  }
+
+  var xhr = utils.createCORSRequest('GET', getMMSEndpoint() + mediaId)
+  xhr.setRequestHeader('Content-Type', 'application/json')
+  xhr.send()
+
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4) {
+      if (xhr.status === 200) {
+        callback(xhr.responseText)
+      } else {
+        console.error(xhr)
+      }
+    }
   }
 }
 
@@ -81,15 +89,29 @@ function retrieveMetadataForMediaFile (mediaUuid, callback) {
  *  - callback: function to be called upon success.
  * Returns: false if invalid call
 */
-function updateMedataForMediaFile (mediaUuid, data, callback) {
-  if (!mediaUuid) {
-    console.error('retrieveMetadataForMediaFiles: no mediaUuid given')
+function updateMedataForMediaFile (mediaId, data, callback) {
+  if (!mediaId) {
+    console.error('retrieveMetadataForMediaFiles: no mediaId given')
     return false
   }
 
   if (!data) {
     console.error('retrieveMetadataForMediaFiles: no data given')
     return false
+  }
+
+  var xhr = utils.createCORSRequest('PUT', getMMSEndpoint() + mediaId)
+  xhr.setRequestHeader('Content-Type', 'application/json')
+  xhr.send(data)
+
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4) {
+      if (xhr.status === 200) {
+        callback(xhr.responseText)
+      } else {
+        console.error(xhr)
+      }
+    }
   }
 }
 
@@ -100,16 +122,29 @@ function updateMedataForMediaFile (mediaUuid, data, callback) {
  *  - callback: function to be called upon success.
  * Returns: false if invalid call
 */
-function deleteMediaFile (mediaUuid, callback) {
-  if (!mediaUuid) {
-    console.error('retrieveMetadataForMediaFiles: no mediaUuid given')
+function deleteMediaFile (mediaId, callback) {
+  if (!mediaId) {
+    console.error('retrieveMetadataForMediaFiles: no mediaId given')
     return false
+  }
+
+  var xhr = utils.createCORSRequest('DELETE', getMMSEndpoint() + mediaId)
+  xhr.setRequestHeader('Content-Type', 'application/json')
+  xhr.send()
+
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4) {
+      if (xhr.status === 200) {
+        callback(xhr.responseText)
+      } else {
+        console.error(xhr)
+      }
+    }
   }
 }
 
 module.exports = {
   getMMSEndpoint: getMMSEndpoint,
-  retrieveMediaFilesForPOI: retrieveMediaFilesForPOI,
   createNewMEdiaFileForPOI: createNewMediaFileForPOI,
   retrieveMetadataForMediaFile: retrieveMetadataForMediaFile,
   updateMedataForMediaFile: updateMedataForMediaFile,

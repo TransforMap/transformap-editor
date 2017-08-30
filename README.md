@@ -30,6 +30,12 @@ Its live instance is here: https://susy-partners.github.io/transformap-editor/
 
 start the watching daemon: ```brunch watch --server -n```
 
+### Isolation mode
+
+The development server instance can be started in an "isolated mode" where certain AJAX calls (See /app/test/intercept_ajax) are mocked for testing purposes.
+
+In order to start the daemon in isolation mode specify the "local" environment: ```brunch watch --server --env local```
+
 ### Lint
 
 please run the linter after developing a feature:
@@ -54,3 +60,7 @@ and run it:
 * in the index.html, change the absolute links ("/app.css", …) to relative ones, remove the slash.
 * git add
 * git push
+
+### Unit & Integration tests
+
+A series of test files can be found under /test as well as some fixtures used for testing purposes.

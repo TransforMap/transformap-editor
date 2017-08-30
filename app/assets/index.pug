@@ -102,19 +102,10 @@ html(lang='en')
           .row
             label(for='_key_opening_hours') Opening Hours
             input(type='text' id='_key_opening_hours' class='form-control')
-          
+
           //fixme allow more than one field for each type
-        fieldset
-          legend Additional Information
-          .row
-            label(for='_key_image') Link to image
-            input(type='text' id='_key_image' class='form-control')
-            span &nbsp;Upload&nbsp;
-            a(href='https://base.transformap.co/wiki/Special:Upload' target='_blank') here
-            span .
-          .row
-            label(for='_key_video') Link to video
-            input(type='text' id='_key_video' class='form-control')
+        fieldset#media
+          legend Related media files
         fieldset#freetags
           legend Free Tags
           //fixme must add additional fields when user fills one
@@ -138,9 +129,9 @@ html(lang='en')
             span &nbsp;
             a(id='transformapapilink' target='_blank') JSON
             .row#deleted {{{ This object is in 'deleted' state. To undelete, click 'Save' }}}
-          
+
       button(type='button' id='delete' class='btn btn-danger btn-sm') Delete POI
       button(type='button' id='save' class='btn btn-success btn-lg') Save
       a(href="https://github.com/TransforMap/transformap-editor/" target="_blank" id="forkme") Fork me on Github!
-            
+
     #map

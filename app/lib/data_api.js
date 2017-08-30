@@ -85,8 +85,38 @@ function deletePOI (uuid, callback) {
   }
 }
 
+/*
+ * Retrieves the list of media files associated with a POI
+ * Params:
+ *  - uuid: POI's uuid
+ *  - callback: function to be called upon success.
+ * Returns: false if invalid call
+*/
+function retrieveMediaFilesForPOI (uuid, callback) {
+  if (!uuid) {
+    console.error('retrieveMediaFilesForPOI: no uuid given')
+    return false
+  }
+
+  var xhr = utils.createCORSRequest('GET', getDataEndpoint() + uuid +  '/media')
+  xhr.setRequestHeader('Content-Type', 'application/json')
+  xhr.send()
+
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4) {
+      if (xhr.status === 200) {
+        var mediaFiles = JSON.parse(xhr.responseText)
+        callback(mediaFiles)
+      } else {
+        console.error(xhr)
+      }
+    }
+  }
+}
+
 module.exports = {
   getDataEndpoint: getDataEndpoint,
   createOrUpdatePOI: createOrUpdatePOI,
-  deletePOI: deletePOI
+  deletePOI: deletePOI,
+  retrieveMediaFilesForPOI: retrieveMediaFilesForPOI
 }
