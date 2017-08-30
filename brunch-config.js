@@ -9,13 +9,13 @@ module.exports = {
   files: {
     javascripts: {
       joinTo: {
-        'vendor.js': /^(node_modules|bower_components)/,
+        'vendor.js': /^node_modules/,
         'app.js': /^app/
       }
     },
     stylesheets: {
       joinTo: {
-        'vendor.css': /^(node_modules|bower_components)/,
+        'vendor.css': /^node_modules/,
         'app.css': /^app/
       }
     }
