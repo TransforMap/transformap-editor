@@ -64,3 +64,5 @@ and run it:
 ### Unit & Integration tests
 
 A series of test files can be found under /test as well as some fixtures used for testing purposes.
+
+Run ```npm test```
