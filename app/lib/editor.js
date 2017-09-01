@@ -283,7 +283,6 @@ module.exports = function () {
     }
 
     dataApi.retrieveMediaFilesForPOI(currentData._id, function(mediaFiles){
-      var mediaList = document.getElementById('media')
       for (var i=0; i < mediaFiles.length; i++){
         var row = $('<div class="row"></div>')
         var metadata = mediaFiles[i]
@@ -293,7 +292,12 @@ module.exports = function () {
         if (metadata.description){
           row.append("<p>" + metadata.description + "</p>")
         }
-        $('#media').append(row)
+        var options = $('<div class="row"></div>')
+        options.append('<a href="#" class="media_option remove">Remove</h4>')
+        options.append('<a href="#" class="media_option edit">Edit</h4>')
+        options.append('<a href="#" class="media_option revisions">Revisions</h4>')
+        row.append(options)
+        $('#media').append(row).append('<hr>')
       }
     })
 

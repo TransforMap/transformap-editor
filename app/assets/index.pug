@@ -104,8 +104,12 @@ html(lang='en')
             input(type='text' id='_key_opening_hours' class='form-control')
 
           //fixme allow more than one field for each type
-        fieldset#media
+        fieldset
           legend Related media files
+          .row.header(style='text-align:right')
+            p Add new media file
+            button(type='button' id='newmedia' class='btn') Add
+          .row#media
         fieldset#freetags
           legend Free Tags
           //fixme must add additional fields when user fills one
