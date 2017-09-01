@@ -4,6 +4,12 @@ xhook.after(function(request, response) {
 
   if (request.method === "GET"){
 
+    // /place/{uuid}
+    if(request.url.match(".*?/place/(.*)")){
+      response.status = 200;
+      response.text = JSON.stringify(fixtures.placeMetadata)
+    }
+
     // /place/{uuid}/media
     if(request.url.match(".*?/place/(.*)/media")){
       response.status = 200;

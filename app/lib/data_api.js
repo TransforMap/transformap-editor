@@ -58,6 +58,36 @@ function createOrUpdatePOI (uuid, data, callback) {
 }
 
 /*
+ * Gets the metadata of a certain POI
+ * Params:
+ *  - uuid: POI's uuid
+ *  - data: to create or update POI
+ *  - callback: function to be called upon success. Receives the uuid of the POI
+ * Returns: false if invalid call
+*/
+function getPOI (uuid, callback) {
+  if (!uuid) {
+    console.error('getPOI: no uuid given')
+    return false
+  }
+
+  var xhr = utils.createCORSRequest('GET', getDataEndpoint() + uuid)
+  xhr.setRequestHeader('Content-Type', 'application/json')
+  xhr.send()
+
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4) {
+      if (xhr.status === 200) {
+        callback(JSON.parse(xhr.responseText))
+      } else {
+        console.error(xhr)
+      }
+    }
+  }
+}
+
+
+/*
  * Deletes the POI corresponding to the uuid passed as parameter
  * Params:
  *  - uuid: POI's uuid, null if does not exist
@@ -105,8 +135,7 @@ function retrieveMediaFilesForPOI (uuid, callback) {
   xhr.onreadystatechange = function () {
     if (xhr.readyState === 4) {
       if (xhr.status === 200) {
-        var mediaFiles = JSON.parse(xhr.responseText)
-        callback(mediaFiles)
+        callback(JSON.parse(xhr.responseText))
       } else {
         console.error(xhr)
       }
@@ -117,6 +146,7 @@ function retrieveMediaFilesForPOI (uuid, callback) {
 module.exports = {
   getDataEndpoint: getDataEndpoint,
   createOrUpdatePOI: createOrUpdatePOI,
+  getPOI: getPOI,
   deletePOI: deletePOI,
   retrieveMediaFilesForPOI: retrieveMediaFilesForPOI
 }

@@ -23,20 +23,7 @@ module.exports = function () {
 
   map = initMap()
 
-  var dataUrls
   const place = urlVars['place']
-  if (place) {
-    if (/^[0-9a-f-]{32,36}$/i.test(place)) {
-      const normalizedPlace = place.replace(/-/, '')
-      if (normalizedPlace.length === 32) {
-        dataUrls = [ dataApi.getDataEndpoint() + place, 'http://192.168.0.2:6000/place/' + place, place ]
-      } else {
-        dataUrls = [ place ]
-      }
-    } else {
-      dataUrls = [ place ]
-    }
-  }
 
   function createToiArray (toiString) {
     if (typeof (toiString) !== 'string') { return [] }
@@ -255,6 +242,7 @@ module.exports = function () {
   var currentData = {}
 
   function fillForm (placeData) {
+
     currentData = placeData
 
     if (currentData._deleted) {
@@ -297,8 +285,15 @@ module.exports = function () {
     dataApi.retrieveMediaFilesForPOI(currentData._id, function(mediaFiles){
       var mediaList = document.getElementById('media')
       for (var i=0; i < mediaFiles.length; i++){
+        var row = $('<div class="row"></div>')
         var metadata = mediaFiles[i]
-        $('#media').append("<h4>"+metadata.name+"</h4>")
+        if (metadata.name){
+          row.append("<h4>" + metadata.name + "</h4>")
+        }
+        if (metadata.description){
+          row.append("<p>" + metadata.description + "</p>")
+        }
+        $('#media').append(row)
       }
     })
 
@@ -340,23 +335,16 @@ module.exports = function () {
   }
 
   if (place) {
-    redFetch(dataUrls, fillForm, function (e) {
-      console.error(e)
-      map.my_drawControl = map.getDrawControl(true)
-      map.addControl(map.my_drawControl)
-    })
-  } else {
-    map.my_drawControl = map.getDrawControl(true)
-    map.addControl(map.my_drawControl)
+    dataApi.getPOI(place,fillForm)
   }
 
   // add languageswitcher
-  var menu = document.getElementById('menu')
   $('#menu').append(
-      '<div id=languageSelector onClick="$(\'#languageSelector ul\').toggleClass(\'open\');">' +
-        '<span lang=en>Choose Language:</span>' +
-        '<ul></ul>' +
-      '</div>')
+    '<div id=languageSelector onClick="$(\'#languageSelector ul\').toggleClass(\'open\');">' +
+      '<span lang=en>Choose Language:</span>' +
+      '<ul></ul>' +
+    '</div>'
+  )
 
   function initializeTranslatedTOIs (Q5data) {
     translations.initializeLanguageSwitcher(Q5data)
