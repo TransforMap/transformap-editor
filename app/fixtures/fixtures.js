@@ -10,7 +10,7 @@ module.exports = {
     },
     {
       "mediaId": "0a6afb5c-70b1-40f7-8f46-8dd7e0d94060",
-      "mimetype": "image.png",
+      "mimetype": "image/png",
       "name": "Transformap Base",
       "url": "https://base.transformap.co/images/transformap.png",
       "versionDate": "2017-07-30T16:01:34+00:00"
@@ -19,14 +19,14 @@ module.exports = {
   mediaFileMetadataBasic: {
     "name": "some title",
     "description": "some description",
-    "mimetype": "image.png",
+    "mimetype": "image/png",
     "url": "https://base.transformap.co/images/transformap.png"
   },
   mediaFileMetadataComplete: {
     "mediaId": "0a6afb5c-70b1-40f7-8f46-8dd7e0d94060",
     "name": "some title",
     "description": "some description",
-    "mimetype": "image.png",
+    "mimetype": "image/png",
     "assignedTo": [],
     "url": "https://base.transformap.co/images/transformap.png",
     "versionDate": "2017-07-30T16:01:34+00:00"
@@ -36,7 +36,7 @@ module.exports = {
     "name": "some title",
     "deleted": true,
     "description": "some description",
-    "mimetype": "image.png",
+    "mimetype": "image/png",
     "assignedTo": [],
     "url": "https://base.transformap.co/images/transformap.png",
     "versionDate": "2017-07-30T16:01:34+00:00"
