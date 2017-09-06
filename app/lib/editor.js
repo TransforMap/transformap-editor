@@ -42,6 +42,7 @@ module.exports = function () {
   document.getElementById('delete').onclick = ui.clickDelete
   document.getElementById('coordsearch').onclick = ui.clickSearch
   document.onkeypress = ui.stopRKey
+  document.getElementById('newmedia').onclick = ui.editMediaFile
 
   map.initMap()
 

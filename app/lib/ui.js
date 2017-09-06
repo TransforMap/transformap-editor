@@ -58,9 +58,21 @@ function fillForm (placeData) {
       }
 
       var options = $('<div class="row"></div>')
-      options.append('<a href="#" class="mediaOption remove">Remove</h4>')
-      options.append('<a href="#" class="mediaOption edit">Edit</h4>')
-      options.append('<a href="#" class="mediaOption revisions">Revisions</h4>')
+      var removeButton = $('<a href="#" class="mediaOption remove">Remove</h4>')
+      removeButton.on('click',function (evt){
+        console.log("removeButton clicked for mediaFile with id:" + metadata.mediaId)
+      })
+      var editButton = $('<a href="#" class="mediaOption edit">Edit</h4>')
+      editButton.on('click',function (evt){
+        console.log("editButton clicked for mediaFile with id:" + metadata.mediaId)
+      })
+      var revisionsButton = $('<a href="#" class="mediaOption revisions">Revisions</h4>')
+      revisionsButton.on('click',function (evt){
+        console.log("revisionsButton clicked for mediaFile with id:" + metadata.mediaId)
+      })
+      options.append(removeButton)
+      options.append(editButton)
+      options.append(revisionsButton)
       info.append(options)
 
       var imageUrl = 'https://s3.amazonaws.com/FringeBucket/image_placeholder.png'

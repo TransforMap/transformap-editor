@@ -16,3 +16,7 @@
 .mediaInfo{
   margin-left: 120px;
 }
+
+#mediaFileDialog{
+  display:none;
+}
