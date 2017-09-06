@@ -1,4 +1,18 @@
-.media_option{
+.mediaFile{
+  padding: 20px;
+}
+
+.mediaOption{
   margin-right: 20px;
   float: right;
+}
+
+.mediaThumb{
+  width: 80px;
+  float: left;
+  margin: 0px 20px;
+}
+
+.mediaInfo{
+  margin-left: 120px;
 }

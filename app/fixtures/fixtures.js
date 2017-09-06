@@ -3,6 +3,7 @@ module.exports = {
     {
       "mediaId": "d07d6ab3-4e3f-44ce-accc-b3efc96b3f04",
       "ipfs": "QmVXmy59f5QqKDGyhpHbRiGnba5SfHaooDPCWhd8Xtgwz2",
+      "url": "https://ipfs.io/images/ipfs-illustration-history.svg",
       "mimetype": "image/jpeg",
       "name": "Chaotic connectome replacement image for the large image on the main screen",
       "description": "some description",

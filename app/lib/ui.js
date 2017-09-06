@@ -46,19 +46,30 @@ function fillForm (placeData) {
 
   dataApi.retrieveMediaFilesForPOI(currentData._id, function(mediaFiles){
     for (var i=0; i < mediaFiles.length; i++){
-      var row = $('<div class="row"></div>')
+      var row = $('<div class="row mediaFile"></div>')
       var metadata = mediaFiles[i]
+
+      var info = $('<div class="row mediaInfo"></div>')
       if (metadata.name){
-        row.append("<h4>" + metadata.name + "</h4>")
+        info.append("<b>" + metadata.name + "</b>")
       }
       if (metadata.description){
-        row.append("<p>" + metadata.description + "</p>")
+        info.append("<p>" + metadata.description + "</p>")
       }
+
       var options = $('<div class="row"></div>')
-      options.append('<a href="#" class="media_option remove">Remove</h4>')
-      options.append('<a href="#" class="media_option edit">Edit</h4>')
-      options.append('<a href="#" class="media_option revisions">Revisions</h4>')
-      row.append(options)
+      options.append('<a href="#" class="mediaOption remove">Remove</h4>')
+      options.append('<a href="#" class="mediaOption edit">Edit</h4>')
+      options.append('<a href="#" class="mediaOption revisions">Revisions</h4>')
+      info.append(options)
+
+      var imageUrl = 'https://s3.amazonaws.com/FringeBucket/image_placeholder.png'
+      if (metadata.mimetype === "image/png" || metadata.mimetype === "image/jpeg"){
+        imageUrl = metadata.url
+      }
+      row.append('<img class="mediaThumb" src="' + imageUrl + '"/>')
+      row.append(info)
+
       $('#media').append(row).append('<hr>')
     }
   })
