@@ -2,6 +2,8 @@ const L = require('leaflet')
 const L_Hash = require('leaflet-hash')
 const L_Draw = require('leaflet-draw')
 
+var map
+
 var editableLayers
 var drawControl
 var placeMarker
@@ -26,9 +28,12 @@ function getDrawControl (allowNewMarker) {
   return new L.Control.Draw(options)
 }
 
+function getMap () {
+  return map
+}
+
 function initMap () {
   console.log('initMap start')
-  var map
 
   var attrOsm = 'Map data by <a href="https://openstreetmap.org">OpenStreetMap</a> contributors, under <a href="https://www.openstreetmap.org/copyright">ODbL</a>. '
   var attrPois = 'POIs by <a href="http://solidariteconomy.eu">SUSY</a>, <a href="https://creativecommons.org/publicdomain/zero/1.0/">CC-0</a>. '
@@ -125,6 +130,20 @@ function initMap () {
     document.getElementById('_geometry_lat').value = e.layer._latlng.lat.toFixed(6)
   })
 
+  map.on('moveend', function(e){
+    var centre = map.getCenter()
+    var targetlocation = '#' + map.getZoom() + '/' + centre.lat + '/' + centre.lng
+
+    var maplink = document.getElementById('gotomap')
+    var href = maplink.getAttribute('href')
+    var splitstr = href.split('#')
+    href = maplink.getAttribute('href').split('#')[0] + targetlocation
+    maplink.setAttribute('href', href)
+
+    var newlink = document.getElementById('newbutton')
+    newlink.setAttribute('href', './' + targetlocation)
+  })
+
   map.my_editableLayers = editableLayers
  // map.my_drawControl = drawControl
   map.my_placeMarker = placeMarker
@@ -168,4 +187,7 @@ function initMap () {
   return map
 }
 
-module.exports = initMap
+module.exports = {
+  getMap: getMap,
+  initMap: initMap
+}

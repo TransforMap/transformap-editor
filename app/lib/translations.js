@@ -1,3 +1,7 @@
+const redFetch = require('./red_fetch.js')
+const taxonomy = require('./taxonomy.js')
+const ui = require('./ui.js')
+
 // mostly taken from https://github.com/TransforMap/transformap-viewer/blob/gh-pages/scripts/map.js
 
 function getLangs () {
@@ -55,6 +59,7 @@ var supported_languages = [],
   langnames = [],
   abbr_langnames = {},
   langnames_abbr = {}
+
 function initializeLanguageSwitcher (returned_data) {
   var lang
   for (lang in returned_data.entities.Q5.labels) { // Q5 is arbitrary. Choose one that gets translated for sure.
@@ -90,6 +95,25 @@ function initializeLanguageSwitcher (returned_data) {
       $('#languageSelector ul').append('<li targetlang=' + langcode + is_default + " onClick='window.translations.switchToLang(\"" + langcode + "\");'>" + item + '</li>')
     })
   })
+}
+
+function fetchAndSetNewTranslation (lang) {
+  redFetch([ taxonomy.getLangTaxURL(lang, 'Q8'), 'https://raw.githubusercontent.com/TransforMap/transformap-viewer-translations/master/taxonomy-backup/susy/taxonomy.' + lang + '.json' ],
+      ui.fillTOIs,
+      function (error) { console.error('none of the taxonomy data urls available') },
+      { cacheBusting: false })
+  redFetch([ taxonomy.getLangTaxURL(lang, 'Q4'), 'https://raw.githubusercontent.com/TransforMap/transformap-viewer-translations/master/taxonomy-backup/susy/taxonomy.' + lang + '.json' ],
+      ui.fillTransforMapTax,
+      function (error) { console.error('none of the taxonomy data urls available') },
+      { cacheBusting: false })
+}
+
+function initializeTranslatedTOIs (Q5data) {
+  translations.initializeLanguageSwitcher(Q5data)
+
+  var nowPossibleLang = translations.selectAllowedLang(translations.current_lang)
+  translations.current_lang = nowPossibleLang
+  fetchAndSetNewTranslation(nowPossibleLang)
 }
 
 function switchToLang (lang) {
@@ -179,9 +203,11 @@ var browser_languages = getLangs(),
 module.exports = {
   getLangs: getLangs,
   initializeLanguageSwitcher: initializeLanguageSwitcher,
+  initializeTranslatedTOIs: initializeTranslatedTOIs,
   supported_languages: supported_languages,
   browser_languages: browser_languages,
   current_lang: current_lang,
   switchToLang: switchToLang,
-  selectAllowedLang: selectAllowedLang
+  selectAllowedLang: selectAllowedLang,
+  fetchAndSetNewTranslation: fetchAndSetNewTranslation
 }

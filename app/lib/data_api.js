@@ -37,7 +37,6 @@ function createOrUpdatePOI (uuid, data, callback) {
   var xhr = utils.createCORSRequest(uuid ? 'PUT' : 'POST', endpoint + uuid)
   xhr.setRequestHeader('Content-Type', 'application/json')
   xhr.send(data)
-  console.log(xhr)
 
   xhr.onreadystatechange = function () {
     if (xhr.readyState === 4) {
@@ -102,7 +101,6 @@ function deletePOI (uuid, callback) {
 
   var xhr = utils.createCORSRequest('DELETE', endpoint + uuid)
   xhr.send()
-  console.log(xhr)
 
   xhr.onreadystatechange = function () {
     if (xhr.readyState === 4) {
