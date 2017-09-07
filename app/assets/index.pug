@@ -9,7 +9,6 @@ html(lang='en')
     script(src='app.js')
     script require('initialize')
     script(defer='defer' src='https://code.jquery.com/jquery-1.12.4.js')
-    script(src='https://code.jquery.com/ui/1.12.1/jquery-ui.js')
     script(src='https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js')
     script(defer='defer' src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js')
     script(defer='defer' src='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/bootstrap-select.min.js')
@@ -106,7 +105,7 @@ html(lang='en')
 
           //fixme allow more than one field for each type
         fieldset
-          legend Related media files
+          legend(class='relatedMediaTitle') Related media files
           .row.header(style='text-align:right')
             p Add new media file
             button(type='button' id='newmedia' class='btn btn-success') Add
@@ -140,5 +139,13 @@ html(lang='en')
       a(href="https://github.com/TransforMap/transformap-editor/" target="_blank" id="forkme") Fork me on Github!
 
     #map
-    #mediaFileDialog
-      p test
+    .modal.fade#mediaFileDialog(role='dialog')
+      #mediaFileDialogContent
+        .row.mediaFile
+          img(class='mediaThumb')
+          .row.mediaInfo
+            b(class='title')
+            p(class='description')
+        .row
+          button(type='button' id='cancel' class='btn') Cancel
+          button(type='button' id='save' class='btn btn-success') Save

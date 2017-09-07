@@ -1,4 +1,5 @@
 const dataApi = require('./data_api.js')
+const mmsApi = require('./mms_api.js')
 const map = require('./map.js')
 
 var currentData = {}
@@ -45,39 +46,57 @@ function fillForm (placeData) {
   }
 
   dataApi.retrieveMediaFilesForPOI(currentData._id, function(mediaFiles){
+    $('.relatedMediaTitle').text($('.relatedMediaTitle').text() + '(' + mediaFiles.length + ')')
     for (var i=0; i < mediaFiles.length; i++){
-      var row = $('<div class="row mediaFile"></div>')
-      var metadata = mediaFiles[i]
+
+      var row = $('<div class="row mediaFile '+ mediaFiles[i].mediaId + '"></div>')
 
       var info = $('<div class="row mediaInfo"></div>')
-      if (metadata.name){
-        info.append("<b>" + metadata.name + "</b>")
+      if (mediaFiles[i].name){
+        info.append("<b>" + mediaFiles[i].name + "</b>")
       }
-      if (metadata.description){
-        info.append("<p>" + metadata.description + "</p>")
+      if (mediaFiles[i].description){
+        info.append("<p>" + mediaFiles[i].description + "</p>")
       }
 
       var options = $('<div class="row"></div>')
-      var removeButton = $('<a href="#" class="mediaOption remove">Remove</h4>')
-      removeButton.on('click',function (evt){
-        console.log("removeButton clicked for mediaFile with id:" + metadata.mediaId)
+
+      var removeButton = $('<a class="mediaOption remove">Remove</h4>')
+      removeButton.on('click',{ metadata : mediaFiles[i], currentData: currentData },function (evt){
+        var data = evt.data
+        console.log("removeButton clicked for mediaFile with id:" + data.metadata.mediaId)
+        while (data.metadata.assignedTo.indexOf(data.currentData._id) !== -1) {
+          data.metadata.assignedTo.splice(data.metadata.assignedTo.indexOf(data.currentData._id), 1);
+        }
+        mmsApi.updateMedataForMediaFile(data.metadata.mediaId,data.metadata,function(){
+          $('.'+data.metadata.mediaId).remove()
+        })
       })
-      var editButton = $('<a href="#" class="mediaOption edit">Edit</h4>')
-      editButton.on('click',function (evt){
-        console.log("editButton clicked for mediaFile with id:" + metadata.mediaId)
+
+      var editButton = $('<a class="mediaOption edit" data-toggle="modal" data-target="#mediaFileDialog" data-id="' + mediaFiles[i].mediaId + '">Edit</h4>')
+      editButton.on('click',{ metadata : mediaFiles[i], currentData: currentData }, function (evt){
+        var data = evt.data
+        console.log("editButton clicked for mediaFile with id:" + data.metadata.mediaId)
+        $('#mediaFileDialogContent').find('.title').text(data.metadata.name)
+        $('#mediaFileDialogContent').find('.description').text(data.metadata.description)
       })
-      var revisionsButton = $('<a href="#" class="mediaOption revisions">Revisions</h4>')
-      revisionsButton.on('click',function (evt){
-        console.log("revisionsButton clicked for mediaFile with id:" + metadata.mediaId)
+
+      var revisionsButton = $('<a class="mediaOption revisions data-toggle="modal" data-target="#mediaFileDialog" data-id="' + mediaFiles[i].mediaId + '"">Revisions</h4>')
+      revisionsButton.on('click',{ metadata : mediaFiles[i], currentData: currentData },function (evt){
+        var data = evt.data
+        console.log("revisionsButton clicked for mediaFile with id:" + data.metadata.mediaId)
+        $('#mediaFileDialogContent').find('.title').text(data.metadata.name)
+        $('#mediaFileDialogContent').find('.description').text(data.metadata.description)
       })
+
       options.append(removeButton)
       options.append(editButton)
       options.append(revisionsButton)
       info.append(options)
 
       var imageUrl = 'https://s3.amazonaws.com/FringeBucket/image_placeholder.png'
-      if (metadata.mimetype === "image/png" || metadata.mimetype === "image/jpeg"){
-        imageUrl = metadata.url
+      if (mediaFiles[i].mimetype === "image/png" || mediaFiles[i].mimetype === "image/jpeg"){
+        imageUrl = mediaFiles[i].url
       }
       row.append('<img class="mediaThumb" src="' + imageUrl + '"/>')
       row.append(info)

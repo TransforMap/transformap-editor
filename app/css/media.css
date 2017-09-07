@@ -19,4 +19,13 @@
 
 #mediaFileDialog{
   display:none;
+  width: 100%;
+  height: 100%;
+}
+
+#mediaFileDialogContent{
+  background-color: #fff;
+  width: 400px;
+  margin: 20px auto;
+  padding: 20px;
 }

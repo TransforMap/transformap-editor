@@ -5,6 +5,7 @@ module.exports = {
       "ipfs": "QmVXmy59f5QqKDGyhpHbRiGnba5SfHaooDPCWhd8Xtgwz2",
       "url": "https://ipfs.io/images/ipfs-illustration-history.svg",
       "mimetype": "image/jpeg",
+      "assignedTo": ["10ea35c1-e9ad-4983-86ee-aff03fba823e", "7250e9b6-3a48-4fd7-9c61-a3575c47f1e6"],
       "name": "Chaotic connectome replacement image for the large image on the main screen",
       "description": "some description",
       "versionDate": "2017-07-30T16:01:34+00:00"
@@ -12,6 +13,7 @@ module.exports = {
     {
       "mediaId": "0a6afb5c-70b1-40f7-8f46-8dd7e0d94060",
       "mimetype": "image/png",
+      "assignedTo": ["10ea35c1-e9ad-4983-86ee-aff03fba823e"],
       "name": "Transformap Base",
       "url": "https://base.transformap.co/images/transformap.png",
       "versionDate": "2017-07-30T16:01:34+00:00"
@@ -21,14 +23,15 @@ module.exports = {
     "name": "some title",
     "description": "some description",
     "mimetype": "image/png",
-    "url": "https://base.transformap.co/images/transformap.png"
+    "url": "https://base.transformap.co/images/transformap.png",
+    "assignedTo": ["10ea35c1-e9ad-4983-86ee-aff03fba823e"]
   },
   mediaFileMetadataComplete: {
     "mediaId": "0a6afb5c-70b1-40f7-8f46-8dd7e0d94060",
     "name": "some title",
     "description": "some description",
     "mimetype": "image/png",
-    "assignedTo": [],
+    "assignedTo": ["10ea35c1-e9ad-4983-86ee-aff03fba823e"],
     "url": "https://base.transformap.co/images/transformap.png",
     "versionDate": "2017-07-30T16:01:34+00:00"
   },
@@ -38,7 +41,7 @@ module.exports = {
     "deleted": true,
     "description": "some description",
     "mimetype": "image/png",
-    "assignedTo": [],
+    "assignedTo": ["10ea35c1-e9ad-4983-86ee-aff03fba823e"],
     "url": "https://base.transformap.co/images/transformap.png",
     "versionDate": "2017-07-30T16:01:34+00:00"
   },
