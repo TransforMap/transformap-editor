@@ -46,7 +46,7 @@ function fillForm (placeData) {
   }
 
   dataApi.retrieveMediaFilesForPOI(currentData._id, function(mediaFiles){
-    $('.relatedMediaTitle').text($('.relatedMediaTitle').text() + '(' + mediaFiles.length + ')')
+    $('.relatedMediaTitle').text($('.relatedMediaTitle').text() + ' (' + mediaFiles.length + ')')
     for (var i=0; i < mediaFiles.length; i++){
 
       var row = $('<div class="row mediaFile '+ mediaFiles[i].mediaId + '"></div>')
@@ -79,6 +79,17 @@ function fillForm (placeData) {
         console.log("editButton clicked for mediaFile with id:" + data.metadata.mediaId)
         $('#mediaFileDialogContent').find('.title').text(data.metadata.name)
         $('#mediaFileDialogContent').find('.description').text(data.metadata.description)
+        $('#mediaFileDialogContent').find('img').attr("src",data.metadata.url)
+        mmsApi.retrieveMediaFileVersions(data.metadata.mediaId, function(versions){
+          var versionsArray = JSON.parse(versions)
+          if (versionsArray.length > 0){
+            var versionsList = $('<ul class="row"></ul>')
+            for (var i=0; i < versionsArray.length; i++){
+              versionsList.append('<li class="versionItem">' + versionsArray[i].name + '</li>')
+            }
+            $('.mediaVersions').html(versionsList)
+          }
+        });
       })
 
       var revisionsButton = $('<a class="mediaOption revisions data-toggle="modal" data-target="#mediaFileDialog" data-id="' + mediaFiles[i].mediaId + '"">Revisions</h4>')

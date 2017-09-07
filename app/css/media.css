@@ -5,6 +5,7 @@
 .mediaOption{
   margin-right: 20px;
   float: right;
+  cursor: pointer;
 }
 
 .mediaThumb{
@@ -15,6 +16,10 @@
 
 .mediaInfo{
   margin-left: 120px;
+}
+
+.mediaVersions{
+  padding: 0px 30px;
 }
 
 #mediaFileDialog{

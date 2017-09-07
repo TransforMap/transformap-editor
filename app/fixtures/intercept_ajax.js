@@ -22,6 +22,12 @@ xhook.after(function(request, response) {
       response.text = JSON.stringify(fixtures.mediaFileMetadataComplete)
     }
 
+    // /media/{uuid}/versions
+    if(request.url.match(".*?/media/(.*)/versions")){
+      response.status = 200;
+      response.text = JSON.stringify(fixtures.listOfMediaFileVersions)
+    }
+
     // /auth/
     if(request.url.match(".*?/auth/")){
       response.status = 200;

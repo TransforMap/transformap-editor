@@ -143,10 +143,39 @@ function deleteMediaFile (mediaId, callback) {
   }
 }
 
+/*
+ * Returns an array with all the versions of a certain media file
+ * Params:
+ *  - mediaId: Media file's uuid
+ *  - callback: function to be called upon success.
+ * Returns: false if invalid call
+*/
+function retrieveMediaFileVersions (mediaId, callback) {
+  if (!mediaId) {
+    console.error('retrieveMediaFileVersions: no mediaId given')
+    return false
+  }
+
+  var xhr = utils.createCORSRequest('GET', getMMSEndpoint() + mediaId + '/versions')
+  xhr.setRequestHeader('Content-Type', 'application/json')
+  xhr.send()
+
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4) {
+      if (xhr.status === 200) {
+        callback(xhr.responseText)
+      } else {
+        console.error(xhr)
+      }
+    }
+  }
+}
+
 module.exports = {
   getMMSEndpoint: getMMSEndpoint,
   createNewMEdiaFileForPOI: createNewMediaFileForPOI,
   retrieveMetadataForMediaFile: retrieveMetadataForMediaFile,
   updateMedataForMediaFile: updateMedataForMediaFile,
-  deleteMediaFile: deleteMediaFile
+  deleteMediaFile: deleteMediaFile,
+  retrieveMediaFileVersions: retrieveMediaFileVersions
 }
