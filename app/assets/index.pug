@@ -108,7 +108,7 @@ html(lang='en')
           legend(class='relatedMediaTitle') Related media files
           .row.header(style='text-align:right')
             p Add new media file
-            button(type='button' id='newmedia' class='btn btn-success') Add
+            button(type='button' id='newmedia' class='btn btn-success' data-toggle='modal' data-target='#mediaFileDialog') Add
           .row#media
         fieldset#freetags
           legend Free Tags
@@ -141,12 +141,16 @@ html(lang='en')
     #map
     .modal.fade#mediaFileDialog(role='dialog')
       #mediaFileDialogContent
+        input(style="display:none" type='text' class='form-control mediaId')
+        input(style="display:none" type='text' class='form-control metadata')
+        input(style="display:none" type='text' class='form-control poiUUID')
         .row.mediaFile
           img(class='mediaThumb')
+          button(type='button' id='mediaThumbUpload' class='btn btn-success btn-lg') Upload image
           .row.mediaInfo
-            b(class='title')
-            p(class='description')
+            input(type='text' class='name form-control mediaFormItem' placeholder='Name')
+            input(type='text' class='description form-control mediaFormItem' placeholder='Description')
         .row.mediaVersions
         hr
-        button(type='button' id='cancel' class='btn') Cancel
-        button(type='button' id='save' class='btn btn-success') Save
+        button(type='button' id='mediacancel' class='btn') Cancel
+        button(type='button' id='mediasave' class='btn btn-success') Save

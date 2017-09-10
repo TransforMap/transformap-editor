@@ -20,4 +20,14 @@ describe('UTILS', function() {
 
   });
 
+  describe('generateUUID', function() {
+
+    it('should return the expected format xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx', function() {
+      var uuid = utils.generateUUID()
+      assert.equal(uuid.length, 36);
+      assert.equal(uuid[14], "4");
+    });
+
+  });
+
 });

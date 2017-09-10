@@ -1,6 +1,7 @@
 const dataApi = require('./data_api.js')
 const mmsApi = require('./mms_api.js')
 const map = require('./map.js')
+const utils = require('./utils.js')
 
 var currentData = {}
 
@@ -77,9 +78,13 @@ function fillForm (placeData) {
       editButton.on('click',{ metadata : mediaFiles[i], currentData: currentData }, function (evt){
         var data = evt.data
         console.log("editButton clicked for mediaFile with id:" + data.metadata.mediaId)
-        $('#mediaFileDialogContent').find('.title').text(data.metadata.name)
-        $('#mediaFileDialogContent').find('.description').text(data.metadata.description)
+        $('#mediaFileDialogContent').find('.createOrUpdate').text("update")
+        $('#mediaFileDialogContent').find('.mediaId').text(data.metadata.mediaId)
+        $('#mediaFileDialogContent').find('.name').val(data.metadata.name)
+        $('#mediaFileDialogContent').find('.description').val(data.metadata.description)
         $('#mediaFileDialogContent').find('img').attr("src",data.metadata.url)
+        $('#mediaThumbUpload').hide()
+        $('#mediaFileDialogContent').find('.metadata').text(JSON.stringify(data.metadata))
         mmsApi.retrieveMediaFileVersions(data.metadata.mediaId, function(versions){
           var versionsArray = JSON.parse(versions)
           if (versionsArray.length > 0){
@@ -92,17 +97,8 @@ function fillForm (placeData) {
         });
       })
 
-      var revisionsButton = $('<a class="mediaOption revisions data-toggle="modal" data-target="#mediaFileDialog" data-id="' + mediaFiles[i].mediaId + '"">Revisions</h4>')
-      revisionsButton.on('click',{ metadata : mediaFiles[i], currentData: currentData },function (evt){
-        var data = evt.data
-        console.log("revisionsButton clicked for mediaFile with id:" + data.metadata.mediaId)
-        $('#mediaFileDialogContent').find('.title').text(data.metadata.name)
-        $('#mediaFileDialogContent').find('.description').text(data.metadata.description)
-      })
-
       options.append(removeButton)
       options.append(editButton)
-      options.append(revisionsButton)
       info.append(options)
 
       var imageUrl = 'https://s3.amazonaws.com/FringeBucket/image_placeholder.png'
@@ -560,6 +556,46 @@ function stopRKey (evt) {
   }
 }
 
+function clickMediaSave () {
+  var poiUUID = $('#mediaFileDialogContent').find('.poiUUID').text()
+  var mediaId = $('#mediaFileDialogContent').find('.mediaId').text()
+  if ($('#mediaFileDialogContent').find('.createOrUpdate').text() == "create"){
+    var data = {
+      name: $('#mediaFileDialogContent').find('.name').val(),
+      description: $('#mediaFileDialogContent').find('.name').val(),
+      versionDate: new Date().toISOString(),
+      assignedTo: [poiUUID]
+    }
+    mmsApi.updateMedataForMediaFile(mediaId,data, function(){
+      $('#mediaFileDialog').modal('toggle');
+    })
+  }else{
+    var data = JSON.parse($('#mediaFileDialogContent').find('.metadata').text())
+    data.name = $('#mediaFileDialogContent').find('.name').val()
+    data.description = $('#mediaFileDialogContent').find('.description').val()
+    mmsApi.createNewMediaFileForPOI(poiUUID,data, function(){
+      $('#mediaFileDialog').modal('toggle');
+    })
+  }
+
+}
+
+function clickMediaCancel () {
+  $('#mediaFileDialog').modal('toggle');
+}
+
+function clickNewMedia(){
+  console.log("newMedia button clicked")
+  $('#mediaFileDialogContent').find('.createOrUpdate').text("create")
+  $('#mediaFileDialogContent').find('.poiUUID').text(currentData._id)
+  $('#mediaFileDialogContent').find('.name').val("")
+  $('#mediaFileDialogContent').find('.description').val("")
+  $('#mediaFileDialogContent').find('img').attr("display","none")
+  $('#mediaThumbUpload').show()
+  $('#mediaFileDialogContent').find('.metadata').text("")
+  $('#mediaFileDialogContent').find('.mediaVersions').html("")
+}
+
 module.exports = {
   fillForm: fillForm,
   addLanguageSwitcher: addLanguageSwitcher,
@@ -570,5 +606,8 @@ module.exports = {
   clickSubmit: clickSubmit,
   clickDelete: clickDelete,
   clickSearch: clickSearch,
-  stopRKey: stopRKey
+  stopRKey: stopRKey,
+  clickMediaSave:clickMediaSave,
+  clickMediaCancel: clickMediaCancel,
+  clickNewMedia: clickNewMedia
 }

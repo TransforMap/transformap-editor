@@ -14,12 +14,25 @@
   margin: 0px 20px;
 }
 
+#mediaThumbUpload{
+  width: 80px;
+  display: none;
+  float: left;
+  margin: 0px 20px;
+}
+
 .mediaInfo{
   margin-left: 120px;
 }
 
 .mediaVersions{
   padding: 0px 30px;
+}
+
+.mediaFormItem{
+  border: none;
+  box-shadow: none;
+  margin-bottom: 10px;
 }
 
 #mediaFileDialog{
