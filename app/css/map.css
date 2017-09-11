@@ -53,7 +53,7 @@ input.form-control {
     padding-bottom: 0 ! important;
     display: inline; /* to make upload link appear next to input field */
 }
-#newbutton, #gotomap, #help, #resetbutton {
+#newbutton, #gotomap, #help, #resetbutton, #loginbutton{
 	float: right;
 }
 label {

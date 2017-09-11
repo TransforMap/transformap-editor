@@ -1,5 +1,6 @@
 const dataApi = require('./data_api.js')
 const mmsApi = require('./mms_api.js')
+const authApi = require('./auth_api.js')
 const map = require('./map.js')
 const utils = require('./utils.js')
 
@@ -602,6 +603,19 @@ function clickNewMedia(){
   $('#mediaFileDialogContent').find('.mediaVersions').html("")
 }
 
+function clickLoginButton(){
+  if (authApi.isAlreadyLoggedIn()){
+    authApi.logout(authApi.retrieveAuthToken(),function(token){
+      $('#loginbutton').text("Login")
+    })
+  }else{
+    authApi.retrieveAuthToken(function(token){
+      $('#loginbutton').text("Logout")
+    })
+  }
+
+}
+
 module.exports = {
   fillForm: fillForm,
   addLanguageSwitcher: addLanguageSwitcher,
@@ -615,5 +629,6 @@ module.exports = {
   stopRKey: stopRKey,
   clickMediaSave:clickMediaSave,
   clickMediaCancel: clickMediaCancel,
-  clickNewMedia: clickNewMedia
+  clickNewMedia: clickNewMedia,
+  clickLoginButton: clickLoginButton
 }

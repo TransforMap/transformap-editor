@@ -33,7 +33,6 @@ function createOrUpdatePOI (uuid, data, callback) {
     return false
   }
 
-  // PUT is for UPDATE, POST is for CREATE
   var xhr = utils.createCORSRequest(uuid ? 'PUT' : 'POST', endpoint + uuid)
   xhr.setRequestHeader('Content-Type', 'application/json')
   xhr.send(data)

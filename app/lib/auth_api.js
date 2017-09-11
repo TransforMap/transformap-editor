@@ -12,11 +12,17 @@
 
 const utils = require('./utils.js')
 
-const endpoint = ''
+const endpoint = 'https://data.transformap.co/auth/'
+
+var authToken
 
 /* returns the API's endpoint */
 function getAuthEndpoint () {
   return endpoint
+}
+
+function isAlreadyLoggedIn () {
+  return authToken !== undefined
 }
 
 /*
@@ -26,6 +32,26 @@ function getAuthEndpoint () {
  * Returns: false if invalid call
 */
 function retrieveAuthToken (callback) {
+  if (authToken){
+    console.log('Auth token already available')
+    return authToken
+  }
+
+  var xhr = utils.createCORSRequest('GET', endpoint)
+  xhr.setRequestHeader('Content-Type', 'application/json')
+  xhr.send()
+
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4) {
+      if (xhr.status === 200) {
+        var response = JSON.parse(xhr.responseText)
+        callback(response)
+        authToken = response
+      } else {
+        console.error(xhr)
+      }
+    }
+  }
 
 }
 
@@ -35,12 +61,30 @@ function retrieveAuthToken (callback) {
  *  - callback: function to be called upon success.
  * Returns: false if invalid call
 */
-function logout (callback) {
+function logout (authToken,callback) {
+  if (!authToken){
+    console.log('logout: no authToken given')
+    return false
+  }
 
+  var xhr = utils.createCORSRequest('GET', endpoint)
+  xhr.setRequestHeader('Content-Type', 'application/json')
+  xhr.send()
+
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4) {
+      if (xhr.status === 200) {
+        callback(JSON.parse(xhr.responseText))
+      } else {
+        console.error(xhr)
+      }
+    }
+  }
 }
 
 module.exports = {
   getAuthEndpoint: getAuthEndpoint,
+  isAlreadyLoggedIn: isAlreadyLoggedIn,
   retrieveAuthToken: retrieveAuthToken,
   logout: logout
 }
