@@ -46,71 +46,7 @@ function fillForm (placeData) {
     }
   }
 
-  dataApi.retrieveMediaFilesForPOI(currentData._id, function(mediaFiles){
-    $('.relatedMediaTitle').text($('.relatedMediaTitle').text() + ' (' + mediaFiles.length + ')')
-    for (var i=0; i < mediaFiles.length; i++){
-
-      var row = $('<div class="row mediaFile '+ mediaFiles[i].mediaId + '"></div>')
-
-      var info = $('<div class="row mediaInfo"></div>')
-      if (mediaFiles[i].name){
-        info.append("<b>" + mediaFiles[i].name + "</b>")
-      }
-      if (mediaFiles[i].description){
-        info.append("<p>" + mediaFiles[i].description + "</p>")
-      }
-
-      var options = $('<div class="row"></div>')
-
-      var removeButton = $('<a class="mediaOption remove">Remove</h4>')
-      removeButton.on('click',{ metadata : mediaFiles[i], currentData: currentData },function (evt){
-        var data = evt.data
-        console.log("removeButton clicked for mediaFile with id:" + data.metadata.mediaId)
-        while (data.metadata.assignedTo.indexOf(data.currentData._id) !== -1) {
-          data.metadata.assignedTo.splice(data.metadata.assignedTo.indexOf(data.currentData._id), 1);
-        }
-        mmsApi.updateMedataForMediaFile(data.metadata.mediaId,data.metadata,function(){
-          $('.'+data.metadata.mediaId).remove()
-        })
-      })
-
-      var editButton = $('<a class="mediaOption edit" data-toggle="modal" data-target="#mediaFileDialog" data-id="' + mediaFiles[i].mediaId + '">Edit</h4>')
-      editButton.on('click',{ metadata : mediaFiles[i], currentData: currentData }, function (evt){
-        var data = evt.data
-        console.log("editButton clicked for mediaFile with id:" + data.metadata.mediaId)
-        $('#mediaFileDialogContent').find('.createOrUpdate').text("update")
-        $('#mediaFileDialogContent').find('.mediaId').text(data.metadata.mediaId)
-        $('#mediaFileDialogContent').find('.name').val(data.metadata.name)
-        $('#mediaFileDialogContent').find('.description').val(data.metadata.description)
-        $('#mediaFileDialogContent').find('img').attr("src",data.metadata.url)
-        $('#mediaThumbUpload').hide()
-        $('#mediaFileDialogContent').find('.metadata').text(JSON.stringify(data.metadata))
-        mmsApi.retrieveMediaFileVersions(data.metadata.mediaId, function(versions){
-          var versionsArray = JSON.parse(versions)
-          if (versionsArray.length > 0){
-            var versionsList = $('<ul class="row"></ul>')
-            for (var i=0; i < versionsArray.length; i++){
-              versionsList.append('<li class="versionItem">' + versionsArray[i].name + '</li>')
-            }
-            $('.mediaVersions').html(versionsList)
-          }
-        });
-      })
-
-      options.append(removeButton)
-      options.append(editButton)
-      info.append(options)
-
-      var imageUrl = 'https://s3.amazonaws.com/FringeBucket/image_placeholder.png'
-      if (mediaFiles[i].mimetype === "image/png" || mediaFiles[i].mimetype === "image/jpeg"){
-        imageUrl = mediaFiles[i].url
-      }
-      row.append('<img class="mediaThumb" src="' + imageUrl + '"/>')
-      row.append(info)
-
-      $('#media').append(row).append('<hr>')
-    }
-  })
+  retrieveAndRenderMediaFilesForPOI(currentData)
 
   if (currentData.geometry && currentData.geometry.coordinates) {
     var lon = currentData.geometry.coordinates[0]
@@ -148,6 +84,81 @@ function fillForm (placeData) {
     $('#osmlink').attr('href', currentData.properties.osm)
   }
 
+}
+
+function retrieveAndRenderMediaFilesForPOI(currentData){
+  $('#media').html("")
+  dataApi.retrieveMediaFilesForPOI(currentData._id, function(mediaFiles){
+    $('.relatedMediaTitle').text('Related media files' + ' (' + mediaFiles.length + ')')
+    for (var i=0; i < mediaFiles.length; i++){
+
+      var row = $('<div class="row mediaFile '+ mediaFiles[i].mediaId + '"></div>')
+
+      var info = $('<div class="row mediaInfo"></div>')
+      if (mediaFiles[i].name){
+        info.append("<b>" + mediaFiles[i].name + "</b>")
+      }
+      if (mediaFiles[i].description){
+        info.append("<p>" + mediaFiles[i].description + "</p>")
+      }
+
+      var options = $('<div class="row"></div>')
+
+      var removeButton = $('<a class="mediaOption remove">Remove</h4>')
+      removeButton.on('click',{ metadata : mediaFiles[i], currentData: currentData },function (evt){
+        var data = evt.data
+        console.log("removeButton clicked for mediaFile with id:" + data.metadata.mediaId)
+        if (confirm("Are you sure you want to delete this media file?")) {
+          while (data.metadata.assignedTo.indexOf(data.currentData._id) !== -1) {
+            data.metadata.assignedTo.splice(data.metadata.assignedTo.indexOf(data.currentData._id), 1);
+          }
+          mmsApi.updateMedataForMediaFile(data.metadata.mediaId,data.metadata,function(){
+            $('.'+data.metadata.mediaId).remove()
+            retrieveAndRenderMediaFilesForPOI(currentData)
+          })
+        }
+      })
+
+      var editButton = $('<a class="mediaOption edit" data-toggle="modal" data-target="#mediaFileDialog" data-id="' + mediaFiles[i].mediaId + '">Edit</h4>')
+      editButton.on('click',{ metadata : mediaFiles[i], currentData: currentData }, function (evt){
+        var data = evt.data
+        console.log("editButton clicked for mediaFile with id:" + data.metadata.mediaId)
+        $('#mediaFileDialogContent').find('.createOrUpdate').text("update")
+        $('#mediaFileDialogContent').find('.mediaId').text(data.metadata.mediaId)
+        $('#mediaFileDialogContent').find('.name').val(data.metadata.name)
+        $('#mediaFileDialogContent').find('.description').val(data.metadata.description)
+        $('#mediaFileDialogContent').find('img').attr("src",data.metadata.url)
+        $('#mediaFileDialogContent').find('img').show()
+        $('#mediaThumbUpload').hide()
+        $('#mediaFileDialogContent').find('.metadata').text(JSON.stringify(data.metadata))
+
+        // TODO: Implement versioning
+        // mmsApi.retrieveMediaFileVersions(data.metadata.mediaId, function(versions){
+        //   var versionsArray = JSON.parse(versions)
+        //   if (versionsArray.length > 0){
+        //     var versionsList = $('<ul class="row"></ul>')
+        //     for (var i=0; i < versionsArray.length; i++){
+        //       versionsList.append('<li class="versionItem">' + versionsArray[i].name + '</li>')
+        //     }
+        //     $('.mediaVersions').html(versionsList)
+        //   }
+        // });
+      })
+
+      options.append(removeButton)
+      options.append(editButton)
+      info.append(options)
+
+      var imageUrl = 'https://s3.amazonaws.com/FringeBucket/image_placeholder.png'
+      if (mediaFiles[i].mimetype === "image/png" || mediaFiles[i].mimetype === "image/jpeg"){
+        imageUrl = mediaFiles[i].url
+      }
+      row.append('<img class="mediaThumb" src="' + imageUrl + '"/>')
+      row.append(info)
+
+      $('#media').append(row).append('<hr>')
+    }
+  })
 }
 
 function addLanguageSwitcher(){
@@ -474,11 +485,6 @@ function clickSubmitSuccess (uuid) {
 function clickDelete () {
   const uuid = document.getElementById('_id').value
 
-  if (!confirm('Do you really want to delete this POI? It will be only marked as deleted and can be restored later if you save the current Browser URL.')) {
-    console.log('user aborted delete')
-    return
-  }
-
   dataApi.deletePOI(uuid, clickDeleteSuccess)
 
   document.getElementById('deleted').style.display = 'block'
@@ -590,7 +596,7 @@ function clickNewMedia(){
   $('#mediaFileDialogContent').find('.poiUUID').text(currentData._id)
   $('#mediaFileDialogContent').find('.name').val("")
   $('#mediaFileDialogContent').find('.description').val("")
-  $('#mediaFileDialogContent').find('img').attr("display","none")
+  $('#mediaFileDialogContent').find('img').hide()
   $('#mediaThumbUpload').show()
   $('#mediaFileDialogContent').find('.metadata').text("")
   $('#mediaFileDialogContent').find('.mediaVersions').html("")
