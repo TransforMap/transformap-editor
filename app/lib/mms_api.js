@@ -171,11 +171,45 @@ function retrieveMediaFileVersions (mediaId, callback) {
   }
 }
 
+/*
+ * Adds a new version to an existing media file
+ * Params:
+ *  - mediaId: Media file's uuid
+ *  - data: The payload of the version to create
+ *  - callback: function to be called upon success.
+ * Returns: false if invalid call
+*/
+function addMediaFileVersion (mediaId, data, callback) {
+  if (!mediaId) {
+    console.error('addMediaFileVersion: no mediaId given')
+    return false
+  }
+  if (!data) {
+    console.error('addMediaFileVersion: no data given')
+    return false
+  }
+
+  var xhr = utils.createCORSRequest('POST', getMMSEndpoint() + mediaId + '/versions')
+  xhr.setRequestHeader('Content-Type', 'application/json')
+  xhr.send(data)
+
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4) {
+      if (xhr.status === 200) {
+        callback(xhr.responseText)
+      } else {
+        console.error(xhr)
+      }
+    }
+  }
+}
+
 module.exports = {
   getMMSEndpoint: getMMSEndpoint,
   createNewMEdiaFileForPOI: createNewMediaFileForPOI,
   retrieveMetadataForMediaFile: retrieveMetadataForMediaFile,
   updateMedataForMediaFile: updateMedataForMediaFile,
   deleteMediaFile: deleteMediaFile,
-  retrieveMediaFileVersions: retrieveMediaFileVersions
+  retrieveMediaFileVersions: retrieveMediaFileVersions,
+  addMediaFileVersion: addMediaFileVersion
 }

@@ -573,16 +573,21 @@ function clickMediaSave () {
       versionDate: new Date().toISOString(),
       assignedTo: [poiUUID]
     }
-    mmsApi.updateMedataForMediaFile(mediaId,data, function(){
+    //TODO Upload image if added
+    mmsApi.createNewMediaFileForPOI(poiUUID,data, function(){
       $('#mediaFileDialog').modal('toggle');
     })
   }else{
     var data = JSON.parse($('#mediaFileDialogContent').find('.metadata').text())
     data.name = $('#mediaFileDialogContent').find('.name').val()
     data.description = $('#mediaFileDialogContent').find('.description').val()
-    mmsApi.createNewMediaFileForPOI(poiUUID,data, function(){
-      $('#mediaFileDialog').modal('toggle');
+    //TODO Upload image if changed
+    mmsApi.addMediaFileVersion(mediaId,data, function(){
+
     })
+    mmsApi.updateMedataForMediaFile(mediaId,data, function(){
+      $('#mediaFileDialog').modal('toggle');
+    })    
   }
 
 }

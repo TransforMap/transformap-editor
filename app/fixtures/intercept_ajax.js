@@ -42,6 +42,12 @@ xhook.after(function(request, response) {
       response.text = JSON.stringify(fixtures.mediaFileMetadataComplete)
     }
 
+    // /media
+    if(request.url.match(".*?/media/(.*)/versions")){
+      response.status = 201;
+      response.text = JSON.stringify(fixtures.listOfMediaFileVersionsUpdate)
+    }
+
     // /place
     if(request.url.match(".*?/place/")){
       //TBD
