@@ -110,10 +110,7 @@ function retrieveAndRenderMediaFilesForPOI(currentData){
         var data = evt.data
         console.log("removeButton clicked for mediaFile with id:" + data.metadata.mediaId)
         if (confirm("Are you sure you want to delete this media file?")) {
-          while (data.metadata.assignedTo.indexOf(data.currentData._id) !== -1) {
-            data.metadata.assignedTo.splice(data.metadata.assignedTo.indexOf(data.currentData._id), 1);
-          }
-          mmsApi.updateMedataForMediaFile(data.metadata.mediaId,data.metadata,function(){
+          dataAPI.removeMediaFileFromPOI(data.currentData._id,data.metadata.mediaId,function(){
             $('.'+data.metadata.mediaId).remove()
             retrieveAndRenderMediaFilesForPOI(currentData)
           })
@@ -570,8 +567,7 @@ function clickMediaSave () {
     var data = {
       name: $('#mediaFileDialogContent').find('.name').val(),
       description: $('#mediaFileDialogContent').find('.name').val(),
-      versionDate: new Date().toISOString(),
-      assignedTo: [poiUUID]
+      versionDate: new Date().toISOString()
     }
     //TODO Upload image if added
     mmsApi.createNewMediaFileForPOI(poiUUID,data, function(){
@@ -587,7 +583,7 @@ function clickMediaSave () {
     })
     mmsApi.updateMedataForMediaFile(mediaId,data, function(){
       $('#mediaFileDialog').modal('toggle');
-    })    
+    })
   }
 
 }

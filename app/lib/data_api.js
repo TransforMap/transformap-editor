@@ -140,10 +140,37 @@ function retrieveMediaFilesForPOI (uuid, callback) {
   }
 }
 
+function removeMediaFileFromPOI(uuid, mediaId, callback){
+  if (!uuid) {
+    console.error('removeMediaFileFromPOI: no uuid given')
+    return false
+  }
+
+  if (!mediaId) {
+    console.error('removeMediaFileFromPOI: no mediaId given')
+    return false
+  }
+
+  var xhr = utils.createCORSRequest('DELETE', getDataEndpoint() + uuid +  '/media/' + mediaId)
+  xhr.setRequestHeader('Content-Type', 'application/json')
+  xhr.send()
+
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4) {
+      if (xhr.status === 200) {
+        callback(JSON.parse(xhr.responseText))
+      } else {
+        console.error(xhr)
+      }
+    }
+  }
+}
+
 module.exports = {
   getDataEndpoint: getDataEndpoint,
   createOrUpdatePOI: createOrUpdatePOI,
   getPOI: getPOI,
   deletePOI: deletePOI,
-  retrieveMediaFilesForPOI: retrieveMediaFilesForPOI
+  retrieveMediaFilesForPOI: retrieveMediaFilesForPOI,
+  removeMediaFileFromPOI: removeMediaFileFromPOI
 }

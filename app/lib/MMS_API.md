@@ -25,7 +25,6 @@ Uploads a new media file
   "name": "some title",
   "description": "some description",
   "mimetype": "image.png",
-  "assignedTo": [],
   "url": "https://base.transformap.co/images/transformap.png",
   "versionDate": "2017-07-30T16:01:34+00:00"
 }
@@ -46,7 +45,6 @@ Retrieves the metadata of a particular media file, including all versions
   "name": "some title",
   "description": "some description",
   "mimetype": "image.png",
-  "assignedTo": ["0a6afb5c-70b1-40f7-8f46-8dd7e0d94060"],
   "url": "https://base.transformap.co/images/transformap.png",
   "versionDate": "2017-07-30T16:01:34+00:00"
 }
@@ -93,7 +91,6 @@ Deletes a media file moving it to a moderated trash
   "mediaId": "d07d6ab3-4e3f-44ce-accc-b3efc96b3f04",
   "deleted": true,
   "name": "some new title",
-  "assignedTo": ["0a6afb5c-70b1-40f7-8f46-8dd7e0d94060"],
   "description": "some new description",
   "mimetype": "image.png",
   "url": "https://base.transformap.co/images/transformap.png",
@@ -116,7 +113,6 @@ Returns an array with all the versions of a certain media file
     "mediaId": "497123c0-f9d8-4e6c-acff-76ec9efcb265",
     "name": "other version of the same file",
     "versionDate": "2017-07-30T16:01:34+00:00",
-    "assignedTo": ["0a6afb5c-70b1-40f7-8f46-8dd7e0d94060"],
     "mimetype": "image.png",
     "url": "https://base.transformap.co/images/transformap.png"
   },
@@ -124,7 +120,6 @@ Returns an array with all the versions of a certain media file
     "mediaId": "c29c8d11-ec27-4fe1-9a23-dd10a3b37e11",
     "name": "yet another version",
     "versionDate": "2017-07-30T16:01:34+00:00",
-    "assignedTo": ["0a6afb5c-70b1-40f7-8f46-8dd7e0d94060"],
     "mimetype": "image.png",
     "url": "https://base.transformap.co/images/transformap.png"
   }
@@ -166,7 +161,6 @@ Adds a new version to an existing media file
     "mediaId": "497123c0-f9d8-4e6c-acff-76ec9efcb265",
     "name": "a previous version of the same file",
     "versionDate": "2017-07-30T16:01:34+00:00",
-    "assignedTo": ["0a6afb5c-70b1-40f7-8f46-8dd7e0d94060"],
     "mimetype": "image.png",
     "url": "https://base.transformap.co/images/transformap.png"
   },
@@ -174,7 +168,6 @@ Adds a new version to an existing media file
     "mediaId": "c29c8d11-ec27-4fe1-9a23-dd10a3b37e11",
     "name": "yet another previous version",
     "versionDate": "2017-07-30T16:01:34+00:00",
-    "assignedTo": ["0a6afb5c-70b1-40f7-8f46-8dd7e0d94060"],
     "mimetype": "image.png",
     "url": "https://base.transformap.co/images/transformap.png"
   }

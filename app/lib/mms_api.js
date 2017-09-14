@@ -116,34 +116,6 @@ function updateMedataForMediaFile (mediaId, data, callback) {
 }
 
 /*
- * Deletes a media file moving it to a moderated trash
- * Params:
- *  - mediaId: Media file's uuid
- *  - callback: function to be called upon success.
- * Returns: false if invalid call
-*/
-function deleteMediaFile (mediaId, callback) {
-  if (!mediaId) {
-    console.error('retrieveMetadataForMediaFiles: no mediaId given')
-    return false
-  }
-
-  var xhr = utils.createCORSRequest('DELETE', getMMSEndpoint() + mediaId)
-  xhr.setRequestHeader('Content-Type', 'application/json')
-  xhr.send()
-
-  xhr.onreadystatechange = function () {
-    if (xhr.readyState === 4) {
-      if (xhr.status === 200) {
-        callback(xhr.responseText)
-      } else {
-        console.error(xhr)
-      }
-    }
-  }
-}
-
-/*
  * Returns an array with all the versions of a certain media file
  * Params:
  *  - mediaId: Media file's uuid
@@ -206,10 +178,9 @@ function addMediaFileVersion (mediaId, data, callback) {
 
 module.exports = {
   getMMSEndpoint: getMMSEndpoint,
-  createNewMEdiaFileForPOI: createNewMediaFileForPOI,
+  createNewMediaFileForPOI: createNewMediaFileForPOI,
   retrieveMetadataForMediaFile: retrieveMetadataForMediaFile,
   updateMedataForMediaFile: updateMedataForMediaFile,
-  deleteMediaFile: deleteMediaFile,
   retrieveMediaFileVersions: retrieveMediaFileVersions,
   addMediaFileVersion: addMediaFileVersion
 }

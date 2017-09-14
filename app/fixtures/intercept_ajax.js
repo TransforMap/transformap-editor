@@ -69,16 +69,16 @@ xhook.after(function(request, response) {
 
   }else if (request.method === "DELETE"){
 
-    // /media/{uuid}
-    if(request.url.match(".*?/media/(.*)")){
-      response.status = 200;
-      response.text = JSON.stringify(fixtures.mediaFileMetadataCompleteDeleted)
-    }
-
     // /place/{uuid}
     if(request.url.match(".*?/place/(.*)")){
       response.status = 200;
       //TBD
+    }
+
+    // /media/{uuid}
+    if(request.url.match(".*?/place/(.*)/media/(.*)")){
+      response.status = 200;
+      response.text = JSON.stringify(fixtures.placeMetadata)
     }
 
     // /auth/{token}

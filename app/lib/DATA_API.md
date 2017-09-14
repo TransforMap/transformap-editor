@@ -124,3 +124,45 @@ Retrieves the list of media files associated with a POI
   }
 ]
 ```
+
+## removeMediaFileFromPOI
+
+Disassociates a mediaFile from a POI
+
+**Endpoint**: /place/{uuid}/media/{mediaId}
+**Request method**: DELETE
+**Payload**: No
+**Expected response**: A JSON string containing the POI's metadata which should not contain any reference to the disassociated media file anymore.
+
+```json
+{
+  "type":"Feature",
+  "properties":{
+    "name":"Bulgarian Food Bank",
+    "addr:country":"BG",
+    "addr:street":"бул. Васил Левски",
+    "addr:housenumber":"106",
+    "addr:postcode":"1000",
+    "addr:city":"София",
+    "POI_TYPE":"food bank",
+    "amenity":"social_facility",
+    "description:bg":"Организацията работи като свързващо звено между хранителната индустрия и социалните организации, за да увеличи многократно достъпа до хранително подпомагане в България. Тя създава системи за сигурност и контрол на храните, които постъпват като дарения.",
+    "website":"http://bgfoodbank.org",
+    "contact:email":"contact@bgfoodbank.org",
+    "organic":"no",
+    "fair-trade":"no",
+    "regional":"yes",
+    "free_keywords":"food bank;food waste",
+    "SSEDAS_PARTNER":"BILS",
+    "description":"The organisation acts as an interface between the food industry and social welfare organisations to increase access to food aid in Bulgaria. It sets up routines for guaranteeing that donated food is safe and properly managed.",
+    "type_of_initiative":"foodbank; recycling_foodwaste",
+    "contact:phone":"+3592 953 4100",
+    "social_facility":"food_bank"
+  },
+  "geometry":{
+    "type":"Point",
+    "coordinates":[23.33513259888,42.69809702239]
+  },
+  "_id":"2c10b95ea433712f0b06a3f7d310e7d5"
+}
+```
