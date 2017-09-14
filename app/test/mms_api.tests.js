@@ -72,4 +72,18 @@ describe('MMS API', function() {
 
   });
 
+  describe('setActiveMediaFileVersion', function() {
+
+    it('should return false if no mediaId is provided', function() {
+      var result = mmsApi.setActiveMediaFileVersion(undefined,{"name": "test"},function(){});
+      assert.equal(result, false);
+    });
+
+    it('should return false if no versionId is provided', function() {
+      var result = mmsApi.setActiveMediaFileVersion('some_media_id',undefined,function(){});
+      assert.equal(result, false);
+    });
+
+  });
+
 });

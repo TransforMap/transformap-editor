@@ -113,6 +113,7 @@ Returns an array with all the versions of a certain media file
     "mediaId": "497123c0-f9d8-4e6c-acff-76ec9efcb265",
     "name": "other version of the same file",
     "versionDate": "2017-07-30T16:01:34+00:00",
+    "active": true,
     "mimetype": "image.png",
     "url": "https://base.transformap.co/images/transformap.png"
   },
@@ -154,6 +155,42 @@ Adds a new version to an existing media file
     "name": "other version of the same file",
     "description": "a new description for the same file",
     "versionDate": "2017-07-30T16:01:34+00:00",
+    "mimetype": "image.png",
+    "url": "https://base.transformap.co/images/transformap.png"
+  },
+  {
+    "mediaId": "497123c0-f9d8-4e6c-acff-76ec9efcb265",
+    "name": "a previous version of the same file",
+    "versionDate": "2017-07-30T16:01:34+00:00",
+    "mimetype": "image.png",
+    "url": "https://base.transformap.co/images/transformap.png"
+  },
+  {
+    "mediaId": "c29c8d11-ec27-4fe1-9a23-dd10a3b37e11",
+    "name": "yet another previous version",
+    "versionDate": "2017-07-30T16:01:34+00:00",
+    "mimetype": "image.png",
+    "url": "https://base.transformap.co/images/transformap.png"
+  }
+]
+```
+
+## setActiveMediaFileVersion
+
+Sets a version as currently active
+
+**Endpoint**: /media/{mediaId}/versions/{versionId}
+**Request method**: POST
+**Payload**: no
+**Expected response**: The complete metadata definition of the media file's versions.
+
+```json
+[
+  {
+    "name": "other version of the same file",
+    "description": "a new description for the same file",
+    "versionDate": "2017-07-30T16:01:34+00:00",
+    "active": true,
     "mimetype": "image.png",
     "url": "https://base.transformap.co/images/transformap.png"
   },
