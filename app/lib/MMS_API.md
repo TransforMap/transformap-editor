@@ -210,3 +210,34 @@ Sets a version as currently active
   }
 ]
 ```
+
+## uploadBlob
+
+Uploads an asset's binary blob to the MMS
+
+**Endpoint**: /media/{mediaId}/asset
+**Request method**: POST
+**Payload**: The multipart binary contents of the asset
+
+```
+----------V2ymHFg03ehbqgZCaKO6jy
+"POST: HTTP/1.0"
+"user-agent: firefox"
+"content-type: multipart/form-data; boundary=----------V2ymHFg03ehbqgZCaKO6jy"
+"\r\n------------V2ymHFg03ehbqgZCaKO6jy\r\n"
+"Content-Disposition: form-data; name=thefile; filename=thefile.gif\r\n"
+"Content-Type: image/gif\r\n\r\n"
+[Binary contents]
+"\r\n------------V2ymHFg03ehbqgZCaKO6jy--\r\n"
+```
+
+**Expected response**: The url and mimetype of the uploaded file
+
+```json
+[
+  {
+    "mimetype": "image.png",
+    "url": "https://base.transformap.co/images/transformap.png"
+  }
+]
+```

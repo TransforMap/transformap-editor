@@ -86,4 +86,19 @@ describe('MMS API', function() {
 
   });
 
+  describe('uploadBlob', function() {
+
+    it('should return false if no mediaId is provided', function() {
+      var result = mmsApi.uploadBlob(undefined,"some binary content",function(){});
+      assert.equal(result, false);
+    });
+
+    it('should return false if no blob is provided', function() {
+      var result = mmsApi.uploadBlob('some_media_id',undefined,function(){});
+      assert.equal(result, false);
+    });
+
+  });
+
+
 });

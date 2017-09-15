@@ -569,21 +569,40 @@ function clickMediaSave () {
       description: $('#mediaFileDialogContent').find('.name').val(),
       versionDate: new Date().toISOString()
     }
-    //TODO Upload image if added
-    mmsApi.createNewMediaFileForPOI(poiUUID,data, function(){
-      $('#mediaFileDialog').modal('toggle');
-    })
+    if (utils.getCurrentBlob()){
+      var blobURL = mmsApi.uploadBlob(utils.getCurrentBlob(),function(){
+        data.url = blob.url
+        data.mimetype = blob.mimetype
+        mmsApi.createNewMediaFileForPOI(poiUUID,data, function(){
+          $('#mediaFileDialog').modal('toggle');
+        })
+      })
+    }else{
+      mmsApi.createNewMediaFileForPOI(poiUUID,data, function(){
+        $('#mediaFileDialog').modal('toggle');
+      })
+    }
   }else{
     var data = JSON.parse($('#mediaFileDialogContent').find('.metadata').text())
     data.name = $('#mediaFileDialogContent').find('.name').val()
     data.description = $('#mediaFileDialogContent').find('.description').val()
-    //TODO Upload image if changed
-    mmsApi.addMediaFileVersion(mediaId,data, function(){
-
-    })
-    mmsApi.updateMedataForMediaFile(mediaId,data, function(){
-      $('#mediaFileDialog').modal('toggle');
-    })
+    if (utils.getCurrentBlob()){
+      var blobURL = mmsApi.uploadBlob(utils.getCurrentBlob(),function(){
+        data.url = blob.url
+        data.mimetype = blob.mimetype
+        mmsApi.addMediaFileVersion(mediaId,data, function(){
+          mmsApi.updateMedataForMediaFile(mediaId,data, function(){
+            $('#mediaFileDialog').modal('toggle');
+          })
+        })
+      })
+    }else{
+      mmsApi.addMediaFileVersion(mediaId,data, function(){
+        mmsApi.updateMedataForMediaFile(mediaId,data, function(){
+          $('#mediaFileDialog').modal('toggle');
+        })
+      })
+    }
   }
 
 }
@@ -602,6 +621,8 @@ function clickNewMedia(){
   $('#mediaThumbUpload').show()
   $('#mediaFileDialogContent').find('.metadata').text("")
   $('#mediaFileDialogContent').find('.mediaVersions').html("")
+
+  document.getElementById('mediaThumbUpload').addEventListener('change', utils.handleFileSelect, false);
 }
 
 function clickLoginButton(){

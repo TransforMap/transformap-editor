@@ -1,3 +1,5 @@
+var currentBlob
+
 /*
  * This library provide utility functions
  *
@@ -47,18 +49,56 @@ function getUrlPath(url){
 }
 
 function generateUUID() {
-    var d = new Date().getTime();
+    var d = new Date().getTime()
     var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-        var r = (d + Math.random()*16)%16 | 0;
-        d = Math.floor(d/16);
-        return (c=='x' ? r : (r&0x3|0x8)).toString(16);
-    });
-    return uuid;
-};
+        var r = (d + Math.random()*16)%16 | 0
+        d = Math.floor(d/16)
+        return (c=='x' ? r : (r&0x3|0x8)).toString(16)
+    })
+    return uuid
+}
+
+function handleFileSelect(evt,callback) {
+  var files = evt.target.files
+  var reader = new FileReader()
+
+  reader.onload = function(event) {
+    var contents = event.target.result
+    currentBlob = contents
+    console.log("Storing current asset's binary content in memory: " + currentBlob)
+  }
+
+  reader.onerror = function(event) {
+    console.error("File could not be read! Code " + event.target.error.code)
+    ui.currentBlob = undefined
+  }
+
+  var accept = {
+    binary : ["image/png", "image/jpeg"]
+  }
+
+  var file
+
+  for (var i = 0; i < files.length; i++) {
+    file = files[i]
+
+    if (file !== null) {
+      if (accept.binary.indexOf(file.type) > -1) {
+        reader.readAsArrayBuffer(file)
+      }
+    }
+  }
+}
+
+function getCurrentBlob(){
+  return currentBlob
+}
 
 module.exports = {
   createCORSRequest: createCORSRequest,
   getUrlVars: getUrlVars,
   getUrlPath: getUrlPath,
-  generateUUID: generateUUID
+  generateUUID: generateUUID,
+  handleFileSelect: handleFileSelect,
+  getCurrentBlob: getCurrentBlob
 }

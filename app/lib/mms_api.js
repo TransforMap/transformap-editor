@@ -209,6 +209,31 @@ function setActiveMediaFileVersion (mediaId, versionId, callback) {
   }
 }
 
+function uploadBlob(mediaId, blob, callback){
+  if (!mediaId) {
+    console.error('uploadBlob: no mediaId given')
+    return false
+  }
+  if (!blob) {
+    console.error('uploadBlob: no blob given')
+    return false
+  }
+
+  var xhr = utils.createCORSRequest('POST', getMMSEndpoint() + mediaId + '/blob')
+  xhr.setRequestHeader('Content-Type', 'multipart/form-data')
+  xhr.send(blob)
+
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4) {
+      if (xhr.status === 200) {
+        callback(xhr.JSON.parse(responseText))
+      } else {
+        console.error(xhr)
+      }
+    }
+  }
+}
+
 module.exports = {
   getMMSEndpoint: getMMSEndpoint,
   createNewMediaFileForPOI: createNewMediaFileForPOI,
@@ -216,5 +241,6 @@ module.exports = {
   updateMedataForMediaFile: updateMedataForMediaFile,
   retrieveMediaFileVersions: retrieveMediaFileVersions,
   addMediaFileVersion: addMediaFileVersion,
-  setActiveMediaFileVersion: setActiveMediaFileVersion
+  setActiveMediaFileVersion: setActiveMediaFileVersion,
+  uploadBlob: uploadBlob
 }
