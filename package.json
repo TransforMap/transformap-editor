@@ -10,7 +10,7 @@
   "scripts": {
     "lint": "standard app/**/*js",
     "start": "brunch watch --server",
-    "prod": "brunch build --production",
+    "build": "brunch build --production",
     "test": "mocha app/test",
     "postinstall": "./scripts/postinstall"
   },
