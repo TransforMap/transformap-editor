@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>TransforMap Editor</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi">
+    <script src="vendor.js"></script>
+    <script src="app.js"></script>
+    <script>require('initialize')</script>
+    <script defer="defer" src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+    <script defer="defer" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script defer="defer" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/bootstrap-select.min.js"></script>
+    <script>
+      if(! Modernizr.promises) {
+        document.write('<script src="https://www.promisejs.org/polyfills/promise-7.0.4.min.js"></sc' + 'ript>')
+        document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/2.0.2/fetch.min.js"></sc' + 'ript>')
+      }
+    </script>
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/css/bootstrap-select.min.css">
+    <link rel="stylesheet" href="app.css">
+    <link rel="stylesheet" href="vendor.css">
+  </head>
+  <body>
+    <div id="forms">
+      <h1>TransforMap Editor</h1>
+      <form>
+        <fieldset class="no-padding">
+          <div class="row" id="menu"><a class="btn btn-default" href="#" id="loginbutton">Login</a><a class="btn btn-default" href="http://viewer.transformap.co/editable.html?background=mapnik#5/50.458/10.261" id="gotomap" target="_blank">→ Go to Map</a><a class="btn btn-default" href="https://github.com/TransforMap/transformap-editor/blob/master/HELP.md" id="help" target="_blank">Help</a><a class="btn btn-success" href="." id="newbutton" title="Create a new POI">New</a><a class="btn btn-danger" href="" id="resetbutton">Reset</a></div>
+        </fieldset>
+        <fieldset id="address">
+          <legend>Name and address</legend>
+          <div class="row" id="name">
+            <label for="_key_name">Name</label>
+            <input class="form-control" type="text" id="_key_name">
+          </div>
+          <div class="row">
+            <label for="_key_addr:country">Country</label>
+            <input class="form-control" type="text" id="_key_addr:country">
+          </div>
+          <div class="row">
+            <label for="_key_addr:city">City</label>
+            <input class="form-control" type="text" id="_key_addr:city">
+          </div>
+          <div class="row">
+            <label for="_key_addr:postcode">Postcode</label>
+            <input class="form-control" type="text" id="_key_addr:postcode">
+          </div>
+          <div class="row">
+            <label for="_key_addr:street">Street Name</label>
+            <input class="form-control" type="text" id="_key_addr:street">
+          </div>
+          <div class="row">
+            <label for="_key_addr:housenumber">House Number</label>
+            <input class="form-control" type="text" id="_key_addr:housenumber">
+          </div>
+          <!--fixme add support for addr:housename and addr:place-->
+          <div class="row" style="margin-top:1em;">
+            <label>Search for Coordinates from Address</label>
+            <button class="btn btn-success" type="button" id="coordsearch">Go!</button>
+            <Search>using OpenStreetMap</Search>
+          </div>
+          <div class="row" style="margin-top:1em;">
+            <label for="_geometry_lon" title="X, WGS84, decimal degree">Longitude</label>
+            <input class="form-control" type="text" id="_geometry_lon">
+          </div>
+          <div class="row">
+            <label for="_geometry_lat" title="Y, WGS84, decimal degree">Latitude</label>
+            <input class="form-control" type="text" id="_geometry_lat">
+            <!--TODO add reset coords button-->
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend>Description</legend>
+          <div class="row">
+            <label for="_key_description">Description text</label>
+            <textarea class="form-control" id="_key_description" rows="6"></textarea>
+            <!--fixme different langs for description-->
+          </div>
+          <div class="row" id="toi">
+            <label for="_key_type_of_initiative">Type of Initiative</label>
+            <select class="selectpicker show-tick" id="_key_type_of_initiative" multiple size="5" data-live-search="true">
+              <option value="">== Choose at least one type of initiative ==</option>
+            </select>
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend>TransforMap Taxonomy</legend>
+          <div class="row">
+            <label for="_key_provides">Fulfils Needs</label>
+            <select class="selectpicker show-tick" id="_key_provides" name="Needs" multiple size="5" data-live-search="true">
+              <option value="">== Choose all Needs fulfilled ==</option>
+            </select>
+          </div>
+          <div class="row">
+            <label for="_key_interaction">Interaction</label>
+            <select class="selectpicker show-tick" id="_key_interaction" name="Interaction" multiple size="5" data-live-search="true">
+              <option value="">== Choose any Interactions ==</option>
+            </select>
+          </div>
+          <div class="row">
+            <label for="_key_identity">Identity</label>
+            <select class="selectpicker show-tick" id="_key_identity" name="Identity" multiple size="5" data-live-search="true">
+              <option value="">== Choose An Identity ==</option>
+            </select>
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend>Contact Data</legend>
+          <div class="row">
+            <label for="_key_contact:website">Website</label>
+            <input class="form-control" type="text" id="_key_contact:website">
+          </div>
+          <div class="row">
+            <label for="_key_contact:email">Email Address</label>
+            <input class="form-control" type="text" id="_key_contact:email">
+          </div>
+          <div class="row">
+            <label for="_key_contact:phone">Phone Number</label>
+            <input class="form-control" type="text" id="_key_contact:phone">
+          </div>
+          <div class="row">
+            <label for="_key_opening_hours">Opening Hours</label>
+            <input class="form-control" type="text" id="_key_opening_hours">
+          </div>
+          <!--fixme allow more than one field for each type-->
+        </fieldset>
+        <fieldset>
+          <legend class="relatedMediaTitle">Related media files</legend>
+          <div class="row header" style="text-align:right;">
+            <p>Add new media file</p>
+            <button class="btn btn-success" type="button" id="newmedia" data-toggle="modal" data-target="#mediaFileDialog">Add</button>
+          </div>
+          <div class="row" id="media"></div>
+        </fieldset>
+        <fieldset id="freetags">
+          <legend>Free Tags</legend>
+          <!--fixme must add additional fields when user fills one-->
+          <div class="row header">
+            <p>Key</p>
+            <p>Value</p>
+            <button class="btn btn-success" type="button" id="plus">Add</button>
+          </div>
+          <div class="row">
+            <input class="form-control" type="text" id="key1" name="freetags">
+            <input class="form-control" type="text" id="value1" name="freetags">
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend>Object information</legend>
+          <div class="row" id="osm">
+            <label for="_key_osm">Link to OSM object</label>
+            <input class="form-control" type="text" id="_key_osm"><span>&nbsp;</span><a id="osmlink" target="_blank">OSM</a>
+          </div>
+          <div class="row" id="id">
+            <label for="_id">Object ID</label>
+            <input class="form-control" type="text" id="_id" disabled="true"><span>&nbsp;</span><a id="transformapapilink" target="_blank">JSON</a>
+            <div class="row" id="deleted">{{{ This object is in 'deleted' state. To undelete, click 'Save' }}}</div>
+          </div>
+        </fieldset>
+      </form>
+      <button class="btn btn-danger btn-sm" type="button" id="delete">Delete POI</button>
+      <button class="btn btn-success btn-lg" type="button" id="save">Save</button><a href="https://github.com/TransforMap/transformap-editor/" target="_blank" id="forkme">Fork me on Github!</a>
+    </div>
+    <div id="map"></div>
+    <div class="modal fade" id="mediaFileDialog" role="dialog">
+      <div id="mediaFileDialogContent">
+        <input class="form-control mediaId" style="display:none;" type="text">
+        <input class="form-control metadata" style="display:none;" type="text">
+        <input class="form-control poiUUID" style="display:none;" type="text">
+        <div class="row mediaFile"><img class="mediaThumb">
+          <input type="file" id="mediaThumbUpload">
+          <div class="row mediaInfo">
+            <input class="name form-control mediaFormItem" type="text" placeholder="Name">
+            <input class="description form-control mediaFormItem" type="text" placeholder="Description">
+          </div>
+        </div>
+        <div class="row mediaVersions"></div>
+        <hr>
+        <button class="btn" type="button" id="mediacancel">Cancel</button>
+        <button class="btn btn-success" type="button" id="mediasave">Save</button>
+      </div>
+    </div>
+  </body>
+</html>
