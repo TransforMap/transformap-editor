@@ -11,7 +11,7 @@ REPO=$3
 : ${REPO:=git@github.com:transformap/transformap-editor.git}
 git fetch $upstream
 if [ `git rev-list HEAD...$upstream/$branch --count` -ne 0 ]; then
-  echo "not deploying"
+  printf "# Not deploying.\n# Please update your upstream branch with your local commits before proceeding.\n"
   exit 1
 fi
 
