@@ -1,28 +1,29 @@
 #!/usr/bin/env bash
+
 set -e -x
 git --version
+
 upstream=$1
 branch=$2
 REPO=$3
 : ${upstream:=origin}
-: ${branch:=master}
+: ${branch:=staging}
 : ${REPO:=git@github.com:transformap/transformap-editor.git}
 git fetch $upstream
 if [ `git rev-list HEAD...$upstream/$branch --count` -ne 0 ]; then
   echo "not deploying"
   exit 1
 fi
-npm i
-rm -rf public
 
+rm -rf public
 # use --reference when not in shallow clone
 # git clone $REPO --reference . -b dokku _public
-
 git clone $REPO -b dokku public
+
 rm -rf public/*
-source ./postinstall
+npm i
 REV=`git describe --always`
-BUILD=git-$REV brunch ./node_modules/brunch/bin/build --production build
+BUILD=git-$REV npm run build
 cd public
 git remote add deploy dokku@apps.allmende.io:transformap-editor
 git add -A .
