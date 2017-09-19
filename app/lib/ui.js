@@ -570,9 +570,10 @@ function clickMediaSave () {
       versionDate: new Date().toISOString()
     }
     if (utils.getCurrentBlob()){
-      var blobURL = mmsApi.uploadBlob(utils.getCurrentBlob(),function(){
+      var blobURL = mmsApi.uploadBlob(utils.getCurrentBlob(),function(blob){
         data.url = blob.url
         data.mimetype = blob.mimetype
+        data.id = blob.id
         mmsApi.createNewMediaFileForPOI(poiUUID,data, function(){
           $('#mediaFileDialog').modal('toggle');
         })
@@ -587,9 +588,10 @@ function clickMediaSave () {
     data.name = $('#mediaFileDialogContent').find('.name').val()
     data.description = $('#mediaFileDialogContent').find('.description').val()
     if (utils.getCurrentBlob()){
-      var blobURL = mmsApi.uploadBlob(utils.getCurrentBlob(),function(){
+      var blobURL = mmsApi.uploadBlob(utils.getCurrentBlob(),function(blob){
         data.url = blob.url
         data.mimetype = blob.mimetype
+        data.id = blob.id
         mmsApi.addMediaFileVersion(mediaId,data, function(){
           mmsApi.updateMedataForMediaFile(mediaId,data, function(){
             $('#mediaFileDialog').modal('toggle');
