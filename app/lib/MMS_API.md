@@ -77,27 +77,6 @@ Updates the metadata of a particular media file
 }
 ```
 
-## deleteMediaFile
-
-Deletes a media file moving it to a moderated trash
-
-**Endpoint**: /media/{mediaId}
-**Request method**: DELETE
-**Payload**: No
-**Expected response**: The complete metadata definition of the media file.
-
-```json
-{
-  "mediaId": "d07d6ab3-4e3f-44ce-accc-b3efc96b3f04",
-  "deleted": true,
-  "name": "some new title",
-  "description": "some new description",
-  "mimetype": "image.png",
-  "url": "https://base.transformap.co/images/transformap.png",
-  "versionDate": "2017-07-30T16:01:34+00:00"
-}
-```
-
 ## retrieveMediaFileVersions
 
 Returns an array with all the versions of a certain media file
