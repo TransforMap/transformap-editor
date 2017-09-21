@@ -96,11 +96,16 @@ function getCurrentBlob(){
   return currentBlob
 }
 
+function resetCurrentBlob(){
+  currentBlob = undefined
+}
+
 module.exports = {
   createCORSRequest: createCORSRequest,
   getUrlVars: getUrlVars,
   getUrlPath: getUrlPath,
   generateUUID: generateUUID,
   handleFileSelect: handleFileSelect,
-  getCurrentBlob: getCurrentBlob
+  getCurrentBlob: getCurrentBlob,
+  resetCurrentBlob: resetCurrentBlob
 }
