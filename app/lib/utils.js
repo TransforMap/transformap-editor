@@ -65,7 +65,9 @@ function handleFileSelect(evt,callback) {
   reader.onload = function(event) {
     var contents = event.target.result
     currentBlob = contents
-    console.log("Storing current asset's binary content in memory: " + currentBlob)
+    $('#mediaFileDialogContent').find('img').attr('src', contents)
+    $('#mediaFileDialogContent').find('img').show()
+    $('#mediaThumbUpload').hide()
   }
 
   reader.onerror = function(event) {
@@ -84,7 +86,7 @@ function handleFileSelect(evt,callback) {
 
     if (file !== null) {
       if (accept.binary.indexOf(file.type) > -1) {
-        reader.readAsArrayBuffer(file)
+        reader.readAsDataURL(file)
       }
     }
   }
