@@ -79,14 +79,17 @@ module.exports = {
       "name": "other version of the same file",
       "version_date": "2017-07-30T16:01:34+00:00",
       "mimetype": "image.png",
-      "url": "https://base.transformap.co/images/transformap.png"
+      "active": true,
+      "url": "https://base.transformap.co/images/transformap.png",
+      "author": "alex"
     },
     {
       "id": "c29c8d11-ec27-4fe1-9a23-dd10a3b37e11",
       "name": "yet another version",
       "version_date": "2017-07-30T16:01:34+00:00",
       "mimetype": "image.png",
-      "url": "https://base.transformap.co/images/transformap.png"
+      "url": "https://base.transformap.co/images/transformap.png",
+      "author": "jenny"
     }
   ],
   listOfMediaFileVersionsUpdate: [

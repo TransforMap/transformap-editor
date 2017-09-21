@@ -130,17 +130,22 @@ function retrieveAndRenderMediaFilesForPOI(currentData){
         $('#mediaThumbUpload').hide()
         $('#mediaFileDialogContent').find('.metadata').text(JSON.stringify(data.metadata))
 
-        // TODO: Implement versioning
-        // mmsApi.retrieveMediaFileVersions(data.metadata.mediaId, function(versions){
-        //   var versionsArray = JSON.parse(versions)
-        //   if (versionsArray.length > 0){
-        //     var versionsList = $('<ul class="row"></ul>')
-        //     for (var i=0; i < versionsArray.length; i++){
-        //       versionsList.append('<li class="versionItem">' + versionsArray[i].name + '</li>')
-        //     }
-        //     $('.mediaVersions').html(versionsList)
-        //   }
-        // });
+        mmsApi.retrieveMediaFileVersions(data.metadata.id, function(versions){
+          var versionsArray = JSON.parse(versions)
+          console.log(versionsArray)
+          if (versionsArray.length > 0){
+            var versionsList = $('<div class="row"></div>')
+            for (var i=0; i < versionsArray.length; i++){
+              var version = versionsArray[i]
+              var versionInput = $('<input type="radio" name="versions" value="' + version.name + '" class="versionItem"><b>' + version.version_date + '</b> - ' + version.name + ' - ' + version.author + '</input></br>')
+              if (version.active){
+                versionInput.prop('checked', true)
+              }
+              versionsList.append(versionInput)
+            }
+            $('.mediaVersions').html(versionsList)
+          }
+        });
       })
 
       options.append(removeButton)
