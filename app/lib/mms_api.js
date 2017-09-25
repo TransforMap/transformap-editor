@@ -12,7 +12,7 @@
 
 const utils = require('./utils.js')
 
-const endpoint = 'https://data.transformap.co/media/'
+const endpoint = baseUrl + 'media/'
 
 /* returns the API's endpoint */
 function getMMSEndpoint () {
