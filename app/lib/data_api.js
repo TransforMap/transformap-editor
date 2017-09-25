@@ -12,7 +12,7 @@
 
 const utils = require('./utils.js')
 
-const endpoint = baseUrl + 'place/'
+const endpoint = utils.baseUrl + '/place/'
 
 /* returns the API's endpoint */
 function getDataEndpoint () {

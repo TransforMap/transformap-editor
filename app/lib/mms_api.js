@@ -12,7 +12,7 @@
 
 const utils = require('./utils.js')
 
-const endpoint = baseUrl + 'media/'
+const endpoint = utils.baseUrl + '/media/'
 
 /* returns the API's endpoint */
 function getMMSEndpoint () {

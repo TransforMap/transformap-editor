@@ -28,7 +28,7 @@ module.exports = {
     envstatic: {
       variables: {
         MOCK_AJAX: "false",
-        BASE_URL: process.env.BASE_URL
+        BASE_URL: '//' + process.env.FQDN
       }
     }
   },
