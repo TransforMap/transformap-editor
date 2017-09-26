@@ -12,7 +12,7 @@
 
 const utils = require('./utils.js')
 
-const endpoint = 'https://data.transformap.co/auth/'
+const endpoint = utils.baseUrl + '/auth/'
 
 var authToken
 

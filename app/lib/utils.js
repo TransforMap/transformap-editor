@@ -1,5 +1,5 @@
 var currentBlob
-
+const baseUrl = $ENVSTATIC_BASE_URL
 /*
  * This library provide utility functions
  *
@@ -107,5 +107,6 @@ module.exports = {
   generateUUID: generateUUID,
   handleFileSelect: handleFileSelect,
   getCurrentBlob: getCurrentBlob,
+  baseUrl: baseUrl,
   resetCurrentBlob: resetCurrentBlob
 }
