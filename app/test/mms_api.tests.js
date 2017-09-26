@@ -94,7 +94,7 @@ describe('MMS API', function() {
     });
 
     it('should return false if no blob is provided', function() {
-      var result = mmsApi.uploadBlob('some_media_id',undefined,function(){});
+      var result = mmsApi.setActiveMediaFileVersion('some_media_id',undefined,function(){});
       assert.equal(result, false);
     });
 

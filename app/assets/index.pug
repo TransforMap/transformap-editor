@@ -145,13 +145,17 @@ html(lang='en')
         input(style="display:none" type='text' class='form-control mediaId')
         input(style="display:none" type='text' class='form-control metadata')
         input(style="display:none" type='text' class='form-control poiUUID')
+        input(style="display:none" type='text' class='form-control createOrUpdate')
         .row.mediaFile
           img(class='mediaThumb')
           input(type='file' id='mediaThumbUpload')
           .row.mediaInfo
             input(type='text' class='name form-control mediaFormItem' placeholder='Name')
             input(type='text' class='description form-control mediaFormItem' placeholder='Description')
-        .row.mediaVersions
+        .row
+          legend Version history
+          p.hint You can roll back to a different version by clinking on 'Activate'
+          .row.mediaVersions
         hr
         button(type='button' id='mediacancel' class='btn') Cancel
         button(type='button' id='mediasave' class='btn btn-success') Save

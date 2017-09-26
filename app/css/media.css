@@ -26,7 +26,9 @@
 }
 
 .mediaVersions{
-  padding: 0px 30px;
+  margin: 0 10px;
+  padding: 0 30px;
+  font-size: 12px;
 }
 
 .mediaFormItem{
@@ -46,4 +48,10 @@
   width: 400px;
   margin: 10% auto;
   padding: 20px;
+}
+
+.hint{
+  color: #CCC;
+  font-size: 12px;
+  font-style: italic;
 }

@@ -120,9 +120,12 @@ function retrieveAndRenderMediaFilesForPOI(currentData){
       var editButton = $('<a class="mediaOption edit" data-toggle="modal" data-target="#mediaFileDialog" data-id="' + mediaFiles[i].mediaId + '">Edit</h4>')
       editButton.on('click',{ metadata : mediaFiles[i], currentData: currentData }, function (evt){
         var data = evt.data
-        console.log("editButton clicked for mediaFile with id:" + data.metadata.mediaId)
+
+        utils.resetCurrentBlob()
+
+        console.log("editButton clicked for mediaFile with id:" + data.metadata.id)
         $('#mediaFileDialogContent').find('.createOrUpdate').text("update")
-        $('#mediaFileDialogContent').find('.mediaId').text(data.metadata.mediaId)
+        $('#mediaFileDialogContent').find('.mediaId').text(data.metadata.id)
         $('#mediaFileDialogContent').find('.name').val(data.metadata.name)
         $('#mediaFileDialogContent').find('.description').val(data.metadata.description)
         $('#mediaFileDialogContent').find('img').attr("src",data.metadata.url)
@@ -130,17 +133,30 @@ function retrieveAndRenderMediaFilesForPOI(currentData){
         $('#mediaThumbUpload').hide()
         $('#mediaFileDialogContent').find('.metadata').text(JSON.stringify(data.metadata))
 
-        // TODO: Implement versioning
-        // mmsApi.retrieveMediaFileVersions(data.metadata.mediaId, function(versions){
-        //   var versionsArray = JSON.parse(versions)
-        //   if (versionsArray.length > 0){
-        //     var versionsList = $('<ul class="row"></ul>')
-        //     for (var i=0; i < versionsArray.length; i++){
-        //       versionsList.append('<li class="versionItem">' + versionsArray[i].name + '</li>')
-        //     }
-        //     $('.mediaVersions').html(versionsList)
-        //   }
-        // });
+        mmsApi.retrieveMediaFileVersions(data.metadata.id, function(versions){
+          var versionsArray = JSON.parse(versions)
+          if (versionsArray.length > 0){
+            var versionsList = $('<ul class="row"></ul>')
+            for (var i=0; i < versionsArray.length; i++){
+              var version = versionsArray[i]
+              var versionInput = $('<li data-id="' + version.id + '" class="versionItem"><b>' + version.version_date + '</b> - ' + version.name + ' - ' + version.author + '</li></br>')
+              if (version.active){
+                versionInput.append(' ').append('<b>[Active]</b>')
+              }else{
+                var activateLink = $('<a data-id="' + version.id + '" href="#">Activate</a>')
+                activateLink.on("click",{ version : version}, function(evt){
+                  var versionData = evt.data
+                  mmsApi.setActiveMediaFileVersion(data.metadata.id,versionData.version.id, function(){
+                    $('#mediaFileDialog').modal('toggle');
+                  });
+                })
+                versionInput.append(' ').append(activateLink)
+              }
+              versionsList.append(versionInput)
+            }
+            $('.mediaVersions').html(versionsList)
+          }
+        });
       })
 
       options.append(removeButton)
@@ -563,6 +579,7 @@ function stopRKey (evt) {
 function clickMediaSave () {
   var poiUUID = $('#mediaFileDialogContent').find('.poiUUID').text()
   var mediaId = $('#mediaFileDialogContent').find('.mediaId').text()
+
   if ($('#mediaFileDialogContent').find('.createOrUpdate').text() == "create"){
     var data = {
       name: $('#mediaFileDialogContent').find('.name').val(),
@@ -570,9 +587,10 @@ function clickMediaSave () {
       versionDate: new Date().toISOString()
     }
     if (utils.getCurrentBlob()){
-      var blobURL = mmsApi.uploadBlob(utils.getCurrentBlob(),function(){
+      var blobURL = mmsApi.uploadBlob(utils.getCurrentBlob(),function(blob){
         data.url = blob.url
         data.mimetype = blob.mimetype
+        data.id = blob.id
         mmsApi.createNewMediaFileForPOI(poiUUID,data, function(){
           $('#mediaFileDialog').modal('toggle');
         })
@@ -582,23 +600,34 @@ function clickMediaSave () {
         $('#mediaFileDialog').modal('toggle');
       })
     }
-  }else{
+  }else if ($('#mediaFileDialogContent').find('.createOrUpdate').text() == "update"){
+    var metadataChanged = false
     var data = JSON.parse($('#mediaFileDialogContent').find('.metadata').text())
-    data.name = $('#mediaFileDialogContent').find('.name').val()
-    data.description = $('#mediaFileDialogContent').find('.description').val()
+    var nameField = $('#mediaFileDialogContent').find('.name').val()
+    if (data.name != nameField){
+      data.name = nameField
+      metadataChanged = true
+    }
+    var descriptionField = $('#mediaFileDialogContent').find('.description').val()
+    if (data.description != descriptionField){
+      data.description = descriptionField
+      metadataChanged = true
+    }
+
     if (utils.getCurrentBlob()){
-      var blobURL = mmsApi.uploadBlob(utils.getCurrentBlob(),function(){
+      var blobURL = mmsApi.uploadBlob(utils.getCurrentBlob(),function(blob){
         data.url = blob.url
         data.mimetype = blob.mimetype
-        mmsApi.addMediaFileVersion(mediaId,data, function(){
-          mmsApi.updateMedataForMediaFile(mediaId,data, function(){
+        data.id = blob.id
+        mmsApi.addMediaFileVersion(mediaId, data, function(){
+          mmsApi.updateMedataForMediaFile(mediaId, data, function(){
             $('#mediaFileDialog').modal('toggle');
           })
         })
       })
-    }else{
-      mmsApi.addMediaFileVersion(mediaId,data, function(){
-        mmsApi.updateMedataForMediaFile(mediaId,data, function(){
+    }else if (metadataChanged){
+      mmsApi.addMediaFileVersion(mediaId, data, function(){
+        mmsApi.updateMedataForMediaFile(mediaId, data, function(){
           $('#mediaFileDialog').modal('toggle');
         })
       })
@@ -612,6 +641,9 @@ function clickMediaCancel () {
 }
 
 function clickNewMedia(){
+
+  utils.resetCurrentBlob()
+
   console.log("newMedia button clicked")
   $('#mediaFileDialogContent').find('.createOrUpdate').text("create")
   $('#mediaFileDialogContent').find('.poiUUID').text(currentData._id)

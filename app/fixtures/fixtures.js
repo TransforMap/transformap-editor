@@ -1,20 +1,20 @@
 module.exports = {
   listOfMediaFilesForPOI: [
     {
-      "mediaId": "d07d6ab3-4e3f-44ce-accc-b3efc96b3f04",
+      "id": "d07d6ab3-4e3f-44ce-accc-b3efc96b3f04",
       "ipfs": "QmVXmy59f5QqKDGyhpHbRiGnba5SfHaooDPCWhd8Xtgwz2",
       "url": "https://ipfs.io/images/ipfs-illustration-history.svg",
       "mimetype": "image/jpeg",
       "name": "Chaotic connectome replacement image for the large image on the main screen",
       "description": "some description",
-      "versionDate": "2017-07-30T16:01:34+00:00"
+      "version_date": "2017-07-30T16:01:34+00:00"
     },
     {
-      "mediaId": "0a6afb5c-70b1-40f7-8f46-8dd7e0d94060",
+      "id": "0a6afb5c-70b1-40f7-8f46-8dd7e0d94060",
       "mimetype": "image/png",
       "name": "Transformap Base",
       "url": "https://base.transformap.co/images/transformap.png",
-      "versionDate": "2017-07-30T16:01:34+00:00"
+      "version_date": "2017-07-30T16:01:34+00:00"
     }
   ],
   mediaFileMetadataBasic: {
@@ -24,21 +24,21 @@ module.exports = {
     "url": "https://base.transformap.co/images/transformap.png",
   },
   mediaFileMetadataComplete: {
-    "mediaId": "0a6afb5c-70b1-40f7-8f46-8dd7e0d94060",
+    "id": "0a6afb5c-70b1-40f7-8f46-8dd7e0d94060",
     "name": "some title",
     "description": "some description",
     "mimetype": "image/png",
     "url": "https://base.transformap.co/images/transformap.png",
-    "versionDate": "2017-07-30T16:01:34+00:00"
+    "version_date": "2017-07-30T16:01:34+00:00"
   },
   mediaFileMetadataCompleteDeleted: {
-    "mediaId": "0a6afb5c-70b1-40f7-8f46-8dd7e0d94060",
+    "id": "0a6afb5c-70b1-40f7-8f46-8dd7e0d94060",
     "name": "some title",
     "deleted": true,
     "description": "some description",
     "mimetype": "image/png",
     "url": "https://base.transformap.co/images/transformap.png",
-    "versionDate": "2017-07-30T16:01:34+00:00"
+    "version_date": "2017-07-30T16:01:34+00:00"
   },
   validAuthToken: {
     "token": "d07d6ab3-4e3f-44ce-accc-b3efc96b3f04"
@@ -75,39 +75,42 @@ module.exports = {
   },
   listOfMediaFileVersions: [
     {
-      "mediaId": "497123c0-f9d8-4e6c-acff-76ec9efcb265",
+      "id": "497123c0-f9d8-4e6c-acff-76ec9efcb265",
       "name": "other version of the same file",
-      "versionDate": "2017-07-30T16:01:34+00:00",
+      "version_date": "2017-07-30T16:01:34+00:00",
       "mimetype": "image.png",
-      "url": "https://base.transformap.co/images/transformap.png"
+      "active": true,
+      "url": "https://base.transformap.co/images/transformap.png",
+      "author": "alex"
     },
     {
-      "mediaId": "c29c8d11-ec27-4fe1-9a23-dd10a3b37e11",
+      "id": "c29c8d11-ec27-4fe1-9a23-dd10a3b37e11",
       "name": "yet another version",
-      "versionDate": "2017-07-30T16:01:34+00:00",
+      "version_date": "2017-07-30T16:01:34+00:00",
       "mimetype": "image.png",
-      "url": "https://base.transformap.co/images/transformap.png"
+      "url": "https://base.transformap.co/images/transformap.png",
+      "author": "jenny"
     }
   ],
   listOfMediaFileVersionsUpdate: [
     {
       "name": "other version of the same file",
       "description": "a new description for the same file",
-      "versionDate": "2017-07-30T16:01:34+00:00",
+      "version_date": "2017-07-30T16:01:34+00:00",
       "mimetype": "image.png",
       "url": "https://base.transformap.co/images/transformap.png"
     },
     {
-      "mediaId": "497123c0-f9d8-4e6c-acff-76ec9efcb265",
+      "id": "497123c0-f9d8-4e6c-acff-76ec9efcb265",
       "name": "a previous version of the same file",
-      "versionDate": "2017-07-30T16:01:34+00:00",
+      "version_date": "2017-07-30T16:01:34+00:00",
       "mimetype": "image.png",
       "url": "https://base.transformap.co/images/transformap.png"
     },
     {
-      "mediaId": "c29c8d11-ec27-4fe1-9a23-dd10a3b37e11",
+      "id": "c29c8d11-ec27-4fe1-9a23-dd10a3b37e11",
       "name": "yet another previous version",
-      "versionDate": "2017-07-30T16:01:34+00:00",
+      "version_date": "2017-07-30T16:01:34+00:00",
       "mimetype": "image.png",
       "url": "https://base.transformap.co/images/transformap.png"
     }
