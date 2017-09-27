@@ -1,5 +1,7 @@
 var currentBlob
-const baseUrl = $ENVSTATIC_BASE_URL
+console.log("ENVVVVVV")
+console.log($ENVSTATIC_BASE_URL)
+const baseUrl = $ENVSTATIC_BASE_URL !== "//undefined" ? $ENVSTATIC_BASE_URL : ""
 /*
  * This library provide utility functions
  *
@@ -100,6 +102,30 @@ function resetCurrentBlob(){
   currentBlob = undefined
 }
 
+function getCookie(cname) {
+    var name = cname + "=";
+    var decodedCookie = decodeURIComponent(document.cookie);
+    var ca = decodedCookie.split(';');
+    for(var i = 0; i <ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
+}
+
+function setCookie(cname, cvalue, exdays) {
+    var d = new Date();
+    d.setTime(d.getTime() + (exdays*24*60*60*1000));
+    var expires = "expires="+ d.toUTCString();
+    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+}
+
+
 module.exports = {
   createCORSRequest: createCORSRequest,
   getUrlVars: getUrlVars,
@@ -108,5 +134,7 @@ module.exports = {
   handleFileSelect: handleFileSelect,
   getCurrentBlob: getCurrentBlob,
   baseUrl: baseUrl,
-  resetCurrentBlob: resetCurrentBlob
+  resetCurrentBlob: resetCurrentBlob,
+  getCookie: getCookie,
+  setCookie: setCookie
 }

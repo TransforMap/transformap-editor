@@ -4,6 +4,7 @@ const utils = require('./utils.js')
 const redFetch = require('./red_fetch.js')
 const translations = require('./translations.js')
 const dataApi = require('./data_api.js')
+const authApi = require('./auth_api.js')
 const ui = require('./ui.js')
 const map = require('./map.js')
 
@@ -46,6 +47,8 @@ module.exports = function () {
   document.onkeypress = ui.stopRKey
   document.getElementById('mediacancel').onclick = ui.clickMediaCancel
   document.getElementById('mediasave').onclick = ui.clickMediaSave
+
+  ui.setupLoginButton()
 
   map.initMap()
 

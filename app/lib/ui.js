@@ -657,17 +657,23 @@ function clickNewMedia(){
   document.getElementById('mediaThumbUpload').addEventListener('change', utils.handleFileSelect, false);
 }
 
+function setupLoginButton(){
+  if (authApi.isAlreadyLoggedIn()){
+    $('#loginbutton').text("Logout")
+    $('#loginbutton').attr("href","#")
+    $('#save').removeAttr("disabled")
+  }else{
+    $('#loginbutton').text("Login")
+    $('#loginbutton').attr("href",authApi.getAuthEndpoint())
+    $('#save').attr("disabled","disabled")
+  }
+}
+
 function clickLoginButton(){
   if (authApi.isAlreadyLoggedIn()){
-    authApi.logout(authApi.retrieveAuthToken(),function(token){
-      $('#loginbutton').text("Login")
-    })
-  }else{
-    authApi.retrieveAuthToken(function(token){
-      $('#loginbutton').text("Logout")
-    })
+    utils.setCookie("session",undefined,0)
   }
-
+  setupLoginButton()
 }
 
 module.exports = {
@@ -684,5 +690,6 @@ module.exports = {
   clickMediaSave:clickMediaSave,
   clickMediaCancel: clickMediaCancel,
   clickNewMedia: clickNewMedia,
-  clickLoginButton: clickLoginButton
+  clickLoginButton: clickLoginButton,
+  setupLoginButton: setupLoginButton
 }
