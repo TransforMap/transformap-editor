@@ -14,45 +14,18 @@ const utils = require('./utils.js')
 
 const endpoint = utils.baseUrl + '/auth/'
 
-var authToken
-
 /* returns the API's endpoint */
 function getAuthEndpoint () {
   return endpoint
 }
 
 function isAlreadyLoggedIn () {
-  return authToken !== undefined
+  return utils.getCookie("session") !== undefined &&  utils.getCookie("session") !== ""
 }
 
-/*
- * Retrieves the auth token from the RP
- * Params:
- *  - callback: function to be called upon success.
- * Returns: false if invalid call
-*/
-function retrieveAuthToken (callback) {
-  if (authToken){
-    console.log('Auth token already available')
-    return authToken
-  }
-
-  var xhr = utils.createCORSRequest('GET', endpoint)
-  xhr.setRequestHeader('Content-Type', 'application/json')
-  xhr.send()
-
-  xhr.onreadystatechange = function () {
-    if (xhr.readyState === 4) {
-      if (xhr.status === 200) {
-        var response = JSON.parse(xhr.responseText)
-        callback(response)
-        authToken = response
-      } else {
-        console.error(xhr)
-      }
-    }
-  }
-
+function getUserIdFromSession() {
+  //TODO deserialize
+  return utils.getCookie("session")
 }
 
 /*
@@ -85,6 +58,6 @@ function logout (authToken,callback) {
 module.exports = {
   getAuthEndpoint: getAuthEndpoint,
   isAlreadyLoggedIn: isAlreadyLoggedIn,
-  retrieveAuthToken: retrieveAuthToken,
+  getUserIdFromSession: getUserIdFromSession,
   logout: logout
 }

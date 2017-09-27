@@ -31,7 +31,13 @@ xhook.after(function(request, response) {
     // /auth/
     if(request.url.match(".*?/auth/")){
       response.status = 200;
-      response.text = JSON.stringify(fixtures.validAuthToken)
+      utils.setCookie("session","123456789")
+    }
+
+    // /user/{userId}
+    if(request.url.match(".*?/user/(.*)")){
+      response.status = 200;
+      response.text = JSON.stringify(fixtures.userWithoutAgreedTos)
     }
 
   }else if (request.method === "POST"){
@@ -65,6 +71,12 @@ xhook.after(function(request, response) {
     if(request.url.match(".*?/place/(.*)")){
       response.status = 200;
       //TBD
+    }
+
+    // /user/{userId}
+    if(request.url.match(".*?/user/(.*)")){
+      response.status = 200;
+      response.text = JSON.stringify(fixtures.userWithAgreedTos)
     }
 
   }else if (request.method === "DELETE"){

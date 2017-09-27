@@ -1,6 +1,7 @@
 const dataApi = require('./data_api.js')
 const mmsApi = require('./mms_api.js')
 const authApi = require('./auth_api.js')
+const userApi = require('./user_api.js')
 const map = require('./map.js')
 const utils = require('./utils.js')
 
@@ -676,6 +677,18 @@ function clickLoginButton(){
   setupLoginButton()
 }
 
+function clickAcceptTosButton(){
+  var userId = authApi.getUserIdFromSession()
+  userApi.getUser(userId,function(user){
+    user["agreedTos"] = true
+    userApi.updateUser(userId,user,function(updatedUser){
+      console.log("user accepted TOS")
+      $("#tos").fadeOut()
+    })
+  })
+
+}
+
 module.exports = {
   fillForm: fillForm,
   addLanguageSwitcher: addLanguageSwitcher,
@@ -691,5 +704,6 @@ module.exports = {
   clickMediaCancel: clickMediaCancel,
   clickNewMedia: clickNewMedia,
   clickLoginButton: clickLoginButton,
-  setupLoginButton: setupLoginButton
+  setupLoginButton: setupLoginButton,
+  clickAcceptTosButton: clickAcceptTosButton
 }

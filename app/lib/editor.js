@@ -5,6 +5,7 @@ const redFetch = require('./red_fetch.js')
 const translations = require('./translations.js')
 const dataApi = require('./data_api.js')
 const authApi = require('./auth_api.js')
+const userApi = require('./user_api.js')
 const ui = require('./ui.js')
 const map = require('./map.js')
 
@@ -21,12 +22,24 @@ module.exports = function () {
   console.log('editor initialize start')
 
   const place = utils.getUrlVars()['place']
+  const showTosMessage = utils.getUrlVars()['showTosMessage']
 
   var startLang = translations.selectAllowedLang(translations.current_lang)
   console.log('lang on start: ' + startLang)
   console.log(translations.supported_languages)
 
   document.getElementById('plus').onclick = ui.addFreeTagsRow
+
+  if (showTosMessage) {
+    var userId = authApi.getUserIdFromSession()
+    if (userId){
+      userApi.getUser(userId, function(user){
+        if (user["agreedTos"] === false){
+          $("#tos").fadeIn()
+        }
+      })
+    }
+  }
 
   if (place) {
     dataApi.getPOI(place,ui.fillForm)
@@ -44,6 +57,7 @@ module.exports = function () {
   document.getElementById('coordsearch').onclick = ui.clickSearch
   document.getElementById('newmedia').onclick = ui.clickNewMedia
   document.getElementById('loginbutton').onclick = ui.clickLoginButton
+  document.getElementById('accepttosbutton').onclick = ui.clickAcceptTosButton
   document.onkeypress = ui.stopRKey
   document.getElementById('mediacancel').onclick = ui.clickMediaCancel
   document.getElementById('mediasave').onclick = ui.clickMediaSave

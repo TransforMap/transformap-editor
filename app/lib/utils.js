@@ -1,6 +1,4 @@
 var currentBlob
-console.log("ENVVVVVV")
-console.log($ENVSTATIC_BASE_URL)
 const baseUrl = $ENVSTATIC_BASE_URL !== "//undefined" ? $ENVSTATIC_BASE_URL : ""
 /*
  * This library provide utility functions
