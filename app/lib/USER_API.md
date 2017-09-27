@@ -4,7 +4,7 @@
 
 Gets the metadata of a certain user
 
-**Endpoint**: /user/{userId}
+**Endpoint**: /users/{userId}
 **Request method**: GET
 **Payload**: No
 **Expected response**: A JSON string containing the metadata of the user
@@ -21,7 +21,7 @@ Gets the metadata of a certain user
 
 Updates the metadata of a certain user
 
-**Endpoint**: /user/{userId}
+**Endpoint**: /users/{userId}
 **Request method**: PUT
 **Payload**: A JSON string containing the updated metadata of the user
 

@@ -39,27 +39,4 @@ describe('DATA API', function() {
 
   });
 
-  describe('retrieveMediaFilesForPOI', function() {
-
-    it('should return false if no uuid is provided', function() {
-      var result = dataApi.retrieveMediaFilesForPOI(undefined,function(){});
-      assert.equal(result, false);
-    });
-
-  });
-
-  describe('removeMediaFileFromPOI', function() {
-
-    it('should return false if no uuid is provided', function() {
-      var result = dataApi.removeMediaFileFromPOI(undefined,'some_media_id',function(){});
-      assert.equal(result, false);
-    });
-
-    it('should return false if no mediaId is provided', function() {
-      var result = dataApi.removeMediaFileFromPOI('some_uuid',undefined,function(){});
-      assert.equal(result, false);
-    });
-
-  });
-
 });

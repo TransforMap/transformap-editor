@@ -1,6 +1,6 @@
 # MMS API endpoints and responses
 
-## createNewMediaFileForPOI
+## createNewMediaFile
 
 Uploads a new media file
 
@@ -196,7 +196,7 @@ Sets a version as currently active
 
 Uploads an asset's binary blob to the MMS
 
-**Endpoint**: /media/{mediaId}/asset
+**Endpoint**: /media/{mediaId}/blob
 **Request method**: POST
 **Payload**: The multipart binary contents of the asset
 

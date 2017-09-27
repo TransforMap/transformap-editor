@@ -34,8 +34,8 @@ xhook.after(function(request, response) {
       utils.setCookie("session","123456789")
     }
 
-    // /user/{userId}
-    if(request.url.match(".*?/user/(.*)")){
+    // /users/{userId}
+    if(request.url.match(".*?/users/(.*)")){
       response.status = 200;
       response.text = JSON.stringify(fixtures.userWithoutAgreedTos)
     }
@@ -73,8 +73,8 @@ xhook.after(function(request, response) {
       //TBD
     }
 
-    // /user/{userId}
-    if(request.url.match(".*?/user/(.*)")){
+    // /users/{userId}
+    if(request.url.match(".*?/users/(.*)")){
       response.status = 200;
       response.text = JSON.stringify(fixtures.userWithAgreedTos)
     }

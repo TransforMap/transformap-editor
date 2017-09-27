@@ -90,90 +90,93 @@ function fillForm (placeData) {
 
 function retrieveAndRenderMediaFilesForPOI(currentData){
   $('#media').html("")
-  dataApi.retrieveMediaFilesForPOI(currentData._id, function(mediaFiles){
-    $('.relatedMediaTitle').text('Related media files' + ' (' + mediaFiles.length + ')')
-    for (var i=0; i < mediaFiles.length; i++){
+  if (currentData.properties.media_files){
+    var mediaFileIds = currentData.properties.media_files.split(';')
+    $('.relatedMediaTitle').text('Related media files' + ' (' + mediaFileIds.length + ')')
+    for (var i=0; i< mediaFileIds.length; i++){
+      var mediaFileId = mediaFileIds[i]
+      mmsApi.retrieveMetadataForMediaFile(mediaFileId, function(mediaFile){
 
-      var row = $('<div class="row mediaFile '+ mediaFiles[i].mediaId + '"></div>')
+        var row = $('<div class="row mediaFile '+ mediaFile.mediaId + '"></div>')
 
-      var info = $('<div class="row mediaInfo"></div>')
-      if (mediaFiles[i].name){
-        info.append("<b>" + mediaFiles[i].name + "</b>")
-      }
-      if (mediaFiles[i].description){
-        info.append("<p>" + mediaFiles[i].description + "</p>")
-      }
-
-      var options = $('<div class="row"></div>')
-
-      var removeButton = $('<a class="mediaOption remove">Remove</h4>')
-      removeButton.on('click',{ metadata : mediaFiles[i], currentData: currentData },function (evt){
-        var data = evt.data
-        console.log("removeButton clicked for mediaFile with id:" + data.metadata.mediaId)
-        if (confirm("Are you sure you want to delete this media file?")) {
-          dataAPI.removeMediaFileFromPOI(data.currentData._id,data.metadata.mediaId,function(){
-            $('.'+data.metadata.mediaId).remove()
-            retrieveAndRenderMediaFilesForPOI(currentData)
-          })
+        var info = $('<div class="row mediaInfo"></div>')
+        if (mediaFile.name){
+          info.append("<b>" + mediaFile.name + "</b>")
         }
-      })
+        if (mediaFile.description){
+          info.append("<p>" + mediaFile.description + "</p>")
+        }
 
-      var editButton = $('<a class="mediaOption edit" data-toggle="modal" data-target="#mediaFileDialog" data-id="' + mediaFiles[i].mediaId + '">Edit</h4>')
-      editButton.on('click',{ metadata : mediaFiles[i], currentData: currentData }, function (evt){
-        var data = evt.data
+        var options = $('<div class="row"></div>')
 
-        utils.resetCurrentBlob()
-
-        console.log("editButton clicked for mediaFile with id:" + data.metadata.id)
-        $('#mediaFileDialogContent').find('.createOrUpdate').text("update")
-        $('#mediaFileDialogContent').find('.mediaId').text(data.metadata.id)
-        $('#mediaFileDialogContent').find('.name').val(data.metadata.name)
-        $('#mediaFileDialogContent').find('.description').val(data.metadata.description)
-        $('#mediaFileDialogContent').find('img').attr("src",data.metadata.url)
-        $('#mediaFileDialogContent').find('img').show()
-        $('#mediaThumbUpload').hide()
-        $('#mediaFileDialogContent').find('.metadata').text(JSON.stringify(data.metadata))
-
-        mmsApi.retrieveMediaFileVersions(data.metadata.id, function(versions){
-          var versionsArray = JSON.parse(versions)
-          if (versionsArray.length > 0){
-            var versionsList = $('<ul class="row"></ul>')
-            for (var i=0; i < versionsArray.length; i++){
-              var version = versionsArray[i]
-              var versionInput = $('<li data-id="' + version.id + '" class="versionItem"><b>' + version.version_date + '</b> - ' + version.name + ' - ' + version.author + '</li></br>')
-              if (version.active){
-                versionInput.append(' ').append('<b>[Active]</b>')
-              }else{
-                var activateLink = $('<a data-id="' + version.id + '" href="#">Activate</a>')
-                activateLink.on("click",{ version : version}, function(evt){
-                  var versionData = evt.data
-                  mmsApi.setActiveMediaFileVersion(data.metadata.id,versionData.version.id, function(){
-                    $('#mediaFileDialog').modal('toggle');
-                  });
-                })
-                versionInput.append(' ').append(activateLink)
-              }
-              versionsList.append(versionInput)
-            }
-            $('.mediaVersions').html(versionsList)
+        var removeButton = $('<a class="mediaOption remove">Remove</h4>')
+        removeButton.on('click',{ metadata : mediaFile, currentData: currentData },function (evt){
+          var data = evt.data
+          console.log("removeButton clicked for mediaFile with id:" + data.metadata.mediaId)
+          if (confirm("Are you sure you want to delete this media file?")) {
+            dataAPI.removeMediaFileFromPOI(data.currentData._id,data.metadata.mediaId,function(){
+              $('.'+data.metadata.mediaId).remove()
+              retrieveAndRenderMediaFilesForPOI(currentData)
+            })
           }
-        });
+        })
+
+        var editButton = $('<a class="mediaOption edit" data-toggle="modal" data-target="#mediaFileDialog" data-id="' + mediaFile.mediaId + '">Edit</h4>')
+        editButton.on('click',{ metadata : mediaFile, currentData: currentData }, function (evt){
+          var data = evt.data
+
+          utils.resetCurrentBlob()
+
+          console.log("editButton clicked for mediaFile with id:" + data.metadata.id)
+          $('#mediaFileDialogContent').find('.createOrUpdate').text("update")
+          $('#mediaFileDialogContent').find('.mediaId').text(data.metadata.id)
+          $('#mediaFileDialogContent').find('.name').val(data.metadata.name)
+          $('#mediaFileDialogContent').find('.description').val(data.metadata.description)
+          $('#mediaFileDialogContent').find('img').attr("src",data.metadata.url)
+          $('#mediaFileDialogContent').find('img').show()
+          $('#mediaThumbUpload').hide()
+          $('#mediaFileDialogContent').find('.metadata').text(JSON.stringify(data.metadata))
+
+          mmsApi.retrieveMediaFileVersions(data.metadata.id, function(versionsArray){
+            if (versionsArray.length > 0){
+              var versionsList = $('<ul class="row"></ul>')
+              for (var i=0; i < versionsArray.length; i++){
+                var version = versionsArray[i]
+                var versionInput = $('<li data-id="' + version.id + '" class="versionItem"><b>' + version.version_date + '</b> - ' + version.name + ' - ' + version.author + '</li></br>')
+                if (version.active){
+                  versionInput.append(' ').append('<b>[Active]</b>')
+                }else{
+                  var activateLink = $('<a data-id="' + version.id + '" href="#">Activate</a>')
+                  activateLink.on("click",{ version : version}, function(evt){
+                    var versionData = evt.data
+                    mmsApi.setActiveMediaFileVersion(data.metadata.id,versionData.version.id, function(){
+                      $('#mediaFileDialog').modal('toggle');
+                    });
+                  })
+                  versionInput.append(' ').append(activateLink)
+                }
+                versionsList.append(versionInput)
+              }
+              $('.mediaVersions').html(versionsList)
+            }
+          });
+        })
+
+        options.append(removeButton)
+        options.append(editButton)
+        info.append(options)
+
+        var imageUrl = 'https://s3.amazonaws.com/FringeBucket/image_placeholder.png'
+        if (mediaFile.mimetype === "image/png" || mediaFile.mimetype === "image/jpeg"){
+          imageUrl = mediaFile.url
+        }
+        row.append('<img class="mediaThumb" src="' + imageUrl + '"/>')
+        row.append(info)
+
+        $('#media').append(row).append('<hr>')
       })
-
-      options.append(removeButton)
-      options.append(editButton)
-      info.append(options)
-
-      var imageUrl = 'https://s3.amazonaws.com/FringeBucket/image_placeholder.png'
-      if (mediaFiles[i].mimetype === "image/png" || mediaFiles[i].mimetype === "image/jpeg"){
-        imageUrl = mediaFiles[i].url
-      }
-      row.append('<img class="mediaThumb" src="' + imageUrl + '"/>')
-      row.append(info)
-
-      $('#media').append(row).append('<hr>')
     }
-  })
+  }
 }
 
 function addLanguageSwitcher(){
@@ -592,12 +595,12 @@ function clickMediaSave () {
         data.url = blob.url
         data.mimetype = blob.mimetype
         data.id = blob.id
-        mmsApi.createNewMediaFileForPOI(poiUUID,data, function(){
+        mmsApi.createNewMediaFile(data, function(){
           $('#mediaFileDialog').modal('toggle');
         })
       })
     }else{
-      mmsApi.createNewMediaFileForPOI(poiUUID,data, function(){
+      mmsApi.createNewMediaFile(data, function(){
         $('#mediaFileDialog').modal('toggle');
       })
     }
@@ -621,16 +624,12 @@ function clickMediaSave () {
         data.mimetype = blob.mimetype
         data.id = blob.id
         mmsApi.addMediaFileVersion(mediaId, data, function(){
-          mmsApi.updateMedataForMediaFile(mediaId, data, function(){
-            $('#mediaFileDialog').modal('toggle');
-          })
+          $('#mediaFileDialog').modal('toggle');
         })
       })
     }else if (metadataChanged){
       mmsApi.addMediaFileVersion(mediaId, data, function(){
-        mmsApi.updateMedataForMediaFile(mediaId, data, function(){
-          $('#mediaFileDialog').modal('toggle');
-        })
+        $('#mediaFileDialog').modal('toggle');
       })
     }
   }

@@ -62,7 +62,8 @@ module.exports = {
       "description":"The organisation acts as an interface between the food industry and social welfare organisations to increase access to food aid in Bulgaria. It sets up routines for guaranteeing that donated food is safe and properly managed.",
       "type_of_initiative":"foodbank; recycling_foodwaste",
       "contact:phone":"+3592 953 4100",
-      "social_facility":"food_bank"
+      "social_facility":"food_bank",
+      "media_files": "6abf3336-4441-458f-a24f-ed76f7f53533"
     },
     "geometry":{
       "type":"Point",

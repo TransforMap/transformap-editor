@@ -12,7 +12,7 @@
 
 const utils = require('./utils.js')
 
-const endpoint = utils.baseUrl + '/user/'
+const endpoint = utils.baseUrl + '/users/'
 
 /* returns the API's endpoint */
 function getUserEndpoint () {

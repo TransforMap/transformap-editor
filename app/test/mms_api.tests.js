@@ -12,15 +12,10 @@ describe('MMS API', function() {
 
   });
 
-  describe('createNewMediaFileForPOI', function() {
-
-    it('should return false if no uuid is provided', function() {
-      var result = mmsApi.createNewMediaFileForPOI(undefined,{"name": "test"},function(){});
-      assert.equal(result, false);
-    });
+  describe('createNewMediaFile', function() {
 
     it('should return false if no data is provided', function() {
-      var result = mmsApi.createNewMediaFileForPOI('some_uuid',undefined,function(){});
+      var result = mmsApi.createNewMediaFile('some_uuid',undefined,function(){});
       assert.equal(result, false);
     });
 
@@ -30,20 +25,6 @@ describe('MMS API', function() {
 
     it('should return false if no mediaId is provided', function() {
       var result = mmsApi.retrieveMetadataForMediaFile(undefined,function(){});
-      assert.equal(result, false);
-    });
-
-  });
-
-  describe('updateMedataForMediaFile', function() {
-
-    it('should return false if no uuid is provided', function() {
-      var result = mmsApi.updateMedataForMediaFile(undefined,{"name": "test"},function(){});
-      assert.equal(result, false);
-    });
-
-    it('should return false if no data is provided', function() {
-      var result = mmsApi.updateMedataForMediaFile('some_uuid',undefined,function(){});
       assert.equal(result, false);
     });
 
