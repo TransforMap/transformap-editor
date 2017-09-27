@@ -91,7 +91,7 @@ function fillForm (placeData) {
 function retrieveAndRenderMediaFilesForPOI(currentData){
   $('#media').html("")
   if (currentData.properties.media_files){
-    var mediaFileIds = currentData.properties.media_files.split(';')
+    var mediaFileIds = currentData.properties.media_files
     $('.relatedMediaTitle').text('Related media files' + ' (' + mediaFileIds.length + ')')
     for (var i=0; i< mediaFileIds.length; i++){
       var mediaFileId = mediaFileIds[i]
@@ -581,7 +581,7 @@ function stopRKey (evt) {
 }
 
 function clickMediaSave () {
-  var poiUUID = $('#mediaFileDialogContent').find('.poiUUID').text()
+  var poi = JSON.parse($('#mediaFileDialogContent').find('.poi').text())
   var mediaId = $('#mediaFileDialogContent').find('.mediaId').text()
 
   if ($('#mediaFileDialogContent').find('.createOrUpdate').text() == "create"){
@@ -601,7 +601,13 @@ function clickMediaSave () {
       })
     }else{
       mmsApi.createNewMediaFile(data, function(){
-        $('#mediaFileDialog').modal('toggle');
+        if (!poi.media_files){
+          poi.media_files = []
+        }
+        poi.media_files.indexOf(mediaId) === -1 ? poi.media_files.push(mediaId) : console.log("This media file is already associated with the POI");
+        dataApi.updatePOI(poi.id,poi, function(place){
+          $('#mediaFileDialog').modal('toggle');
+        })
       })
     }
   }else if ($('#mediaFileDialogContent').find('.createOrUpdate').text() == "update"){
@@ -646,7 +652,7 @@ function clickNewMedia(){
 
   console.log("newMedia button clicked")
   $('#mediaFileDialogContent').find('.createOrUpdate').text("create")
-  $('#mediaFileDialogContent').find('.poiUUID').text(currentData._id)
+  $('#mediaFileDialogContent').find('.poi').text(JSON.stringify(currentData))
   $('#mediaFileDialogContent').find('.name').val("")
   $('#mediaFileDialogContent').find('.description').val("")
   $('#mediaFileDialogContent').find('img').hide()

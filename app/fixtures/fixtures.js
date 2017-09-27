@@ -63,7 +63,9 @@ module.exports = {
       "type_of_initiative":"foodbank; recycling_foodwaste",
       "contact:phone":"+3592 953 4100",
       "social_facility":"food_bank",
-      "media_files": "6abf3336-4441-458f-a24f-ed76f7f53533"
+      "media_files": [
+        "6abf3336-4441-458f-a24f-ed76f7f53533"
+      ]
     },
     "geometry":{
       "type":"Point",
