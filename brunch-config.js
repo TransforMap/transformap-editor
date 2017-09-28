@@ -5,7 +5,11 @@ module.exports = {
       'leaflet-draw': ['dist/leaflet.draw.css'],
     },
   },
-
+  conventions: {
+    ignored: [
+      /^app\/test/
+    ],
+  },
   files: {
     javascripts: {
       joinTo: {
