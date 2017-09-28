@@ -46,7 +46,6 @@ and run it:
     cd app/
     standard --fix
 
-
 # Deployment
 
 ## Production environment

@@ -1,3 +1,5 @@
+global.$ENVSTATIC_BASE_URL = "https://domain";
+
 var assert = require('assert');
 var mmsApi = require('../lib/mms_api.js')
 
@@ -7,7 +9,7 @@ describe('MMS API', function() {
 
     it('should return https://data.transformap.co/media/', function() {
       var endpoint = mmsApi.getMMSEndpoint();
-      assert.equal(endpoint, "https://data.transformap.co/media/");
+      assert.equal(endpoint, "https://domain/media/");
     });
 
   });
@@ -15,7 +17,7 @@ describe('MMS API', function() {
   describe('createNewMediaFile', function() {
 
     it('should return false if no data is provided', function() {
-      var result = mmsApi.createNewMediaFile('some_uuid',undefined,function(){});
+      var result = mmsApi.createNewMediaFile(undefined,function(){});
       assert.equal(result, false);
     });
 
