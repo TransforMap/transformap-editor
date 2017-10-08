@@ -68,7 +68,6 @@ function handleFileSelect(evt,callback) {
     currentBlob = contents;
     $('#mediaFileDialogContent').find('img').attr('src', contents);
     $('#mediaFileDialogContent').find('img').show();
-    $('#mediaThumbUpload').hide();
   };
 
   reader.onerror = function(event) {

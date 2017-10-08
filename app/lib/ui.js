@@ -136,8 +136,9 @@ function retrieveAndRenderMediaFilesForPOI(currentData){
           $('#mediaFileDialogContent').find('.description').val(data.metadata.description);
           $('#mediaFileDialogContent').find('img').attr("src",data.metadata.url);
           $('#mediaFileDialogContent').find('img').show();
-          $('#mediaThumbUpload').hide();
           $('#mediaFileDialogContent').find('.metadata').text(JSON.stringify(data.metadata));
+
+          document.getElementById('mediaThumbUpload').addEventListener('change', utils.handleFileSelect, false);
 
           mmsApi.retrieveMediaFileVersions(data.metadata.id, function(versionsArray){
             if (versionsArray.length > 0){
@@ -606,15 +607,7 @@ function clickMediaSave () {
         });
       });
     }else{
-      mmsApi.createNewMediaFile(data, function(){
-        if (!poi.media_files){
-          poi.media_files = [];
-        }
-        poi.media_files.indexOf(mediaId) === -1 ? poi.media_files.push(mediaId) : console.log("This media file is already associated with the POI");
-        dataApi.updatePOI(poi.id,poi, function(place){
-          $('#mediaFileDialog').modal('toggle');
-        });
-      });
+      alert("Please add an asset");
     }
   }else if ($('#mediaFileDialogContent').find('.createOrUpdate').text() == "update"){
     var metadataChanged = false;
@@ -662,7 +655,6 @@ function clickNewMedia(){
   $('#mediaFileDialogContent').find('.name').val("");
   $('#mediaFileDialogContent').find('.description').val("");
   $('#mediaFileDialogContent').find('img').hide();
-  $('#mediaThumbUpload').show();
   $('#mediaFileDialogContent').find('.metadata').text("");
   $('#mediaFileDialogContent').find('.mediaVersions').html("");
 
