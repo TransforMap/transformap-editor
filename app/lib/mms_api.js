@@ -10,13 +10,13 @@
  * To Public License, Version 2, as published by Sam Hocevar. See
  * http://www.wtfpl.net/ for more details. */
 
-const utils = require('./utils.js')
+const utils = require('./utils.js');
 
-const endpoint = utils.baseUrl + '/media/'
+const endpoint = utils.baseUrl + '/media/';
 
 /* returns the API's endpoint */
 function getMMSEndpoint () {
-  return endpoint
+  return endpoint;
 }
 
 /*
@@ -29,23 +29,23 @@ function getMMSEndpoint () {
 function createNewMediaFile (data, callback) {
 
   if (!data) {
-    console.error('createNewMediaFile: no data given')
-    return false
+    console.error('createNewMediaFile: no data given');
+    return false;
   }
 
-  var xhr = utils.createCORSRequest('POST', getMMSEndpoint())
-  xhr.setRequestHeader('Content-Type', 'application/json')
-  xhr.send(data)
+  var xhr = utils.createCORSRequest('POST', getMMSEndpoint());
+  xhr.setRequestHeader('Content-Type', 'application/json');
+  xhr.send(data);
 
   xhr.onreadystatechange = function () {
     if (xhr.readyState === 4) {
       if (xhr.status === 200) {
-        callback(JSON.parse(xhr.responseText))
+        callback(JSON.parse(xhr.responseText));
       } else {
-        console.error(xhr)
+        console.error(xhr);
       }
     }
-  }
+  };
 }
 
 /*
@@ -57,23 +57,23 @@ function createNewMediaFile (data, callback) {
 */
 function retrieveMetadataForMediaFile (mediaId, callback) {
   if (!mediaId) {
-    console.error('retrieveMetadataForMediaFile: no mediaId given')
-    return false
+    console.error('retrieveMetadataForMediaFile: no mediaId given');
+    return false;
   }
 
-  var xhr = utils.createCORSRequest('GET', getMMSEndpoint() + mediaId)
-  xhr.setRequestHeader('Content-Type', 'application/json')
-  xhr.send()
+  var xhr = utils.createCORSRequest('GET', getMMSEndpoint() + mediaId);
+  xhr.setRequestHeader('Content-Type', 'application/json');
+  xhr.send();
 
   xhr.onreadystatechange = function () {
     if (xhr.readyState === 4) {
       if (xhr.status === 200) {
-        callback(JSON.parse(xhr.responseText))
+        callback(JSON.parse(xhr.responseText));
       } else {
-        console.error(xhr)
+        console.error(xhr);
       }
     }
-  }
+  };
 }
 
 /*
@@ -85,23 +85,23 @@ function retrieveMetadataForMediaFile (mediaId, callback) {
 */
 function retrieveMediaFileVersions (mediaId, callback) {
   if (!mediaId) {
-    console.error('retrieveMediaFileVersions: no mediaId given')
-    return false
+    console.error('retrieveMediaFileVersions: no mediaId given');
+    return false;
   }
 
-  var xhr = utils.createCORSRequest('GET', getMMSEndpoint() + mediaId + '/versions')
-  xhr.setRequestHeader('Content-Type', 'application/json')
-  xhr.send()
+  var xhr = utils.createCORSRequest('GET', getMMSEndpoint() + mediaId + '/versions');
+  xhr.setRequestHeader('Content-Type', 'application/json');
+  xhr.send();
 
   xhr.onreadystatechange = function () {
     if (xhr.readyState === 4) {
       if (xhr.status === 200) {
-        callback(JSON.parse(xhr.responseText))
+        callback(JSON.parse(xhr.responseText));
       } else {
-        console.error(xhr)
+        console.error(xhr);
       }
     }
-  }
+  };
 }
 
 /*
@@ -114,27 +114,27 @@ function retrieveMediaFileVersions (mediaId, callback) {
 */
 function addMediaFileVersion (mediaId, data, callback) {
   if (!mediaId) {
-    console.error('addMediaFileVersion: no mediaId given')
-    return false
+    console.error('addMediaFileVersion: no mediaId given');
+    return false;
   }
   if (!data) {
-    console.error('addMediaFileVersion: no data given')
-    return false
+    console.error('addMediaFileVersion: no data given');
+    return false;
   }
 
-  var xhr = utils.createCORSRequest('POST', getMMSEndpoint() + mediaId + '/versions')
-  xhr.setRequestHeader('Content-Type', 'application/json')
-  xhr.send(data)
+  var xhr = utils.createCORSRequest('POST', getMMSEndpoint() + mediaId + '/versions');
+  xhr.setRequestHeader('Content-Type', 'application/json');
+  xhr.send(data);
 
   xhr.onreadystatechange = function () {
     if (xhr.readyState === 4) {
       if (xhr.status === 200) {
-        callback(JSON.parse(xhr.responseText))
+        callback(JSON.parse(xhr.responseText));
       } else {
-        console.error(xhr)
+        console.error(xhr);
       }
     }
-  }
+  };
 }
 
 /*
@@ -147,52 +147,52 @@ function addMediaFileVersion (mediaId, data, callback) {
 */
 function setActiveMediaFileVersion (mediaId, versionId, callback) {
   if (!mediaId) {
-    console.error('setActiveMediaFileVersion: no mediaId given')
-    return false
+    console.error('setActiveMediaFileVersion: no mediaId given');
+    return false;
   }
   if (!versionId) {
-    console.error('setActiveMediaFileVersion: no versionId given')
-    return false
+    console.error('setActiveMediaFileVersion: no versionId given');
+    return false;
   }
 
-  var xhr = utils.createCORSRequest('POST', getMMSEndpoint() + mediaId + '/versions/' + versionId)
-  xhr.setRequestHeader('Content-Type', 'application/json')
-  xhr.send()
+  var xhr = utils.createCORSRequest('POST', getMMSEndpoint() + mediaId + '/versions/' + versionId);
+  xhr.setRequestHeader('Content-Type', 'application/json');
+  xhr.send();
 
   xhr.onreadystatechange = function () {
     if (xhr.readyState === 4) {
       if (xhr.status === 200) {
-        callback(JSON.parse(xhr.responseText))
+        callback(JSON.parse(xhr.responseText));
       } else {
-        console.error(xhr)
+        console.error(xhr);
       }
     }
-  }
+  };
 }
 
 function uploadBlob(mediaId, blob, callback){
   if (!mediaId) {
-    console.error('uploadBlob: no mediaId given')
-    return false
+    console.error('uploadBlob: no mediaId given');
+    return false;
   }
   if (!blob) {
-    console.error('uploadBlob: no blob given')
-    return false
+    console.error('uploadBlob: no blob given');
+    return false;
   }
 
-  var xhr = utils.createCORSRequest('POST', getMMSEndpoint() + mediaId + '/blob')
-  xhr.setRequestHeader('Content-Type', 'multipart/form-data')
-  xhr.send(blob)
+  var xhr = utils.createCORSRequest('POST', getMMSEndpoint() + mediaId + '/blob');
+  xhr.setRequestHeader('Content-Type', 'multipart/form-data');
+  xhr.send(blob);
 
   xhr.onreadystatechange = function () {
     if (xhr.readyState === 4) {
       if (xhr.status === 200) {
-        callback(JSON.parse(xhr.responseText))
+        callback(JSON.parse(xhr.responseText));
       } else {
-        console.error(xhr)
+        console.error(xhr);
       }
     }
-  }
+  };
 }
 
 module.exports = {
@@ -203,4 +203,4 @@ module.exports = {
   addMediaFileVersion: addMediaFileVersion,
   setActiveMediaFileVersion: setActiveMediaFileVersion,
   uploadBlob: uploadBlob
-}
+};

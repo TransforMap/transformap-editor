@@ -1,7 +1,7 @@
 global.$ENVSTATIC_BASE_URL = "https://domain";
 
 var assert = require('assert');
-var mmsApi = require('../lib/mms_api.js')
+var mmsApi = require('../lib/mms_api.js');
 
 describe('MMS API', function() {
 

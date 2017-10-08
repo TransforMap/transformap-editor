@@ -1,7 +1,7 @@
 global.$ENVSTATIC_BASE_URL = "https://domain";
 
 var assert = require('assert');
-var dataApi = require('../lib/data_api.js')
+var dataApi = require('../lib/data_api.js');
 
 describe('DATA API', function() {
 

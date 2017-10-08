@@ -1,6 +1,6 @@
-var currentBlob
+var currentBlob;
 
-const baseUrl = $ENVSTATIC_BASE_URL !== "//undefined" ? $ENVSTATIC_BASE_URL : ""
+const baseUrl = $ENVSTATIC_BASE_URL !== "//undefined" ? $ENVSTATIC_BASE_URL : "";
 /*
  * This library provide utility functions
  *
@@ -19,86 +19,86 @@ const baseUrl = $ENVSTATIC_BASE_URL !== "//undefined" ? $ENVSTATIC_BASE_URL : ""
 
 function createCORSRequest (method, url) {
   // taken from https://www.html5rocks.com/en/tutorials/cors/
-  var xhr = new XMLHttpRequest()
+  var xhr = new XMLHttpRequest();
   if ('withCredentials' in xhr) {
     // Check if the XMLHttpRequest object has a "withCredentials" property.
     // "withCredentials" only exists on XMLHTTPRequest2 objects.
-    xhr.open(method, url, true)
+    xhr.open(method, url, true);
   } else if (typeof XDomainRequest !== 'undefined') {
     // Otherwise, check if XDomainRequest.
     // XDomainRequest only exists in IE, and is IE's way of making CORS requests.
-    xhr = new XDomainRequest()
-    xhr.open(method, url)
+    xhr = new XDomainRequest();
+    xhr.open(method, url);
   } else {
     // Otherwise, CORS is not supported by the browser.
-    xhr = null
+    xhr = null;
   }
-  return xhr
+  return xhr;
 }
 
 function getUrlVars () {
-  var vars = {}
+  var vars = {};
   var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function (m, key, value) {
-    vars[key] = value.replace(/#.*$/, '')
-  })
-  return vars
+    vars[key] = value.replace(/#.*$/, '');
+  });
+  return vars;
 }
 
 function getUrlPath(url){
   var reg = /.+?\:\/\/.+?(\/.+?)(?:#|\?|$)/;
-  return reg.exec(url)[1]
+  return reg.exec(url)[1];
 }
 
 function generateUUID() {
-    var d = new Date().getTime()
+    var d = new Date().getTime();
     var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-        var r = (d + Math.random()*16)%16 | 0
-        d = Math.floor(d/16)
-        return (c=='x' ? r : (r&0x3|0x8)).toString(16)
-    })
-    return uuid
+        var r = (d + Math.random()*16)%16 | 0;
+        d = Math.floor(d/16);
+        return (c=='x' ? r : (r&0x3|0x8)).toString(16);
+    });
+    return uuid;
 }
 
 function handleFileSelect(evt,callback) {
-  var files = evt.target.files
-  var reader = new FileReader()
+  var files = evt.target.files;
+  var reader = new FileReader();
 
   reader.onload = function(event) {
-    var contents = event.target.result
-    currentBlob = contents
-    $('#mediaFileDialogContent').find('img').attr('src', contents)
-    $('#mediaFileDialogContent').find('img').show()
-    $('#mediaThumbUpload').hide()
-  }
+    var contents = event.target.result;
+    currentBlob = contents;
+    $('#mediaFileDialogContent').find('img').attr('src', contents);
+    $('#mediaFileDialogContent').find('img').show();
+    $('#mediaThumbUpload').hide();
+  };
 
   reader.onerror = function(event) {
-    console.error("File could not be read! Code " + event.target.error.code)
-    ui.currentBlob = undefined
-  }
+    console.error("File could not be read! Code " + event.target.error.code);
+    ui.currentBlob = undefined;
+  };
 
   var accept = {
     binary : ["image/png", "image/jpeg"]
-  }
+  };
 
-  var file
+  var file;
 
   for (var i = 0; i < files.length; i++) {
-    file = files[i]
+    file = files[i];
 
     if (file !== null) {
       if (accept.binary.indexOf(file.type) > -1) {
-        reader.readAsDataURL(file)
+        reader.readAsDataURL(file);
       }
     }
   }
 }
 
 function getCurrentBlob(){
-  return currentBlob
+  return currentBlob;
 }
 
 function resetCurrentBlob(){
-  currentBlob = undefined
+  currentBlob = undefined;
 }
 
 function getCookie(cname) {
@@ -136,4 +136,4 @@ module.exports = {
   resetCurrentBlob: resetCurrentBlob,
   getCookie: getCookie,
   setCookie: setCookie
-}
+};

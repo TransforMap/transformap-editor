@@ -10,13 +10,13 @@
  * To Public License, Version 2, as published by Sam Hocevar. See
  * http://www.wtfpl.net/ for more details. */
 
-const utils = require('./utils.js')
+const utils = require('./utils.js');
 
-const endpoint = utils.baseUrl + '/place/'
+const endpoint = utils.baseUrl + '/place/';
 
 /* returns the API's endpoint */
 function getDataEndpoint () {
-  return endpoint
+  return endpoint;
 }
 
 /*
@@ -29,30 +29,30 @@ function getDataEndpoint () {
 */
 function createOrUpdatePOI (uuid, data, callback) {
   if (!data) {
-    console.error('updateOrCreatePOI: no data given')
-    return false
+    console.error('updateOrCreatePOI: no data given');
+    return false;
   }
 
-  var xhr = utils.createCORSRequest(uuid ? 'PUT' : 'POST', endpoint + uuid)
-  xhr.setRequestHeader('Content-Type', 'application/json')
-  xhr.send(data)
+  var xhr = utils.createCORSRequest(uuid ? 'PUT' : 'POST', endpoint + uuid);
+  xhr.setRequestHeader('Content-Type', 'application/json');
+  xhr.send(data);
 
   xhr.onreadystatechange = function () {
     if (xhr.readyState === 4) {
       if (xhr.status === 200) {
-        var retJson = JSON.parse(xhr.responseText)
-        console.log(retJson)
+        var retJson = JSON.parse(xhr.responseText);
+        console.log(retJson);
         if (retJson.id) {
-          callback(retJson.id)
-          alert('Save successful')
+          callback(retJson.id);
+          alert('Save successful');
         } else {
-          alert('Error: something wrent wrong on saving: ' + JSON.stringify(retJson))
+          alert('Error: something wrent wrong on saving: ' + JSON.stringify(retJson));
         }
       } else {
-        console.error(xhr)
+        console.error(xhr);
       }
     }
-  }
+  };
 }
 
 /*
@@ -65,23 +65,23 @@ function createOrUpdatePOI (uuid, data, callback) {
 */
 function getPOI (uuid, callback) {
   if (!uuid) {
-    console.error('getPOI: no uuid given')
-    return false
+    console.error('getPOI: no uuid given');
+    return false;
   }
 
-  var xhr = utils.createCORSRequest('GET', getDataEndpoint() + uuid)
-  xhr.setRequestHeader('Content-Type', 'application/json')
-  xhr.send()
+  var xhr = utils.createCORSRequest('GET', getDataEndpoint() + uuid);
+  xhr.setRequestHeader('Content-Type', 'application/json');
+  xhr.send();
 
   xhr.onreadystatechange = function () {
     if (xhr.readyState === 4) {
       if (xhr.status === 200) {
-        callback(JSON.parse(xhr.responseText))
+        callback(JSON.parse(xhr.responseText));
       } else {
-        console.error(xhr)
+        console.error(xhr);
       }
     }
-  }
+  };
 }
 
 
@@ -94,22 +94,22 @@ function getPOI (uuid, callback) {
 */
 function deletePOI (uuid, callback) {
   if (!uuid) {
-    console.error('deletePOI: no uuid given')
-    return false
+    console.error('deletePOI: no uuid given');
+    return false;
   }
 
-  var xhr = utils.createCORSRequest('DELETE', endpoint + uuid)
-  xhr.send()
+  var xhr = utils.createCORSRequest('DELETE', endpoint + uuid);
+  xhr.send();
 
   xhr.onreadystatechange = function () {
     if (xhr.readyState === 4) {
       if (xhr.status === 200) {
-        callback(uuid)
+        callback(uuid);
       } else {
-        console.error(xhr)
+        console.error(xhr);
       }
     }
-  }
+  };
 }
 
 module.exports = {
@@ -117,4 +117,4 @@ module.exports = {
   createOrUpdatePOI: createOrUpdatePOI,
   getPOI: getPOI,
   deletePOI: deletePOI
-}
+};
