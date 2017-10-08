@@ -682,18 +682,6 @@ function clickLoginButton(){
   setupLoginButton()
 }
 
-function clickAcceptTosButton(){
-  var userId = authApi.getUserIdFromSession()
-  userApi.getUser(userId,function(user){
-    user["agreedTos"] = true
-    userApi.updateUser(userId,user,function(updatedUser){
-      console.log("user accepted TOS")
-      $("#tos").fadeOut()
-    })
-  })
-
-}
-
 module.exports = {
   fillForm: fillForm,
   addLanguageSwitcher: addLanguageSwitcher,
@@ -709,6 +697,5 @@ module.exports = {
   clickMediaCancel: clickMediaCancel,
   clickNewMedia: clickNewMedia,
   clickLoginButton: clickLoginButton,
-  setupLoginButton: setupLoginButton,
-  clickAcceptTosButton: clickAcceptTosButton
+  setupLoginButton: setupLoginButton
 }

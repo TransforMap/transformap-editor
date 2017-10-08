@@ -115,15 +115,8 @@ module.exports = {
       "url": "https://base.transformap.co/images/transformap.png"
     }
   ],
-  userWithoutAgreedTos: {
+  user: {
     "name": "Joe",
-    "email": "joe@domain.com",
-    "agreedTos": false
+    "email": "joe@domain.com"
   }
-  ,
-  userWithAgreedTos: {
-    "name": "Joe",
-    "email": "joe@domain.com",
-    "agreedTos": false
-  }
-}
+};

@@ -12,8 +12,7 @@ Gets the metadata of a certain user
 ```json
 {
   "name": "Joe",
-  "email": "joe@domain.com",
-  "agreedTos": false
+  "email": "joe@domain.com"
 }
 ```
 
@@ -28,8 +27,7 @@ Updates the metadata of a certain user
 ```json
 {
   "name": "Joe",
-  "email": "joe@domain.com",
-  "agreedTos": true
+  "email": "joe@domain.com"
 }
 ```
 
@@ -37,8 +35,7 @@ Updates the metadata of a certain user
 
 ```json
 {
-  "name": "Joe",
-  "email": "joe@domain.com",
-  "agreedTos": true
+  "name": "Joe Doe",
+  "email": "joe@domain.com"
 }
 ```

@@ -37,7 +37,7 @@ xhook.after(function(request, response) {
     // /users/{userId}
     if(request.url.match(".*?/users/(.*)")){
       response.status = 200;
-      response.text = JSON.stringify(fixtures.userWithoutAgreedTos)
+      response.text = JSON.stringify(fixtures.user)
     }
 
   }else if (request.method === "POST"){
@@ -76,7 +76,7 @@ xhook.after(function(request, response) {
     // /users/{userId}
     if(request.url.match(".*?/users/(.*)")){
       response.status = 200;
-      response.text = JSON.stringify(fixtures.userWithAgreedTos)
+      response.text = JSON.stringify(fixtures.user)
     }
 
   }else if (request.method === "DELETE"){
