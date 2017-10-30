@@ -10,22 +10,21 @@
  * To Public License, Version 2, as published by Sam Hocevar. See
  * http://www.wtfpl.net/ for more details. */
 
-const utils = require('./utils.js')
+const utils = require('./utils.js');
 
-const endpoint = utils.baseUrl + '/auth/'
+const endpoint = utils.baseUrl + '/auth/';
 
 /* returns the API's endpoint */
 function getAuthEndpoint () {
-  return endpoint
+  return endpoint;
 }
 
 function isAlreadyLoggedIn () {
-  return utils.getCookie("session") !== undefined &&  utils.getCookie("session") !== ""
+  return utils.getCookie("session") !== undefined &&  utils.getCookie("session") !== "";
 }
 
 function getUserIdFromSession() {
-  //TODO deserialize
-  return utils.getCookie("session")
+  return utils.getCookie("session");
 }
 
 /*
@@ -36,23 +35,24 @@ function getUserIdFromSession() {
 */
 function logout (authToken,callback) {
   if (!authToken){
-    console.log('logout: no authToken given')
-    return false
+    console.log('logout: no authToken given');
+    return false;
   }
 
-  var xhr = utils.createCORSRequest('GET', endpoint)
-  xhr.setRequestHeader('Content-Type', 'application/json')
-  xhr.send()
+  var xhr = utils.createCORSRequest('GET', endpoint);
+  xhr.setRequestHeader('Content-Type', 'application/json');
+  xhr.withCredentials = true;
+  xhr.send();
 
   xhr.onreadystatechange = function () {
     if (xhr.readyState === 4) {
       if (xhr.status === 200) {
-        callback(JSON.parse(xhr.responseText))
+        callback(JSON.parse(xhr.responseText));
       } else {
-        console.error(xhr)
+        console.error(xhr);
       }
     }
-  }
+  };
 }
 
 module.exports = {
@@ -60,4 +60,4 @@ module.exports = {
   isAlreadyLoggedIn: isAlreadyLoggedIn,
   getUserIdFromSession: getUserIdFromSession,
   logout: logout
-}
+};

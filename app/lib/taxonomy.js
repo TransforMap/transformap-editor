@@ -13,11 +13,13 @@
 /* takes the language (string:"iso"), and the wished taxonomy (string: "Qnn") */
 function getLangTaxURL (lang, taxonomy) {
   if (!lang) {
-    console.error('setFilterLang: no lang given')
-    return false
+    console.error('setFilterLang: no lang given');
+    return false;
   }
 
-  if (!taxonomy) { taxonomy = 'Q8' }
+  if (!taxonomy) {
+     taxonomy = 'Q8';
+  }
 
   var tax_query =
     'prefix bd: <http://www.bigdata.com/rdf#> ' +
@@ -36,11 +38,11 @@ function getLangTaxURL (lang, taxonomy) {
       'OPTIONAL { ?item schema:description ?description FILTER(LANG(?description) = "' + lang + '") }' +
       'OPTIONAL { ?wikipedia schema:about ?item . ?wikipedia schema:inLanguage "en"}' +
       'SERVICE wikibase:label {bd:serviceParam wikibase:language "' + lang + '" }' +
-    '}'
+    '}';
 
-  return 'https://query.base.transformap.co/bigdata/namespace/transformap/sparql?query=' + encodeURIComponent(tax_query) + '&format=json'
+  return 'https://query.base.transformap.co/bigdata/namespace/transformap/sparql?query=' + encodeURIComponent(tax_query) + '&format=json';
 }
 
 module.exports = {
   getLangTaxURL: getLangTaxURL
-}
+};

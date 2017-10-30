@@ -7,37 +7,37 @@ xhook.after(function(request, response) {
     // /place/{uuid}
     if(request.url.match(".*?/place/(.*)")){
       response.status = 200;
-      response.text = JSON.stringify(fixtures.placeMetadata)
+      response.text = JSON.stringify(fixtures.placeMetadata);
     }
 
     // /place/{uuid}/media
     if(request.url.match(".*?/place/(.*)/media")){
       response.status = 200;
-      response.text = JSON.stringify(fixtures.listOfMediaFilesForPOI)
+      response.text = JSON.stringify(fixtures.listOfMediaFilesForPOI);
     }
 
     // /media/{uuid}
     if(request.url.match(".*?/media/(.*)")){
       response.status = 200;
-      response.text = JSON.stringify(fixtures.mediaFileMetadataComplete)
+      response.text = JSON.stringify(fixtures.mediaFileMetadataComplete);
     }
 
     // /media/{uuid}/versions
     if(request.url.match(".*?/media/(.*)/versions")){
       response.status = 200;
-      response.text = JSON.stringify(fixtures.listOfMediaFileVersions)
+      response.text = JSON.stringify(fixtures.listOfMediaFileVersions);
     }
 
     // /auth/
     if(request.url.match(".*?/auth/")){
       response.status = 200;
-      utils.setCookie("session","123456789")
+      utils.setCookie("session","123456789");
     }
 
     // /users/{userId}
     if(request.url.match(".*?/users/(.*)")){
       response.status = 200;
-      response.text = JSON.stringify(fixtures.userWithoutAgreedTos)
+      response.text = JSON.stringify(fixtures.user);
     }
 
   }else if (request.method === "POST"){
@@ -45,13 +45,13 @@ xhook.after(function(request, response) {
     // /media
     if(request.url.match(".*?/media/")){
       response.status = 201;
-      response.text = JSON.stringify(fixtures.mediaFileMetadataComplete)
+      response.text = JSON.stringify(fixtures.mediaFileMetadataComplete);
     }
 
     // /media
     if(request.url.match(".*?/media/(.*)/versions")){
       response.status = 201;
-      response.text = JSON.stringify(fixtures.listOfMediaFileVersionsUpdate)
+      response.text = JSON.stringify(fixtures.listOfMediaFileVersionsUpdate);
     }
 
     // /place
@@ -64,7 +64,7 @@ xhook.after(function(request, response) {
     // /media/{uuid}
     if(request.url.match(".*?/media/(.*)")){
       response.status = 200;
-      response.text = JSON.stringify(fixtures.mediaFileMetadataComplete)
+      response.text = JSON.stringify(fixtures.mediaFileMetadataComplete);
     }
 
     // /place/{uuid}
@@ -76,7 +76,7 @@ xhook.after(function(request, response) {
     // /users/{userId}
     if(request.url.match(".*?/users/(.*)")){
       response.status = 200;
-      response.text = JSON.stringify(fixtures.userWithAgreedTos)
+      response.text = JSON.stringify(fixtures.user);
     }
 
   }else if (request.method === "DELETE"){
@@ -90,7 +90,7 @@ xhook.after(function(request, response) {
     // /media/{uuid}
     if(request.url.match(".*?/place/(.*)/media/(.*)")){
       response.status = 200;
-      response.text = JSON.stringify(fixtures.placeMetadata)
+      response.text = JSON.stringify(fixtures.placeMetadata);
     }
 
     // /auth/{token}
@@ -99,4 +99,4 @@ xhook.after(function(request, response) {
     }
   }
 
-})
+});

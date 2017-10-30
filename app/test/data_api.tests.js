@@ -1,5 +1,7 @@
+global.$ENVSTATIC_BASE_URL = "https://domain";
+
 var assert = require('assert');
-var dataApi = require('../lib/data_api.js')
+var dataApi = require('../lib/data_api.js');
 
 describe('DATA API', function() {
 
@@ -7,7 +9,7 @@ describe('DATA API', function() {
 
     it('should return https://data.transformap.co/place/', function() {
       var endpoint = dataApi.getDataEndpoint();
-      assert.equal(endpoint, "https://data.transformap.co/place/");
+      assert.equal(endpoint, "https://domain/place/");
     });
 
   });

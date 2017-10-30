@@ -1,13 +1,15 @@
-const redFetch = require('./red_fetch.js')
-const taxonomy = require('./taxonomy.js')
-const ui = require('./ui.js')
+const redFetch = require('./red_fetch.js');
+const taxonomy = require('./taxonomy.js');
+const ui = require('./ui.js');
 
 // mostly taken from https://github.com/TransforMap/transformap-viewer/blob/gh-pages/scripts/map.js
 
 function getLangs () {
-  var language = window.navigator.languages ? window.navigator.languages[0] : (window.navigator.language || window.navigator.userLanguage)
+  var language = window.navigator.languages ? window.navigator.languages[0] : (window.navigator.language || window.navigator.userLanguage);
 
-  if (typeof language === 'string') { language = [ language ] }
+  if (typeof language === 'string') {
+    language = [ language ];
+  }
 
   // we need to have the following languages:
   // browserlang
@@ -16,41 +18,45 @@ function getLangs () {
 
   for (var i = 0; i < language.length; i++) {
     if (language[i].match(/-/)) {
-      var short_lang = language[i].match(/^([a-zA-Z]*)-/)[1]
+      var short_lang = language[i].match(/^([a-zA-Z]*)-/)[1];
       if (language.indexOf(short_lang) == -1) {
-        language.push(short_lang)
-        continue
+        language.push(short_lang);
+        continue;
       }
     }
   }
 
-  if (language.indexOf('en') == -1) { language.push('en') }
+  if (language.indexOf('en') == -1) {
+    language.push('en')
+  };
 
-  console.log(language)
-  return language
+  console.log(language);
+  return language;
 }
 
 function setFallbackLangs () {
-  fallback_langs = []
+  fallback_langs = [];
   if (current_lang != 'en') {
     for (var i = 0; i < browser_languages.length; i++) {
-      var abbr = browser_languages[i]
-      if (current_lang != abbr) { fallback_langs.push(abbr) }
+      var abbr = browser_languages[i];
+      if (current_lang != abbr) {
+        fallback_langs.push(abbr);
+      }
     }
   }
-  console.log('new fallback langs: ' + fallback_langs.join(',') + '.')
+  console.log('new fallback langs: ' + fallback_langs.join(',') + '.');
 }
 
 function resetLang () {
-  current_lang = 'en'
+  current_lang = 'en';
   for (var i = 0; i < browser_languages.length; i++) {
-    var abbr = browser_languages[i]
+    var abbr = browser_languages[i];
     if (abbr_langnames[abbr]) {
-      current_lang = abbr
-      break
+      current_lang = abbr;
+      break;
     }
   }
-  switchToLang(current_lang)
+  switchToLang(current_lang);
 }
 
 /* get languages for UI from our Wikibase, and pick languages that are translated there */
@@ -58,14 +64,14 @@ function resetLang () {
 var supported_languages = [],
   langnames = [],
   abbr_langnames = {},
-  langnames_abbr = {}
+  langnames_abbr = {};
 
 function initializeLanguageSwitcher (returned_data) {
-  var lang
+  var lang;
   for (lang in returned_data.entities.Q5.labels) { // Q5 is arbitrary. Choose one that gets translated for sure.
-    supported_languages.push(lang)
+    supported_languages.push(lang);
   }
-  var langstr = supported_languages.join('|')
+  var langstr = supported_languages.join('|');
 
   var langstr_query =
     'SELECT ?lang ?langLabel ?abbr ' +
@@ -74,55 +80,59 @@ function initializeLanguageSwitcher (returned_data) {
       '?lang wdt:P218 ?abbr;' +
       'FILTER regex (?abbr, "^(' + langstr + ')$").' +
       'SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }' +
-    '}'
+    '}';
 
-  langstr_query = 'https://query.wikidata.org/bigdata/namespace/wdq/sparql?query=' + encodeURIComponent(langstr_query) + '&format=json'
+  langstr_query = 'https://query.wikidata.org/bigdata/namespace/wdq/sparql?query=' + encodeURIComponent(langstr_query) + '&format=json';
   $.getJSON(langstr_query, function (langstrings) {
     langstrings.results.bindings.forEach(function (item) {
-      abbr_langnames[item.abbr.value] = item.langLabel.value
-      langnames_abbr[item.langLabel.value] = item.abbr.value
-      langnames.push(item.langLabel.value)
-    })
-    langnames.sort()
+      abbr_langnames[item.abbr.value] = item.langLabel.value;
+      langnames_abbr[item.langLabel.value] = item.abbr.value;
+      langnames.push(item.langLabel.value);
+    });
+    langnames.sort();
 
-    resetLang()
-    setFallbackLangs()
+    resetLang();
+    setFallbackLangs();
 
     langnames.forEach(function (item) {
-      var langcode = langnames_abbr[item]
-      var is_default = (langcode == current_lang) ? ' class=default' : ''
-      console.log("adding lang '" + langcode + "' (" + item + ')')
-      $('#languageSelector ul').append('<li targetlang=' + langcode + is_default + " onClick='window.translations.switchToLang(\"" + langcode + "\");'>" + item + '</li>')
-    })
-  })
+      var langcode = langnames_abbr[item];
+      var is_default = (langcode == current_lang) ? ' class=default' : '';
+      console.log("adding lang '" + langcode + "' (" + item + ')');
+      $('#languageSelector ul').append('<li targetlang=' + langcode + is_default + " onClick='window.translations.switchToLang(\"" + langcode + "\");'>" + item + '</li>');
+    });
+  });
 }
 
 function fetchAndSetNewTranslation (lang) {
   redFetch([ taxonomy.getLangTaxURL(lang, 'Q8'), 'https://raw.githubusercontent.com/TransforMap/transformap-viewer-translations/master/taxonomy-backup/susy/taxonomy.' + lang + '.json' ],
       ui.fillTOIs,
-      function (error) { console.error('none of the taxonomy data urls available') },
-      { cacheBusting: false })
+      function (error) {
+        console.error('none of the taxonomy data urls available');
+      },
+      { cacheBusting: false });
   redFetch([ taxonomy.getLangTaxURL(lang, 'Q4'), 'https://raw.githubusercontent.com/TransforMap/transformap-viewer-translations/master/taxonomy-backup/susy/taxonomy.' + lang + '.json' ],
       ui.fillTransforMapTax,
-      function (error) { console.error('none of the taxonomy data urls available') },
-      { cacheBusting: false })
+      function (error) {
+        console.error('none of the taxonomy data urls available');
+      },
+      { cacheBusting: false });
 }
 
 function initializeTranslatedTOIs (Q5data) {
-  translations.initializeLanguageSwitcher(Q5data)
+  translations.initializeLanguageSwitcher(Q5data);
 
-  var nowPossibleLang = translations.selectAllowedLang(translations.current_lang)
-  translations.current_lang = nowPossibleLang
-  fetchAndSetNewTranslation(nowPossibleLang)
+  var nowPossibleLang = translations.selectAllowedLang(translations.current_lang);
+  translations.current_lang = nowPossibleLang;
+  fetchAndSetNewTranslation(nowPossibleLang);
 }
 
 function switchToLang (lang) {
-  $('#languageSelector li.default').removeClass('default')
-  $('#languageSelector li[targetlang=' + lang + ']').addClass('default')
-  current_lang = lang
-  window.translations.current_lang = lang
-  window.translations.fetchAndSetNewTranslation(lang)
-  setFallbackLangs()
+  $('#languageSelector li.default').removeClass('default');
+  $('#languageSelector li[targetlang=' + lang + ']').addClass('default');
+  current_lang = lang;
+  window.translations.current_lang = lang;
+  window.translations.fetchAndSetNewTranslation(lang);
+  setFallbackLangs();
 /*
   //updateTranslatedTexts();
 
@@ -158,47 +168,47 @@ function switchToLang (lang) {
   resetFilter();
   setFilterLang(lang);
 */
-  console.log('new lang:' + lang)
+  console.log('new lang:' + lang);
 }
 
 // if wishedLang is in supported, OK
 // shorten wishedLang and see if in supported
 // take fallback
 function selectAllowedLang (wishedLang) {
-  console.log('selectAllowedLang(' + wishedLang + ') called')
+  console.log('selectAllowedLang(' + wishedLang + ') called');
   if (wishedLang) {
     if (supported_languages.indexOf(wishedLang) != -1) {
-      current_lang = wishedLang
-      return current_lang
+      current_lang = wishedLang;
+      return current_lang;
     }
-    console.log('not in supported, try shorten')
-    var matches = wishedLang.match(/^([a-zA-Z]*)-/)
+    console.log('not in supported, try shorten');
+    var matches = wishedLang.match(/^([a-zA-Z]*)-/);
     if (matches && matches[1]) {
-      var short_lang = matches[1]
-      console.log('short: ' + short_lang)
+      var short_lang = matches[1];
+      console.log('short: ' + short_lang);
       if (short_lang) {
         if (supported_languages.indexOf(short_lang) != -1) {
-          current_lang = short_lang
-          console.log('current_lang set to ' + short_lang)
-          return current_lang
+          current_lang = short_lang;
+          console.log('current_lang set to ' + short_lang);
+          return current_lang;
         }
       }
     }
   }
-  setFallbackLangs()
+  setFallbackLangs();
   if (fallback_langs[0]) {
     if (supported_languages.indexOf(fallback_langs[0]) != -1) {
-      current_lang = fallback_langs[0]
-      return current_lang
+      current_lang = fallback_langs[0];
+      return current_lang;
     }
   }
-  current_lang = 'en'
-  return current_lang
+  current_lang = 'en';
+  return current_lang;
 }
 
 var browser_languages = getLangs(),
   current_lang = browser_languages[0],
-  fallback_langs = []
+  fallback_langs = [];
 
 module.exports = {
   getLangs: getLangs,
@@ -210,4 +220,4 @@ module.exports = {
   switchToLang: switchToLang,
   selectAllowedLang: selectAllowedLang,
   fetchAndSetNewTranslation: fetchAndSetNewTranslation
-}
+};

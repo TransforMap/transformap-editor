@@ -10,17 +10,17 @@
  * To Public License, Version 2, as published by Sam Hocevar. See
  * http://www.wtfpl.net/ for more details. */
 
-const utils = require('./utils.js')
+const utils = require('./utils.js');
 
-const endpoint = utils.baseUrl + '/users/'
+const endpoint = utils.baseUrl + '/users/';
 
 /* returns the API's endpoint */
 function getUserEndpoint () {
-  return endpoint
+  return endpoint;
 }
 
 function isAlreadyLoggedIn () {
-  return utils.getCookie("session") !== undefined &&  utils.getCookie("session") !== ""
+  return utils.getCookie("session") !== undefined &&  utils.getCookie("session") !== "";
 }
 
 /*
@@ -32,23 +32,24 @@ function isAlreadyLoggedIn () {
 */
 function getUser (userId,callback) {
   if (!userId){
-    console.log('getUser: no userId given')
-    return false
+    console.log('getUser: no userId given');
+    return false;
   }
 
-  var xhr = utils.createCORSRequest('GET', endpoint + userId)
-  xhr.setRequestHeader('Content-Type', 'application/json')
-  xhr.send()
+  var xhr = utils.createCORSRequest('GET', endpoint + userId);
+  xhr.setRequestHeader('Content-Type', 'application/json');
+  xhr.withCredentials = true;
+  xhr.send();
 
   xhr.onreadystatechange = function () {
     if (xhr.readyState === 4) {
       if (xhr.status === 200) {
-        callback(JSON.parse(xhr.responseText))
+        callback(JSON.parse(xhr.responseText));
       } else {
-        console.error(xhr)
+        console.error(xhr);
       }
     }
-  }
+  };
 }
 
 /*
@@ -60,31 +61,32 @@ function getUser (userId,callback) {
 */
 function updateUser (userId,data,callback) {
   if (!userId){
-    console.log('updateUser: no userId given')
-    return false
+    console.log('updateUser: no userId given');
+    return false;
   }
 
   if (!data){
-    console.log('updateUser: no data given')
-    return false
+    console.log('updateUser: no data given');
+    return false;
   }
 
-  var xhr = utils.createCORSRequest('PUT', endpoint + userId)
-  xhr.setRequestHeader('Content-Type', 'application/json')
-  xhr.send(data)
+  var xhr = utils.createCORSRequest('PUT', endpoint + userId);
+  xhr.setRequestHeader('Content-Type', 'application/json');
+  xhr.withCredentials = true;
+  xhr.send(data);
 
   xhr.onreadystatechange = function () {
     if (xhr.readyState === 4) {
       if (xhr.status === 200) {
-        callback(JSON.parse(xhr.responseText))
+        callback(JSON.parse(xhr.responseText));
       } else {
-        console.error(xhr)
+        console.error(xhr);
       }
     }
-  }
+  };
 }
 
 module.exports = {
   getUserEndpoint: getUserEndpoint,
   getUser: getUser
-}
+};
