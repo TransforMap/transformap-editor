@@ -25,7 +25,7 @@ git clone $REPO -b dokku public
 rm -rf public/*
 npm i
 REV=`git describe --always`
-BUILD=git-$REV FQDN=$host npm run build
+BUILD=git-$REV FQDN=$host npm run compile
 cd public
 git remote add deploy dokku@apps.allmende.io:transformap-editor
 git add -A .
