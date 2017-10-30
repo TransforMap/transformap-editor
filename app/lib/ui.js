@@ -598,13 +598,8 @@ function clickMediaSave () {
       versionDate: new Date().toISOString()
     };
     if (utils.getCurrentBlob()){
-      var blobURL = mmsApi.uploadBlob(utils.getCurrentBlob(),function(blob){
-        data.url = blob.url;
-        data.mimetype = blob.mimetype;
-        data.id = blob.id;
-        mmsApi.createNewMediaFile(data, function(){
-          $('#mediaFileDialog').modal('toggle');
-        });
+      mmsApi.createNewMediaFile(data, utils.getCurrentBlob(), function(){
+        $('#mediaFileDialog').modal('toggle');
       });
     }else{
       alert("Please add an asset");
@@ -615,28 +610,14 @@ function clickMediaSave () {
     var nameField = $('#mediaFileDialogContent').find('.name').val();
     if (data.name != nameField){
       data.name = nameField;
-      metadataChanged = true;
     }
     var descriptionField = $('#mediaFileDialogContent').find('.description').val();
     if (data.description != descriptionField){
       data.description = descriptionField;
-      metadataChanged = true;
     }
-
-    if (utils.getCurrentBlob()){
-      var blobURL = mmsApi.uploadBlob(utils.getCurrentBlob(),function(blob){
-        data.url = blob.url;
-        data.mimetype = blob.mimetype;
-        data.id = blob.id;
-        mmsApi.addMediaFileVersion(mediaId, data, function(){
-          $('#mediaFileDialog').modal('toggle');
-        });
-      });
-    }else if (metadataChanged){
-      mmsApi.addMediaFileVersion(mediaId, data, function(){
-        $('#mediaFileDialog').modal('toggle');
-      });
-    }
+    mmsApi.updateMediaFile(mediaId, data, utils.getCurrentBlob(), function(){
+      $('#mediaFileDialog').modal('toggle');
+    });
   }
 
 }

@@ -5,10 +5,21 @@
 Uploads a new media file
 
 **Endpoint**: /media/
-**Request method**: POST
-**Payload**: A JSON string containing the metadata of the media file to create
+**Request method**: POST (multi-part message)
+**Payload**: A multipart message containing the JSON metadata and the blob. Both mandatory.
 
-```json
+```
+----------V2ymHFg03ehbqgZCaKO6jy
+"POST: HTTP/1.0"
+"user-agent: firefox"
+"content-type: multipart/form-data; boundary=----------V2ymHFg03ehbqgZCaKO6jy"
+"\r\n------------V2ymHFg03ehbqgZCaKO6jy\r\n"
+"Content-Disposition: form-data; name=thefile; filename=thefile.jpg\r\n"
+"Content-Type: image/jpg\r\n\r\n"
+[Binary contents]
+"\r\n------------V2ymHFg03ehbqgZCaKO6jy--\r\n"
+"Content-Disposition: form-data; name=themetadata;\r\n"
+"Content-Type: image/jpg\r\n\r\n"
 {  
   "name": "some title",
   "description": "some description",
@@ -17,7 +28,7 @@ Uploads a new media file
 }
 ```
 
-**Expected response**: The complete metadata definition of the media file.
+**Expected response**: The complete metadata definition of the media file, including the URL of the asset.
 
 ```json
 {
@@ -32,7 +43,7 @@ Uploads a new media file
 
 ## retrieveMetadataForMediaFile
 
-Retrieves the metadata of a particular media file, including all versions
+Retrieves the metadata of a particular media file, not including versions
 
 **Endpoint**: /media/{mediaId}
 **Request method**: GET
@@ -50,17 +61,31 @@ Retrieves the metadata of a particular media file, including all versions
 }
 ```
 
-## updateMedataForMediaFile
+## updateMediaFile
 
-Updates the metadata of a particular media file
+Updates a particular media file
 
 **Endpoint**: /media/{mediaId}
-**Request method**: PUT
-**Payload**: A JSON string containing the metadata of the media file to update with.
+**Request method**: PUT (multi-part message)
+**Payload**: A multipart message containing the JSON metadata and the blob. Both mandatory.
 
-```json
+```
+----------V2ymHFg03ehbqgZCaKO6jy
+"POST: HTTP/1.0"
+"user-agent: firefox"
+"content-type: multipart/form-data; boundary=----------V2ymHFg03ehbqgZCaKO6jy"
+"\r\n------------V2ymHFg03ehbqgZCaKO6jy\r\n"
+"Content-Disposition: form-data; name=thefile; filename=thefile.jpg\r\n"
+"Content-Type: image/jpg\r\n\r\n"
+[Binary contents]
+"\r\n------------V2ymHFg03ehbqgZCaKO6jy--\r\n"
+"Content-Disposition: form-data; name=themetadata;\r\n"
+"Content-Type: image/jpg\r\n\r\n"
 {  
-  "name": "some new title"
+  "name": "some title",
+  "description": "some description",
+  "mimetype": "image.png",
+  "url": "https://base.transformap.co/images/transformap.png"
 }
 ```
 
@@ -104,26 +129,6 @@ Returns an array with all the versions of a certain media file
     "mimetype": "image.png",
     "url": "https://base.transformap.co/images/transformap.png",
     "author": "jenny"
-  }
-]
-```
-
-## addMediaFileVersion
-
-Adds a new version to an existing media file
-
-**Endpoint**: /media/{mediaId}/versions
-**Request method**: POST
-**Payload**: yes
-
-```json
-[
-  {
-    "name": "other version of the same file",
-    "description": "a new description for the same file",
-    "version_date": "2017-07-30T16:01:34+00:00",
-    "mimetype": "image.png",
-    "url": "https://base.transformap.co/images/transformap.png"
   }
 ]
 ```
@@ -186,37 +191,6 @@ Sets a version as currently active
     "mediaId": "c29c8d11-ec27-4fe1-9a23-dd10a3b37e11",
     "name": "yet another previous version",
     "version_date": "2017-07-30T16:01:34+00:00",
-    "mimetype": "image.png",
-    "url": "https://base.transformap.co/images/transformap.png"
-  }
-]
-```
-
-## uploadBlob
-
-Uploads an asset's binary blob to the MMS
-
-**Endpoint**: /media/{mediaId}/blob
-**Request method**: POST
-**Payload**: The multipart binary contents of the asset
-
-```
-----------V2ymHFg03ehbqgZCaKO6jy
-"POST: HTTP/1.0"
-"user-agent: firefox"
-"content-type: multipart/form-data; boundary=----------V2ymHFg03ehbqgZCaKO6jy"
-"\r\n------------V2ymHFg03ehbqgZCaKO6jy\r\n"
-"Content-Disposition: form-data; name=thefile; filename=thefile.gif\r\n"
-"Content-Type: image/gif\r\n\r\n"
-[Binary contents]
-"\r\n------------V2ymHFg03ehbqgZCaKO6jy--\r\n"
-```
-
-**Expected response**: The url and mimetype of the uploaded file
-
-```json
-[
-  {
     "mimetype": "image.png",
     "url": "https://base.transformap.co/images/transformap.png"
   }

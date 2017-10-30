@@ -38,6 +38,7 @@ function getUser (userId,callback) {
 
   var xhr = utils.createCORSRequest('GET', endpoint + userId);
   xhr.setRequestHeader('Content-Type', 'application/json');
+  xhr.withCredentials = true;
   xhr.send();
 
   xhr.onreadystatechange = function () {
@@ -71,6 +72,7 @@ function updateUser (userId,data,callback) {
 
   var xhr = utils.createCORSRequest('PUT', endpoint + userId);
   xhr.setRequestHeader('Content-Type', 'application/json');
+  xhr.withCredentials = true;
   xhr.send(data);
 
   xhr.onreadystatechange = function () {

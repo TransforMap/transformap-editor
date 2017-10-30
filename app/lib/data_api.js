@@ -35,6 +35,7 @@ function createOrUpdatePOI (uuid, data, callback) {
 
   var xhr = utils.createCORSRequest(uuid ? 'PUT' : 'POST', endpoint + uuid);
   xhr.setRequestHeader('Content-Type', 'application/json');
+  xhr.withCredentials = true;
   xhr.send(data);
 
   xhr.onreadystatechange = function () {
@@ -71,6 +72,7 @@ function getPOI (uuid, callback) {
 
   var xhr = utils.createCORSRequest('GET', getDataEndpoint() + uuid);
   xhr.setRequestHeader('Content-Type', 'application/json');
+  xhr.withCredentials = true;
   xhr.send();
 
   xhr.onreadystatechange = function () {

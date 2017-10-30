@@ -11,7 +11,7 @@
  * http://www.wtfpl.net/ for more details. */
 
 const utils = require('./utils.js');
-
+const RequestBody = require('maltypart').RequestBody;
 const endpoint = utils.baseUrl + '/media/';
 
 /* returns the API's endpoint */
@@ -23,19 +23,41 @@ function getMMSEndpoint () {
  * Creates a new media file for a certain POI
  * Params:
  *  - data: the metadata to create the media file with
+ *  - blob: the blob to upload along the metadata
  *  - callback: function to be called upon success.
  * Returns: false if invalid call
 */
-function createNewMediaFile (data, callback) {
-
+function createNewMediaFile (data, blob, callback) {
+  
+  // TODO: handle blob, compose multipart
+  
   if (!data) {
     console.error('createNewMediaFile: no data given');
     return false;
   }
+  
+  if (!blob) {
+    console.error('createNewMediaFile: no blob given');
+    return false;
+  }
+  
+  var request = new RequestBody();
+  
+  if (data){
+    request.append(data);
+  }
+  
+  if (blob){
+    request.append(blob.name, {
+      contentType : blob.type,
+      data : blob.contents
+    });
+  }
 
   var xhr = utils.createCORSRequest('POST', getMMSEndpoint());
-  xhr.setRequestHeader('Content-Type', 'application/json');
-  xhr.send(data);
+  xhr.setRequestHeader('Content-Type', request.getContentType());
+  xhr.withCredentials = true;
+  xhr.send(request.getData());
 
   xhr.onreadystatechange = function () {
     if (xhr.readyState === 4) {
@@ -63,7 +85,54 @@ function retrieveMetadataForMediaFile (mediaId, callback) {
 
   var xhr = utils.createCORSRequest('GET', getMMSEndpoint() + mediaId);
   xhr.setRequestHeader('Content-Type', 'application/json');
+  xhr.withCredentials = true;
   xhr.send();
+
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4) {
+      if (xhr.status === 200) {
+        callback(JSON.parse(xhr.responseText));
+      } else {
+        console.error(xhr);
+      }
+    }
+  };
+}
+
+/*
+ * Creates a new media file for a certain POI
+ * Params:
+ *  - data: the metadata to create the media file with
+ *  - blob: the blob to upload along the metadata
+ *  - callback: function to be called upon success.
+ * Returns: false if invalid call
+*/
+function updateMediaFile (data, blob, callback) {
+
+  // TODO: handle blob, compose multipart
+  
+  if (!data) {
+    console.error('updateMediaFile: no data given');
+    return false;
+  }
+  
+  var request = new RequestBody();
+  
+  if (data){
+    request.append(data);
+  }
+  
+  if (blob){
+    request.append(blob.name, {
+      contentType : blob.type,
+      data : blob.content
+    });
+  }
+
+  var xhr = utils.createCORSRequest('POST', getMMSEndpoint());
+  xhr.setRequestHeader('Content-Type', request.getContentType());
+  xhr.withCredentials = true;
+  xhr.send(request.getData());
 
   xhr.onreadystatechange = function () {
     if (xhr.readyState === 4) {
@@ -91,40 +160,8 @@ function retrieveMediaFileVersions (mediaId, callback) {
 
   var xhr = utils.createCORSRequest('GET', getMMSEndpoint() + mediaId + '/versions');
   xhr.setRequestHeader('Content-Type', 'application/json');
+  xhr.withCredentials = true;
   xhr.send();
-
-  xhr.onreadystatechange = function () {
-    if (xhr.readyState === 4) {
-      if (xhr.status === 200) {
-        callback(JSON.parse(xhr.responseText));
-      } else {
-        console.error(xhr);
-      }
-    }
-  };
-}
-
-/*
- * Adds a new version to an existing media file
- * Params:
- *  - mediaId: Media file's uuid
- *  - data: The payload of the version to create
- *  - callback: function to be called upon success.
- * Returns: false if invalid call
-*/
-function addMediaFileVersion (mediaId, data, callback) {
-  if (!mediaId) {
-    console.error('addMediaFileVersion: no mediaId given');
-    return false;
-  }
-  if (!data) {
-    console.error('addMediaFileVersion: no data given');
-    return false;
-  }
-
-  var xhr = utils.createCORSRequest('POST', getMMSEndpoint() + mediaId + '/versions');
-  xhr.setRequestHeader('Content-Type', 'application/json');
-  xhr.send(data);
 
   xhr.onreadystatechange = function () {
     if (xhr.readyState === 4) {
@@ -157,32 +194,8 @@ function setActiveMediaFileVersion (mediaId, versionId, callback) {
 
   var xhr = utils.createCORSRequest('POST', getMMSEndpoint() + mediaId + '/versions/' + versionId);
   xhr.setRequestHeader('Content-Type', 'application/json');
+  xhr.withCredentials = true;
   xhr.send();
-
-  xhr.onreadystatechange = function () {
-    if (xhr.readyState === 4) {
-      if (xhr.status === 200) {
-        callback(JSON.parse(xhr.responseText));
-      } else {
-        console.error(xhr);
-      }
-    }
-  };
-}
-
-function uploadBlob(mediaId, blob, callback){
-  if (!mediaId) {
-    console.error('uploadBlob: no mediaId given');
-    return false;
-  }
-  if (!blob) {
-    console.error('uploadBlob: no blob given');
-    return false;
-  }
-
-  var xhr = utils.createCORSRequest('POST', getMMSEndpoint() + mediaId + '/blob');
-  xhr.setRequestHeader('Content-Type', 'multipart/form-data');
-  xhr.send(blob);
 
   xhr.onreadystatechange = function () {
     if (xhr.readyState === 4) {
@@ -198,9 +211,8 @@ function uploadBlob(mediaId, blob, callback){
 module.exports = {
   getMMSEndpoint: getMMSEndpoint,
   createNewMediaFile: createNewMediaFile,
+  updateMediaFile: updateMediaFile,
   retrieveMetadataForMediaFile: retrieveMetadataForMediaFile,
   retrieveMediaFileVersions: retrieveMediaFileVersions,
-  addMediaFileVersion: addMediaFileVersion,
-  setActiveMediaFileVersion: setActiveMediaFileVersion,
-  uploadBlob: uploadBlob
+  setActiveMediaFileVersion: setActiveMediaFileVersion
 };

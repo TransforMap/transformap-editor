@@ -42,6 +42,7 @@ function logout (authToken,callback) {
 
   var xhr = utils.createCORSRequest('GET', endpoint);
   xhr.setRequestHeader('Content-Type', 'application/json');
+  xhr.withCredentials = true;
   xhr.send();
 
   xhr.onreadystatechange = function () {
@@ -52,7 +53,7 @@ function logout (authToken,callback) {
         console.error(xhr);
       }
     }
-  }
+  };
 }
 
 module.exports = {

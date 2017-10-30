@@ -65,7 +65,11 @@ function handleFileSelect(evt,callback) {
 
   reader.onload = function(event) {
     var contents = event.target.result;
-    currentBlob = contents;
+    currentBlob = {
+      name: files[0].name,
+      type: files[0].type,
+      contents: contents
+    };
     $('#mediaFileDialogContent').find('img').attr('src', contents);
     $('#mediaFileDialogContent').find('img').show();
   };
