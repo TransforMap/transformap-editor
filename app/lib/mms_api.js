@@ -28,9 +28,7 @@ function getMMSEndpoint () {
  * Returns: false if invalid call
 */
 function createNewMediaFile (data, blob, callback) {
-  
-  // TODO: handle blob, compose multipart
-  
+
   if (!data) {
     console.error('createNewMediaFile: no data given');
     return false;
@@ -108,8 +106,6 @@ function retrieveMetadataForMediaFile (mediaId, callback) {
  * Returns: false if invalid call
 */
 function updateMediaFile (data, blob, callback) {
-
-  // TODO: handle blob, compose multipart
   
   if (!data) {
     console.error('updateMediaFile: no data given');

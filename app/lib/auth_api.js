@@ -24,7 +24,6 @@ function isAlreadyLoggedIn () {
 }
 
 function getUserIdFromSession() {
-  //TODO deserialize
   return utils.getCookie("session");
 }
 
