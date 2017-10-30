@@ -116,7 +116,6 @@
 
 (function() {
 var global = typeof window === 'undefined' ? this : window;
-var process;
 var __makeRelativeRequire = function(require, mappings, pref) {
   var none = {};
   var tryReq = function(name, pref) {
@@ -256,21 +255,14 @@ module.exports = {
     "mimetype": "image.png",
     "url": "https://base.transformap.co/images/transformap.png"
   }],
-  userWithoutAgreedTos: {
+  user: {
     "name": "Joe",
-    "email": "joe@domain.com",
-    "agreedTos": false
-  },
-
-  userWithAgreedTos: {
-    "name": "Joe",
-    "email": "joe@domain.com",
-    "agreedTos": false
+    "email": "joe@domain.com"
   }
 };
 });
 
-;require.register("fixtures/intercept_ajax.js", function(exports, require, module) {
+require.register("fixtures/intercept_ajax.js", function(exports, require, module) {
 "use strict";
 
 var fixtures = require('./fixtures.js');
@@ -312,7 +304,7 @@ xhook.after(function (request, response) {
     // /users/{userId}
     if (request.url.match(".*?/users/(.*)")) {
       response.status = 200;
-      response.text = JSON.stringify(fixtures.userWithoutAgreedTos);
+      response.text = JSON.stringify(fixtures.user);
     }
   } else if (request.method === "POST") {
 
@@ -349,7 +341,7 @@ xhook.after(function (request, response) {
     // /users/{userId}
     if (request.url.match(".*?/users/(.*)")) {
       response.status = 200;
-      response.text = JSON.stringify(fixtures.userWithAgreedTos);
+      response.text = JSON.stringify(fixtures.user);
     }
   } else if (request.method === "DELETE") {
 
@@ -373,7 +365,7 @@ xhook.after(function (request, response) {
 });
 });
 
-;require.register("initialize.js", function(exports, require, module) {
+require.register("initialize.js", function(exports, require, module) {
 'use strict';
 
 var editor = require('lib/editor');
@@ -414,7 +406,6 @@ function isAlreadyLoggedIn() {
 }
 
 function getUserIdFromSession() {
-  //TODO deserialize
   return utils.getCookie("session");
 }
 
@@ -432,6 +423,7 @@ function logout(authToken, callback) {
 
   var xhr = utils.createCORSRequest('GET', endpoint);
   xhr.setRequestHeader('Content-Type', 'application/json');
+  xhr.withCredentials = true;
   xhr.send();
 
   xhr.onreadystatechange = function () {
@@ -453,7 +445,7 @@ module.exports = {
 };
 });
 
-;require.register("lib/data_api.js", function(exports, require, module) {
+require.register("lib/data_api.js", function(exports, require, module) {
 'use strict';
 
 /*
@@ -493,6 +485,7 @@ function createOrUpdatePOI(uuid, data, callback) {
 
   var xhr = utils.createCORSRequest(uuid ? 'PUT' : 'POST', endpoint + uuid);
   xhr.setRequestHeader('Content-Type', 'application/json');
+  xhr.withCredentials = true;
   xhr.send(data);
 
   xhr.onreadystatechange = function () {
@@ -529,6 +522,7 @@ function getPOI(uuid, callback) {
 
   var xhr = utils.createCORSRequest('GET', getDataEndpoint() + uuid);
   xhr.setRequestHeader('Content-Type', 'application/json');
+  xhr.withCredentials = true;
   xhr.send();
 
   xhr.onreadystatechange = function () {
@@ -577,7 +571,7 @@ module.exports = {
 };
 });
 
-;require.register("lib/editor.js", function(exports, require, module) {
+require.register("lib/editor.js", function(exports, require, module) {
 'use strict';
 
 /* global alert, L, XMLHttpRequest, XDomainRequest */ // used by standardjs (linter)
@@ -604,24 +598,12 @@ module.exports = function () {
   console.log('editor initialize start');
 
   var place = utils.getUrlVars()['place'];
-  var showTosMessage = utils.getUrlVars()['showTosMessage'];
 
   var startLang = translations.selectAllowedLang(translations.current_lang);
   console.log('lang on start: ' + startLang);
   console.log(translations.supported_languages);
 
   document.getElementById('plus').onclick = ui.addFreeTagsRow;
-
-  if (showTosMessage) {
-    var userId = authApi.getUserIdFromSession();
-    if (userId) {
-      userApi.getUser(userId, function (user) {
-        if (user["agreedTos"] === false) {
-          $("#tos").fadeIn();
-        }
-      });
-    }
-  }
 
   if (place) {
     dataApi.getPOI(place, ui.fillForm);
@@ -639,7 +621,6 @@ module.exports = function () {
   document.getElementById('coordsearch').onclick = ui.clickSearch;
   document.getElementById('newmedia').onclick = ui.clickNewMedia;
   document.getElementById('loginbutton').onclick = ui.clickLoginButton;
-  document.getElementById('accepttosbutton').onclick = ui.clickAcceptTosButton;
   document.onkeypress = ui.stopRKey;
   document.getElementById('mediacancel').onclick = ui.clickMediaCancel;
   document.getElementById('mediasave').onclick = ui.clickMediaSave;
@@ -652,7 +633,7 @@ module.exports = function () {
 };
 });
 
-;require.register("lib/map.js", function(exports, require, module) {
+require.register("lib/map.js", function(exports, require, module) {
 'use strict';
 
 var L = require('leaflet');
@@ -665,7 +646,6 @@ var editableLayers;
 var drawControl;
 var placeMarker;
 var popupText = 'Press the edit button to move me. <img style="width:30px;height:30px;background-position:-150px -1px;background-image:url(\'images/spritesheet.svg\');background-size: 270px 30px;"> <br><br> Find it on the bottom left corner of the map.';
-
 function getDrawControl(allowNewMarker) {
   var markerValue = allowNewMarker ? { icon: new placeMarker() } : false;
   var options = {
@@ -845,7 +825,7 @@ module.exports = {
 };
 });
 
-;require.register("lib/mms_api.js", function(exports, require, module) {
+require.register("lib/mms_api.js", function(exports, require, module) {
 'use strict';
 
 /*
@@ -861,7 +841,7 @@ module.exports = {
  * http://www.wtfpl.net/ for more details. */
 
 var utils = require('./utils.js');
-
+var RequestBody = require('maltypart').RequestBody;
 var endpoint = utils.baseUrl + '/media/';
 
 /* returns the API's endpoint */
@@ -873,19 +853,39 @@ function getMMSEndpoint() {
  * Creates a new media file for a certain POI
  * Params:
  *  - data: the metadata to create the media file with
+ *  - blob: the blob to upload along the metadata
  *  - callback: function to be called upon success.
  * Returns: false if invalid call
 */
-function createNewMediaFile(data, callback) {
+function createNewMediaFile(data, blob, callback) {
 
   if (!data) {
     console.error('createNewMediaFile: no data given');
     return false;
   }
 
+  if (!blob) {
+    console.error('createNewMediaFile: no blob given');
+    return false;
+  }
+
+  var request = new RequestBody();
+
+  if (data) {
+    request.append(data);
+  }
+
+  if (blob) {
+    request.append(blob.name, {
+      contentType: blob.type,
+      data: blob.contents
+    });
+  }
+
   var xhr = utils.createCORSRequest('POST', getMMSEndpoint());
-  xhr.setRequestHeader('Content-Type', 'application/json');
-  xhr.send(data);
+  xhr.setRequestHeader('Content-Type', request.getContentType());
+  xhr.withCredentials = true;
+  xhr.send(request.getData());
 
   xhr.onreadystatechange = function () {
     if (xhr.readyState === 4) {
@@ -913,7 +913,52 @@ function retrieveMetadataForMediaFile(mediaId, callback) {
 
   var xhr = utils.createCORSRequest('GET', getMMSEndpoint() + mediaId);
   xhr.setRequestHeader('Content-Type', 'application/json');
+  xhr.withCredentials = true;
   xhr.send();
+
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4) {
+      if (xhr.status === 200) {
+        callback(JSON.parse(xhr.responseText));
+      } else {
+        console.error(xhr);
+      }
+    }
+  };
+}
+
+/*
+ * Creates a new media file for a certain POI
+ * Params:
+ *  - data: the metadata to create the media file with
+ *  - blob: the blob to upload along the metadata
+ *  - callback: function to be called upon success.
+ * Returns: false if invalid call
+*/
+function updateMediaFile(data, blob, callback) {
+
+  if (!data) {
+    console.error('updateMediaFile: no data given');
+    return false;
+  }
+
+  var request = new RequestBody();
+
+  if (data) {
+    request.append(data);
+  }
+
+  if (blob) {
+    request.append(blob.name, {
+      contentType: blob.type,
+      data: blob.content
+    });
+  }
+
+  var xhr = utils.createCORSRequest('POST', getMMSEndpoint());
+  xhr.setRequestHeader('Content-Type', request.getContentType());
+  xhr.withCredentials = true;
+  xhr.send(request.getData());
 
   xhr.onreadystatechange = function () {
     if (xhr.readyState === 4) {
@@ -941,40 +986,8 @@ function retrieveMediaFileVersions(mediaId, callback) {
 
   var xhr = utils.createCORSRequest('GET', getMMSEndpoint() + mediaId + '/versions');
   xhr.setRequestHeader('Content-Type', 'application/json');
+  xhr.withCredentials = true;
   xhr.send();
-
-  xhr.onreadystatechange = function () {
-    if (xhr.readyState === 4) {
-      if (xhr.status === 200) {
-        callback(JSON.parse(xhr.responseText));
-      } else {
-        console.error(xhr);
-      }
-    }
-  };
-}
-
-/*
- * Adds a new version to an existing media file
- * Params:
- *  - mediaId: Media file's uuid
- *  - data: The payload of the version to create
- *  - callback: function to be called upon success.
- * Returns: false if invalid call
-*/
-function addMediaFileVersion(mediaId, data, callback) {
-  if (!mediaId) {
-    console.error('addMediaFileVersion: no mediaId given');
-    return false;
-  }
-  if (!data) {
-    console.error('addMediaFileVersion: no data given');
-    return false;
-  }
-
-  var xhr = utils.createCORSRequest('POST', getMMSEndpoint() + mediaId + '/versions');
-  xhr.setRequestHeader('Content-Type', 'application/json');
-  xhr.send(data);
 
   xhr.onreadystatechange = function () {
     if (xhr.readyState === 4) {
@@ -1007,32 +1020,8 @@ function setActiveMediaFileVersion(mediaId, versionId, callback) {
 
   var xhr = utils.createCORSRequest('POST', getMMSEndpoint() + mediaId + '/versions/' + versionId);
   xhr.setRequestHeader('Content-Type', 'application/json');
+  xhr.withCredentials = true;
   xhr.send();
-
-  xhr.onreadystatechange = function () {
-    if (xhr.readyState === 4) {
-      if (xhr.status === 200) {
-        callback(JSON.parse(xhr.responseText));
-      } else {
-        console.error(xhr);
-      }
-    }
-  };
-}
-
-function uploadBlob(mediaId, blob, callback) {
-  if (!mediaId) {
-    console.error('uploadBlob: no mediaId given');
-    return false;
-  }
-  if (!blob) {
-    console.error('uploadBlob: no blob given');
-    return false;
-  }
-
-  var xhr = utils.createCORSRequest('POST', getMMSEndpoint() + mediaId + '/blob');
-  xhr.setRequestHeader('Content-Type', 'multipart/form-data');
-  xhr.send(blob);
 
   xhr.onreadystatechange = function () {
     if (xhr.readyState === 4) {
@@ -1048,15 +1037,14 @@ function uploadBlob(mediaId, blob, callback) {
 module.exports = {
   getMMSEndpoint: getMMSEndpoint,
   createNewMediaFile: createNewMediaFile,
+  updateMediaFile: updateMediaFile,
   retrieveMetadataForMediaFile: retrieveMetadataForMediaFile,
   retrieveMediaFileVersions: retrieveMediaFileVersions,
-  addMediaFileVersion: addMediaFileVersion,
-  setActiveMediaFileVersion: setActiveMediaFileVersion,
-  uploadBlob: uploadBlob
+  setActiveMediaFileVersion: setActiveMediaFileVersion
 };
 });
 
-;require.register("lib/red_fetch.js", function(exports, require, module) {
+require.register("lib/red_fetch.js", function(exports, require, module) {
 'use strict';
 
 /*
@@ -1153,7 +1141,9 @@ var getJSON = function getJSON(params) {
 };
 
 function myGetJSON(url, successFunction, errorFunction) {
-  var getJSONparams = { url: url, cacheBusting: true };
+  var getJSONparams = {
+    url: url, cacheBusting: true
+  };
 
   getJSON(getJSONparams).then(function (data) {
     successFunction(data);
@@ -1192,7 +1182,10 @@ function redundantFetch(dataUrlArray, successFunction, errorFunction, params) {
     };
   }
 
-  var getJSONparams = { url: currentUrl, cacheBusting: !(params && params.cacheBusting === false) };
+  var getJSONparams = {
+    url: currentUrl,
+    cacheBusting: !(params && params.cacheBusting === false)
+  };
   getJSON(getJSONparams).then(function (data) {
     localSuccessFunction(data);console.log('rfetch: success on ');console.log(data);
   }, function (error) {
@@ -1203,7 +1196,7 @@ function redundantFetch(dataUrlArray, successFunction, errorFunction, params) {
 module.exports = redundantFetch;
 });
 
-;require.register("lib/taxonomy.js", function(exports, require, module) {
+require.register("lib/taxonomy.js", function(exports, require, module) {
 'use strict';
 
 /*
@@ -1239,7 +1232,7 @@ module.exports = {
 };
 });
 
-;require.register("lib/translations.js", function(exports, require, module) {
+require.register("lib/translations.js", function(exports, require, module) {
 'use strict';
 
 var redFetch = require('./red_fetch.js');
@@ -1272,7 +1265,7 @@ function getLangs() {
 
   if (language.indexOf('en') == -1) {
     language.push('en');
-  }
+  };
 
   console.log(language);
   return language;
@@ -1455,7 +1448,7 @@ module.exports = {
 };
 });
 
-;require.register("lib/ui.js", function(exports, require, module) {
+require.register("lib/ui.js", function(exports, require, module) {
 'use strict';
 
 var dataApi = require('./data_api.js');
@@ -1524,7 +1517,9 @@ function fillForm(placeData) {
     document.getElementById('_geometry_lat').value = lat;
 
     var mapInstance = map.getMap();
-    mapInstance.my_current_marker = new L.marker([lat, lon], { icon: new mapInstance.my_placeMarker() });
+    mapInstance.my_current_marker = new L.marker([lat, lon], {
+      icon: new mapInstance.my_placeMarker()
+    });
     mapInstance.my_editableLayers.addLayer(mapInstance.my_current_marker);
 
     mapInstance.my_drawControl = mapInstance.getDrawControl(false);
@@ -1596,8 +1591,9 @@ function retrieveAndRenderMediaFilesForPOI(currentData) {
           $('#mediaFileDialogContent').find('.description').val(data.metadata.description);
           $('#mediaFileDialogContent').find('img').attr("src", data.metadata.url);
           $('#mediaFileDialogContent').find('img').show();
-          $('#mediaThumbUpload').hide();
           $('#mediaFileDialogContent').find('.metadata').text(JSON.stringify(data.metadata));
+
+          document.getElementById('mediaThumbUpload').addEventListener('change', utils.handleFileSelect, false);
 
           mmsApi.retrieveMediaFileVersions(data.metadata.id, function (versionsArray) {
             if (versionsArray.length > 0) {
@@ -1877,16 +1873,19 @@ function clickSubmit() {
       'type': 'Point',
       'coordinates': [parseFloat(document.getElementById('_geometry_lon').value), parseFloat(document.getElementById('_geometry_lat').value)]
     }
+  };
 
-    // all 'input type=text'
-  };var allInputs = document.getElementsByTagName('input');
-  var freeTags = { keys: {}, values: {} };
+  // all 'input type=text'
+  var allInputs = document.getElementsByTagName('input');
+  var freeTags = {
+    keys: {}, values: {}
+  };
 
   console.log(allInputs);
 
   for (var i = 0; i < allInputs.length; i++) {
     var element = allInputs[i];
-    if (!element.type === 'text') {
+    if (element.type !== 'text') {
       continue;
     }
     if (element.value && element.id) {
@@ -2045,24 +2044,11 @@ function clickMediaSave() {
       versionDate: new Date().toISOString()
     };
     if (utils.getCurrentBlob()) {
-      var blobURL = mmsApi.uploadBlob(utils.getCurrentBlob(), function (blob) {
-        data.url = blob.url;
-        data.mimetype = blob.mimetype;
-        data.id = blob.id;
-        mmsApi.createNewMediaFile(data, function () {
-          $('#mediaFileDialog').modal('toggle');
-        });
+      mmsApi.createNewMediaFile(data, utils.getCurrentBlob(), function () {
+        $('#mediaFileDialog').modal('toggle');
       });
     } else {
-      mmsApi.createNewMediaFile(data, function () {
-        if (!poi.media_files) {
-          poi.media_files = [];
-        }
-        poi.media_files.indexOf(mediaId) === -1 ? poi.media_files.push(mediaId) : console.log("This media file is already associated with the POI");
-        dataApi.updatePOI(poi.id, poi, function (place) {
-          $('#mediaFileDialog').modal('toggle');
-        });
-      });
+      alert("Please add an asset");
     }
   } else if ($('#mediaFileDialogContent').find('.createOrUpdate').text() == "update") {
     var metadataChanged = false;
@@ -2070,28 +2056,14 @@ function clickMediaSave() {
     var nameField = $('#mediaFileDialogContent').find('.name').val();
     if (data.name != nameField) {
       data.name = nameField;
-      metadataChanged = true;
     }
     var descriptionField = $('#mediaFileDialogContent').find('.description').val();
     if (data.description != descriptionField) {
       data.description = descriptionField;
-      metadataChanged = true;
     }
-
-    if (utils.getCurrentBlob()) {
-      var blobURL = mmsApi.uploadBlob(utils.getCurrentBlob(), function (blob) {
-        data.url = blob.url;
-        data.mimetype = blob.mimetype;
-        data.id = blob.id;
-        mmsApi.addMediaFileVersion(mediaId, data, function () {
-          $('#mediaFileDialog').modal('toggle');
-        });
-      });
-    } else if (metadataChanged) {
-      mmsApi.addMediaFileVersion(mediaId, data, function () {
-        $('#mediaFileDialog').modal('toggle');
-      });
-    }
+    mmsApi.updateMediaFile(mediaId, data, utils.getCurrentBlob(), function () {
+      $('#mediaFileDialog').modal('toggle');
+    });
   }
 }
 
@@ -2109,7 +2081,6 @@ function clickNewMedia() {
   $('#mediaFileDialogContent').find('.name').val("");
   $('#mediaFileDialogContent').find('.description').val("");
   $('#mediaFileDialogContent').find('img').hide();
-  $('#mediaThumbUpload').show();
   $('#mediaFileDialogContent').find('.metadata').text("");
   $('#mediaFileDialogContent').find('.mediaVersions').html("");
 
@@ -2135,17 +2106,6 @@ function clickLoginButton() {
   setupLoginButton();
 }
 
-function clickAcceptTosButton() {
-  var userId = authApi.getUserIdFromSession();
-  userApi.getUser(userId, function (user) {
-    user["agreedTos"] = true;
-    userApi.updateUser(userId, user, function (updatedUser) {
-      console.log("user accepted TOS");
-      $("#tos").fadeOut();
-    });
-  });
-}
-
 module.exports = {
   fillForm: fillForm,
   addLanguageSwitcher: addLanguageSwitcher,
@@ -2161,12 +2121,11 @@ module.exports = {
   clickMediaCancel: clickMediaCancel,
   clickNewMedia: clickNewMedia,
   clickLoginButton: clickLoginButton,
-  setupLoginButton: setupLoginButton,
-  clickAcceptTosButton: clickAcceptTosButton
+  setupLoginButton: setupLoginButton
 };
 });
 
-;require.register("lib/user_api.js", function(exports, require, module) {
+require.register("lib/user_api.js", function(exports, require, module) {
 'use strict';
 
 /*
@@ -2209,6 +2168,7 @@ function getUser(userId, callback) {
 
   var xhr = utils.createCORSRequest('GET', endpoint + userId);
   xhr.setRequestHeader('Content-Type', 'application/json');
+  xhr.withCredentials = true;
   xhr.send();
 
   xhr.onreadystatechange = function () {
@@ -2242,6 +2202,7 @@ function updateUser(userId, data, callback) {
 
   var xhr = utils.createCORSRequest('PUT', endpoint + userId);
   xhr.setRequestHeader('Content-Type', 'application/json');
+  xhr.withCredentials = true;
   xhr.send(data);
 
   xhr.onreadystatechange = function () {
@@ -2261,7 +2222,7 @@ module.exports = {
 };
 });
 
-;require.register("lib/utils.js", function(exports, require, module) {
+require.register("lib/utils.js", function(exports, require, module) {
 "use strict";
 
 var currentBlob;
@@ -2331,10 +2292,13 @@ function handleFileSelect(evt, callback) {
 
   reader.onload = function (event) {
     var contents = event.target.result;
-    currentBlob = contents;
+    currentBlob = {
+      name: files[0].name,
+      type: files[0].type,
+      contents: contents
+    };
     $('#mediaFileDialogContent').find('img').attr('src', contents);
     $('#mediaFileDialogContent').find('img').show();
-    $('#mediaThumbUpload').hide();
   };
 
   reader.onerror = function (event) {
@@ -2404,167 +2368,7 @@ module.exports = {
 };
 });
 
-;require.register("test/data_api.tests.js", function(exports, require, module) {
-'use strict';
-
-var assert = require('assert');
-var dataApi = require('../lib/data_api.js');
-
-describe('DATA API', function () {
-
-  describe('getDataEndpoint', function () {
-
-    it('should return https://data.transformap.co/place/', function () {
-      var endpoint = dataApi.getDataEndpoint();
-      assert.equal(endpoint, "https://data.transformap.co/place/");
-    });
-  });
-
-  describe('createOrUpdatePOI', function () {
-
-    it('should return false if no data is provided', function () {
-      var result = dataApi.createOrUpdatePOI('some_uuid', undefined, function () {});
-      assert.equal(result, false);
-    });
-  });
-
-  describe('getPOI', function () {
-
-    it('should return false if no uuid is provided', function () {
-      var result = dataApi.getPOI(undefined, function () {});
-      assert.equal(result, false);
-    });
-  });
-
-  describe('deletePOI', function () {
-
-    it('should return false if no uuid is provided', function () {
-      var result = dataApi.deletePOI(undefined, function () {});
-      assert.equal(result, false);
-    });
-  });
-});
-});
-
-require.register("test/mms_api.tests.js", function(exports, require, module) {
-'use strict';
-
-var assert = require('assert');
-var mmsApi = require('../lib/mms_api.js');
-
-describe('MMS API', function () {
-
-  describe('getMMSEndpoint', function () {
-
-    it('should return https://data.transformap.co/media/', function () {
-      var endpoint = mmsApi.getMMSEndpoint();
-      assert.equal(endpoint, "https://data.transformap.co/media/");
-    });
-  });
-
-  describe('createNewMediaFile', function () {
-
-    it('should return false if no data is provided', function () {
-      var result = mmsApi.createNewMediaFile('some_uuid', undefined, function () {});
-      assert.equal(result, false);
-    });
-  });
-
-  describe('retrieveMetadataForMediaFile', function () {
-
-    it('should return false if no mediaId is provided', function () {
-      var result = mmsApi.retrieveMetadataForMediaFile(undefined, function () {});
-      assert.equal(result, false);
-    });
-  });
-
-  describe('retrieveMediaFileVersions', function () {
-
-    it('should return false if no mediaId is provided', function () {
-      var result = mmsApi.retrieveMediaFileVersions(undefined, function () {});
-      assert.equal(result, false);
-    });
-  });
-
-  describe('addMediaFileVersion', function () {
-
-    it('should return false if no mediaId is provided', function () {
-      var result = mmsApi.addMediaFileVersion(undefined, { "name": "test" }, function () {});
-      assert.equal(result, false);
-    });
-
-    it('should return false if no data is provided', function () {
-      var result = mmsApi.addMediaFileVersion('some_media_id', undefined, function () {});
-      assert.equal(result, false);
-    });
-  });
-
-  describe('setActiveMediaFileVersion', function () {
-
-    it('should return false if no mediaId is provided', function () {
-      var result = mmsApi.setActiveMediaFileVersion(undefined, { "name": "test" }, function () {});
-      assert.equal(result, false);
-    });
-
-    it('should return false if no versionId is provided', function () {
-      var result = mmsApi.setActiveMediaFileVersion('some_media_id', undefined, function () {});
-      assert.equal(result, false);
-    });
-  });
-
-  describe('uploadBlob', function () {
-
-    it('should return false if no mediaId is provided', function () {
-      var result = mmsApi.uploadBlob(undefined, "some binary content", function () {});
-      assert.equal(result, false);
-    });
-
-    it('should return false if no blob is provided', function () {
-      var result = mmsApi.setActiveMediaFileVersion('some_media_id', undefined, function () {});
-      assert.equal(result, false);
-    });
-  });
-});
-});
-
-require.register("test/utils.tests.js", function(exports, require, module) {
-'use strict';
-
-var assert = require('assert');
-var dataApi = require('../lib/data_api.js');
-var utils = require('../lib/utils.js');
-
-describe('UTILS', function () {
-
-  describe('getUrlPath', function () {
-
-    it('should return expected path', function () {
-      var url = "https://data.transformap.co/place/";
-      var path = utils.getUrlPath(url);
-      assert.equal(path, "/place/");
-    });
-
-    it('should return expected multi-valued path', function () {
-      var url = "https://data.transformap.co/place/1234/media";
-      var path = utils.getUrlPath(url);
-      assert.equal(path, "/place/1234/media");
-    });
-  });
-
-  describe('generateUUID', function () {
-
-    it('should return the expected format xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx', function () {
-      var uuid = utils.generateUUID();
-      assert.equal(uuid.length, 36);
-      assert.equal(uuid[14], "4");
-    });
-  });
-});
-});
-
-require.alias("assert/assert.js", "assert");
-require.alias("process/browser.js", "process");
-require.alias("util/util.js", "sys");process = require('process');require.register("___globals___", function(exports, require, module) {
+require.register("___globals___", function(exports, require, module) {
   
 });})();require('___globals___');
 

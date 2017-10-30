@@ -1,7 +1,4 @@
-#tos{
-  display:none;
-  background-color: #ddd;
-}
+
 
 * {
   margin:0;
@@ -246,7 +243,6 @@ fieldset.no-padding {
 
 #mediaThumbUpload{
   width: 80px;
-  display: none;
   float: left;
   margin: 0px 20px;
 }
