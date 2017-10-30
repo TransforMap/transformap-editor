@@ -1,2 +1,2572 @@
-!function(){"use strict";var e="undefined"==typeof global?self:global;if("function"!=typeof e.require){var t={},a={},n={},r={}.hasOwnProperty,i=/^\.\.?(\/|$)/,o=function(e,t){for(var a,n=[],r=(i.test(t)?e+"/"+t:t).split("/"),o=0,s=r.length;o<s;o++)a=r[o],".."===a?n.pop():"."!==a&&""!==a&&n.push(a);return n.join("/")},s=function(e){return e.split("/").slice(0,-1).join("/")},l=function(t){return function(a){var n=o(s(t),a);return e.require(n,t)}},d=function(e,t){var n=v&&v.createHot(e),r={id:e,exports:{},hot:n};return a[e]=r,t(r.exports,l(e),r),r.exports},c=function(e){return n[e]?c(n[e]):e},u=function(e,t){return c(o(s(e),t))},m=function(e,n){null==n&&(n="/");var i=c(e);if(r.call(a,i))return a[i].exports;if(r.call(t,i))return d(i,t[i]);throw new Error("Cannot find module '"+e+"' from '"+n+"'")};m.alias=function(e,t){n[t]=e};var p=/\.[^.\/]+$/,f=/\/index(\.[^\/]+)?$/,g=function(e){if(p.test(e)){var t=e.replace(p,"");r.call(n,t)&&n[t].replace(p,"")!==t+"/index"||(n[t]=e)}if(f.test(e)){var a=e.replace(f,"");r.call(n,a)||(n[a]=e)}};m.register=m.define=function(e,n){if(e&&"object"==typeof e)for(var i in e)r.call(e,i)&&m.register(i,e[i]);else t[e]=n,delete a[e],g(e)},m.list=function(){var e=[];for(var a in t)r.call(t,a)&&e.push(a);return e};var v=e._hmr&&new e._hmr(u,m,t,a);m._cache=a,m.hmr=v&&v.wrap,m.brunch=!0,e.require=m}}(),function(){var e;"undefined"==typeof window?this:window;require.register("fixtures/fixtures.js",function(e,t,a){"use strict";a.exports={listOfMediaFilesForPOI:[{mediaId:"d07d6ab3-4e3f-44ce-accc-b3efc96b3f04",ipfs:"QmVXmy59f5QqKDGyhpHbRiGnba5SfHaooDPCWhd8Xtgwz2",url:"https://ipfs.io/images/ipfs-illustration-history.svg",mimetype:"image/jpeg",name:"Chaotic connectome replacement image for the large image on the main screen",description:"some description",versionDate:"2017-07-30T16:01:34+00:00"},{mediaId:"0a6afb5c-70b1-40f7-8f46-8dd7e0d94060",mimetype:"image/png",name:"Transformap Base",url:"https://base.transformap.co/images/transformap.png",versionDate:"2017-07-30T16:01:34+00:00"}],mediaFileMetadataBasic:{name:"some title",description:"some description",mimetype:"image/png",url:"https://base.transformap.co/images/transformap.png"},mediaFileMetadataComplete:{mediaId:"0a6afb5c-70b1-40f7-8f46-8dd7e0d94060",name:"some title",description:"some description",mimetype:"image/png",url:"https://base.transformap.co/images/transformap.png",versionDate:"2017-07-30T16:01:34+00:00"},mediaFileMetadataCompleteDeleted:{mediaId:"0a6afb5c-70b1-40f7-8f46-8dd7e0d94060",name:"some title",deleted:!0,description:"some description",mimetype:"image/png",url:"https://base.transformap.co/images/transformap.png",versionDate:"2017-07-30T16:01:34+00:00"},validAuthToken:{token:"d07d6ab3-4e3f-44ce-accc-b3efc96b3f04"},placeMetadata:{type:"Feature",properties:{name:"Bulgarian Food Bank","addr:country":"BG","addr:street":"бул. Васил Левски","addr:housenumber":"106","addr:postcode":"1000","addr:city":"София",POI_TYPE:"food bank",amenity:"social_facility","description:bg":"Организацията работи като свързващо звено между хранителната индустрия и социалните организации, за да увеличи многократно достъпа до хранително подпомагане в България. Тя създава системи за сигурност и контрол на храните, които постъпват като дарения.",website:"http://bgfoodbank.org","contact:email":"contact@bgfoodbank.org",organic:"no","fair-trade":"no",regional:"yes",free_keywords:"food bank;food waste",SSEDAS_PARTNER:"BILS",description:"The organisation acts as an interface between the food industry and social welfare organisations to increase access to food aid in Bulgaria. It sets up routines for guaranteeing that donated food is safe and properly managed.",type_of_initiative:"foodbank; recycling_foodwaste","contact:phone":"+3592 953 4100",social_facility:"food_bank"},geometry:{type:"Point",coordinates:[23.33513259888,42.69809702239]},_id:"2c10b95ea433712f0b06a3f7d310e7d5"},listOfMediaFileVersions:[{mediaId:"497123c0-f9d8-4e6c-acff-76ec9efcb265",name:"other version of the same file",versionDate:"2017-07-30T16:01:34+00:00",mimetype:"image.png",url:"https://base.transformap.co/images/transformap.png"},{mediaId:"c29c8d11-ec27-4fe1-9a23-dd10a3b37e11",name:"yet another version",versionDate:"2017-07-30T16:01:34+00:00",mimetype:"image.png",url:"https://base.transformap.co/images/transformap.png"}],listOfMediaFileVersionsUpdate:[{name:"other version of the same file",description:"a new description for the same file",versionDate:"2017-07-30T16:01:34+00:00",mimetype:"image.png",url:"https://base.transformap.co/images/transformap.png"},{mediaId:"497123c0-f9d8-4e6c-acff-76ec9efcb265",name:"a previous version of the same file",versionDate:"2017-07-30T16:01:34+00:00",mimetype:"image.png",url:"https://base.transformap.co/images/transformap.png"},{mediaId:"c29c8d11-ec27-4fe1-9a23-dd10a3b37e11",name:"yet another previous version",versionDate:"2017-07-30T16:01:34+00:00",mimetype:"image.png",url:"https://base.transformap.co/images/transformap.png"}]}}),require.register("fixtures/intercept_ajax.js",function(e,t,a){"use strict";var n=t("./fixtures.js");xhook.after(function(e,t){"GET"===e.method?(e.url.match(".*?/place/(.*)")&&(t.status=200,t.text=JSON.stringify(n.placeMetadata)),e.url.match(".*?/place/(.*)/media")&&(t.status=200,t.text=JSON.stringify(n.listOfMediaFilesForPOI)),e.url.match(".*?/media/(.*)")&&(t.status=200,t.text=JSON.stringify(n.mediaFileMetadataComplete)),e.url.match(".*?/media/(.*)/versions")&&(t.status=200,t.text=JSON.stringify(n.listOfMediaFileVersions)),e.url.match(".*?/auth/")&&(t.status=200,t.text=JSON.stringify(n.validAuthToken))):"POST"===e.method?(e.url.match(".*?/media/")&&(t.status=201,t.text=JSON.stringify(n.mediaFileMetadataComplete)),e.url.match(".*?/media/(.*)/versions")&&(t.status=201,t.text=JSON.stringify(n.listOfMediaFileVersionsUpdate)),e.url.match(".*?/place/")):"PUT"===e.method?(e.url.match(".*?/media/(.*)")&&(t.status=200,t.text=JSON.stringify(n.mediaFileMetadataComplete)),e.url.match(".*?/place/(.*)")&&(t.status=200)):"DELETE"===e.method&&(e.url.match(".*?/place/(.*)")&&(t.status=200),e.url.match(".*?/place/(.*)/media/(.*)")&&(t.status=200,t.text=JSON.stringify(n.placeMetadata)),e.url.match(".*?/auth/(.*)")&&(t.status=200))})}),require.register("initialize.js",function(e,t,a){"use strict";var n=t("lib/editor");document.addEventListener("DOMContentLoaded",function(){n(),console.log("Initialized app")})}),require.register("lib/auth_api.js",function(e,t,a){"use strict";function n(){return d}function r(){return void 0!==s}function i(e){if(s)return console.log("Auth token already available"),s;var t=l.createCORSRequest("GET",d);t.setRequestHeader("Content-Type","application/json"),t.send(),t.onreadystatechange=function(){if(4===t.readyState)if(200===t.status){var a=JSON.parse(t.responseText);e(a),s=a}else console.error(t)}}function o(e,t){if(!e)return console.log("logout: no authToken given"),!1;var a=l.createCORSRequest("GET",d);a.setRequestHeader("Content-Type","application/json"),a.send(),a.onreadystatechange=function(){4===a.readyState&&(200===a.status?t(JSON.parse(a.responseText)):console.error(a))}}var s,l=t("./utils.js"),d=l.baseUrl+"/auth/";a.exports={getAuthEndpoint:n,isAlreadyLoggedIn:r,retrieveAuthToken:i,logout:o}}),require.register("lib/data_api.js",function(e,t,a){"use strict";function n(){return c}function r(e,t,a){if(!t)return console.error("updateOrCreatePOI: no data given"),!1;var n=d.createCORSRequest(e?"PUT":"POST",c+e);n.setRequestHeader("Content-Type","application/json"),n.send(t),n.onreadystatechange=function(){if(4===n.readyState)if(200===n.status){var e=JSON.parse(n.responseText);console.log(e),e.id?(a(e.id),alert("Save successful")):alert("Error: something wrent wrong on saving: "+JSON.stringify(e))}else console.error(n)}}function i(e,t){if(!e)return console.error("getPOI: no uuid given"),!1;var a=d.createCORSRequest("GET",n()+e);a.setRequestHeader("Content-Type","application/json"),a.send(),a.onreadystatechange=function(){4===a.readyState&&(200===a.status?t(JSON.parse(a.responseText)):console.error(a))}}function o(e,t){if(!e)return console.error("deletePOI: no uuid given"),!1;var a=d.createCORSRequest("DELETE",c+e);a.send(),a.onreadystatechange=function(){4===a.readyState&&(200===a.status?t(e):console.error(a))}}function s(e,t){if(!e)return console.error("retrieveMediaFilesForPOI: no uuid given"),!1;var a=d.createCORSRequest("GET",n()+e+"/media");a.setRequestHeader("Content-Type","application/json"),a.send(),a.onreadystatechange=function(){4===a.readyState&&(200===a.status?t(JSON.parse(a.responseText)):console.error(a))}}function l(e,t,a){if(!e)return console.error("removeMediaFileFromPOI: no uuid given"),!1;if(!t)return console.error("removeMediaFileFromPOI: no mediaId given"),!1;var r=d.createCORSRequest("DELETE",n()+e+"/media/"+t);r.setRequestHeader("Content-Type","application/json"),r.send(),r.onreadystatechange=function(){4===r.readyState&&(200===r.status?a(JSON.parse(r.responseText)):console.error(r))}}var d=t("./utils.js"),c=d.baseUrl+"/place/";a.exports={getDataEndpoint:n,createOrUpdatePOI:r,getPOI:i,deletePOI:o,retrieveMediaFilesForPOI:s,removeMediaFileFromPOI:l}}),require.register("lib/editor.js",function(e,t,a){"use strict";var n=t("./utils.js"),r=t("./red_fetch.js"),i=t("./translations.js"),o=t("./data_api.js"),s=t("./ui.js"),l=t("./map.js");window.translations=i;var d=["https://base.transformap.co/wiki/Special:EntityData/Q5.json","https://raw.githubusercontent.com/TransforMap/transformap-viewer/Q5-fallback.json"];"true"==='false'&&(console.log("integrating xhook and mocking ajax calls"),t("xhook"),t("../fixtures/intercept_ajax.js")),a.exports=function(){console.log("editor initialize start");var e=n.getUrlVars().place,t=i.selectAllowedLang(i.current_lang);console.log("lang on start: "+t),console.log(i.supported_languages),document.getElementById("plus").onclick=s.addFreeTagsRow,e&&o.getPOI(e,s.fillForm),s.addLanguageSwitcher(),i.fetchAndSetNewTranslation=i.fetchAndSetNewTranslation,r(d,i.initializeTranslatedTOIs,function(e){console.error("none of the lang init data urls available")}),document.getElementById("save").onclick=s.clickSubmit,document.getElementById("delete").onclick=s.clickDelete,document.getElementById("coordsearch").onclick=s.clickSearch,document.getElementById("newmedia").onclick=s.clickNewMedia,document.getElementById("loginbutton").onclick=s.clickLoginButton,document.onkeypress=s.stopRKey,document.getElementById("mediacancel").onclick=s.clickMediaCancel,document.getElementById("mediasave").onclick=s.clickMediaSave,l.initMap(),console.log("editor initialize end")}}),require.register("lib/map.js",function(e,t,a){"use strict";function n(e){var t=!!e&&{icon:new l},a={position:"bottomleft",draw:{polyline:!1,polygon:!1,rectangle:!1,circle:!1,marker:t},edit:{featureGroup:s,remove:!1}};return new d.Control.Draw(a)}function r(){return o}function i(){console.log("initMap start");var e,t,a,r,i='Map data by <a href="https://openstreetmap.org">OpenStreetMap</a> contributors, under <a href="https://www.openstreetmap.org/copyright">ODbL</a>. ',u='POIs by <a href="http://solidariteconomy.eu">SUSY</a>, <a href="https://creativecommons.org/publicdomain/zero/1.0/">CC-0</a>. ',m={};m.mapnik=new d.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{attribution:i+u,maxZoom:19,noWrap:!0}),m.stamen_terrain=new d.tileLayer("https://stamen-tiles-{s}.a.ssl.fastly.net/terrain/{z}/{x}/{y}.png",{attribution:'Map tiles by <a href="http://stamen.com/">Stamen Design</a>, under <a href="https://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. '+i+u,maxZoom:18,noWrap:!0}),m.stamen_terrain_bg=new d.tileLayer("https://stamen-tiles-{s}.a.ssl.fastly.net/terrain-background/{z}/{x}/{y}.png",{attribution:'Map tiles by <a href="http://stamen.com/">Stamen Design</a>, under <a href="https://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. '+i+u,maxZoom:18,noWrap:!0}),m.hot=new d.tileLayer("http://tile-{s}.openstreetmap.fr/hot/{z}/{x}/{y}.png",{attribution:'Tiles courtesy of <a href="http://hot.openstreetmap.org/">Humanitarian OpenStreetMap Team</a>. '+i+u,maxZoom:20,noWrap:!0}),e||(e={"Stamen - Terrain":m.stamen_terrain,"Stamen - Terrain Background":m.stamen_terrain_bg,"OpenStreetMap - Mapnik":m.mapnik,"Humanitarian OpenStreetMap ":m.hot}),a||(a=m.mapnik),o=d.map("map",{zoomControl:!0,center:r||new d.LatLng(28.6,9),zoom:t||2,layers:a});var p=new d.Control.Layers(e);o.addControl(p);new d.Hash(o);return s=new d.FeatureGroup,o.addLayer(s),l=d.Icon.extend({options:{shadowUrl:null,iconAnchor:new d.Point(12,40),iconSize:new d.Point(25,40),iconUrl:"marker-green.png"}}),o.on(d.Draw.Event.CREATED,function(e){var t=e.layerType,a=e.layer;"marker"===t&&a.bindPopup(c),s.addLayer(a),o.my_current_marker=a,document.getElementById("_geometry_lon").value=a._latlng.lng.toFixed(6),document.getElementById("_geometry_lat").value=a._latlng.lat.toFixed(6),o.removeControl(o.my_drawControl),o.my_drawControl=n(!1),o.addControl(o.my_drawControl)}),o.on("draw:editmove",function(e){console.log("editmove"),console.log(e),document.getElementById("_geometry_lon").value=e.layer._latlng.lng.toFixed(6),document.getElementById("_geometry_lat").value=e.layer._latlng.lat.toFixed(6)}),o.on("moveend",function(e){var t=o.getCenter(),a="#"+o.getZoom()+"/"+t.lat+"/"+t.lng,n=document.getElementById("gotomap"),r=n.getAttribute("href");r.split("#");r=n.getAttribute("href").split("#")[0]+a,n.setAttribute("href",r);var i=document.getElementById("newbutton");i.setAttribute("href","./"+a)}),o.my_editableLayers=s,o.my_placeMarker=l,o.getDrawControl=n,o.updateMarkerFromForm=function(){var e=document.getElementById("_geometry_lat").value,t=document.getElementById("_geometry_lon").value;if(console.log("new lat: "+e+" lon: "+t),e&&t){var a=d.latLng(e,t);o.my_current_marker?o.my_current_marker.setLatLng(a):(o.my_current_marker=new d.marker([e,t],{icon:new o.my_placeMarker}),o.my_current_marker.bindPopup(c),o.my_editableLayers.addLayer(o.my_current_marker),o.removeControl(o.my_drawControl),o.my_drawControl=n(!1),o.addControl(o.my_drawControl)),o.panTo(a)}else console.log("no coords, remove marker"),o.my_current_marker.remove(),delete o.my_current_marker,o.removeControl(o.my_drawControl),o.my_drawControl=n(!0),o.addControl(o.my_drawControl)},document.getElementById("_geometry_lat").onblur=o.updateMarkerFromForm,document.getElementById("_geometry_lon").onblur=o.updateMarkerFromForm,console.log("initMap end"),o}var o,s,l,d=t("leaflet"),c=(t("leaflet-hash"),t("leaflet-draw"),"Press the edit button to move me. <img style=\"width:30px;height:30px;background-position:-150px -1px;background-image:url('images/spritesheet.svg');background-size: 270px 30px;\"> <br><br> Find it on the bottom left corner of the map.");a.exports={getMap:r,initMap:i}}),require.register("lib/mms_api.js",function(e,t,a){"use strict";function n(){return m}function r(e,t,a){if(!e)return console.error("createNewMEdiaFileForPOI: no uuid given"),!1;if(!t)return console.error("createNewMEdiaFileForPOI: no data given"),!1;var r=u.createCORSRequest("POST",n());r.setRequestHeader("Content-Type","application/json"),r.send(t),r.onreadystatechange=function(){4===r.readyState&&(200===r.status?a(r.responseText):console.error(r))}}function i(e,t){if(!e)return console.error("retrieveMetadataForMediaFile: no mediaId given"),!1;var a=u.createCORSRequest("GET",n()+e);a.setRequestHeader("Content-Type","application/json"),a.send(),a.onreadystatechange=function(){4===a.readyState&&(200===a.status?t(a.responseText):console.error(a))}}function o(e,t,a){if(!e)return console.error("retrieveMetadataForMediaFiles: no mediaId given"),!1;if(!t)return console.error("retrieveMetadataForMediaFiles: no data given"),!1;var r=u.createCORSRequest("PUT",n()+e);r.setRequestHeader("Content-Type","application/json"),r.send(t),r.onreadystatechange=function(){4===r.readyState&&(200===r.status?a(r.responseText):console.error(r))}}function s(e,t){if(!e)return console.error("retrieveMediaFileVersions: no mediaId given"),!1;var a=u.createCORSRequest("GET",n()+e+"/versions");a.setRequestHeader("Content-Type","application/json"),a.send(),a.onreadystatechange=function(){4===a.readyState&&(200===a.status?t(a.responseText):console.error(a))}}function l(e,t,a){if(!e)return console.error("addMediaFileVersion: no mediaId given"),!1;if(!t)return console.error("addMediaFileVersion: no data given"),!1;var r=u.createCORSRequest("POST",n()+e+"/versions");r.setRequestHeader("Content-Type","application/json"),r.send(t),r.onreadystatechange=function(){4===r.readyState&&(200===r.status?a(r.responseText):console.error(r))}}function d(e,t,a){if(!e)return console.error("setActiveMediaFileVersion: no mediaId given"),!1;if(!t)return console.error("setActiveMediaFileVersion: no versionId given"),!1;var r=u.createCORSRequest("POST",n()+e+"/versions/"+t);r.setRequestHeader("Content-Type","application/json"),r.send(),r.onreadystatechange=function(){4===r.readyState&&(200===r.status?a(r.responseText):console.error(r))}}function c(e,t,a){if(!e)return console.error("uploadBlob: no mediaId given"),!1;if(!t)return console.error("uploadBlob: no blob given"),!1;var r=u.createCORSRequest("POST",n()+e+"/blob");r.setRequestHeader("Content-Type","multipart/form-data"),r.send(t),r.onreadystatechange=function(){4===r.readyState&&(200===r.status?a(r.JSON.parse(responseText)):console.error(r))}}var u=t("./utils.js"),m=u.baseUrl+"/media/";a.exports={getMMSEndpoint:n,createNewMediaFileForPOI:r,retrieveMetadataForMediaFile:i,updateMedataForMediaFile:o,retrieveMediaFileVersions:s,addMediaFileVersion:l,setActiveMediaFileVersion:d,uploadBlob:c}}),require.register("lib/red_fetch.js",function(e,t,a){"use strict";function n(e,t,a,r){if(!e||Array!==e.constructor)return console.error("redundantFetch: argument is no array"),console.error(e),!1;var i=e[0];if("string"!=typeof i)return console.error("redundantFetch: url is no string"),!1;console.log("redundantFetch called, urls:"),console.log(e),e.shift();var o,s;0==e.length?(s=t,o=a):(s=t,o=function(i){n(e,t,a,r)});var l={url:i,cacheBusting:!(r&&r.cacheBusting===!1)};d(l).then(function(e){s(e),console.log("rfetch: success on "),console.log(e)},function(e){o(e),console.log("rfetch: fail on "),console.log(e)})}var r=function(e){return 200===e.status||0===e.status?Promise.resolve(e):Promise.reject(new Error(e.statusText))},i=function(e){return e.json()},o=function(){var e={},t=new Promise(function(t,a){e.resolve=t,e.reject=a});return e.then=t.then.bind(t),e["catch"]=t["catch"].bind(t),e.promise=t,e},s=function(){var e=o(),t=Array.prototype.slice.call(arguments);return window.fetch.apply(null,t).then(function(t){e.resolve(t)},function(t){e.reject(t)})["catch"](function(t){e["catch"](t)}),e},l=5e3,d=function(e){var t=s(e.cacheBusting?e.url+"?"+(new Date).getTime():e.url,{method:"get",headers:{Accept:"application/json"}}),a=setTimeout(function(){t.reject(new Error("Load timeout for resource: "+e.url))},l);return t.promise.then(function(e){return clearTimeout(a),e}).then(r).then(i)};a.exports=n}),require.register("lib/taxonomy.js",function(e,t,a){"use strict";function n(e,t){if(!e)return console.error("setFilterLang: no lang given"),!1;t||(t="Q8");var a="prefix bd: <http://www.bigdata.com/rdf#> prefix wikibase: <http://wikiba.se/ontology#> prefix wdt: <https://base.transformap.co/prop/direct/>prefix wd: <https://base.transformap.co/entity/>SELECT ?item ?itemLabel ?instance_of ?subclass_of ?type_of_initiative_tag ?interaction_tag ?needs_tag ?identity_tag ?wikipedia ?description WHERE {?item wdt:P8* wd:"+t+' .?item wdt:P8 ?subclass_of .OPTIONAL { ?item wdt:P4 ?instance_of . }OPTIONAL { ?item wdt:P15 ?type_of_initiative_tag }OPTIONAL { ?item wdt:P16 ?interaction_tag }OPTIONAL { ?item wdt:P17 ?needs_tag }OPTIONAL { ?item wdt:P18 ?identity_tag }OPTIONAL { ?item schema:description ?description FILTER(LANG(?description) = "'+e+'") }OPTIONAL { ?wikipedia schema:about ?item . ?wikipedia schema:inLanguage "en"}SERVICE wikibase:label {bd:serviceParam wikibase:language "'+e+'" }}';return"https://query.base.transformap.co/bigdata/namespace/transformap/sparql?query="+encodeURIComponent(a)+"&format=json"}a.exports={getLangTaxURL:n}}),require.register("lib/translations.js",function(e,t,a){"use strict";function n(){var e=window.navigator.languages?window.navigator.languages[0]:window.navigator.language||window.navigator.userLanguage;"string"==typeof e&&(e=[e]);for(var t=0;t<e.length;t++)if(e[t].match(/-/)){var a=e[t].match(/^([a-zA-Z]*)-/)[1];if(e.indexOf(a)==-1){e.push(a);continue}}return e.indexOf("en")==-1&&e.push("en"),console.log(e),e}function r(){if(b=[],"en"!=_)for(var e=0;e<h.length;e++){var t=h[e];_!=t&&b.push(t)}console.log("new fallback langs: "+b.join(",")+".")}function i(){_="en";for(var e=0;e<h.length;e++){var t=h[e];if(v[t]){_=t;break}}d(_)}function o(e){var t;for(t in e.entities.Q5.labels)f.push(t);var a=f.join("|"),n='SELECT ?lang ?langLabel ?abbr WHERE{?lang wdt:P218 ?abbr;FILTER regex (?abbr, "^('+a+')$").SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }}';n="https://query.wikidata.org/bigdata/namespace/wdq/sparql?query="+encodeURIComponent(n)+"&format=json",$.getJSON(n,function(e){e.results.bindings.forEach(function(e){v[e.abbr.value]=e.langLabel.value,y[e.langLabel.value]=e.abbr.value,g.push(e.langLabel.value)}),g.sort(),i(),r(),g.forEach(function(e){var t=y[e],a=t==_?" class=default":"";console.log("adding lang '"+t+"' ("+e+")"),$("#languageSelector ul").append("<li targetlang="+t+a+" onClick='window.translations.switchToLang(\""+t+"\");'>"+e+"</li>")})})}function s(e){u([m.getLangTaxURL(e,"Q8"),"https://raw.githubusercontent.com/TransforMap/transformap-viewer-translations/master/taxonomy-backup/susy/taxonomy."+e+".json"],p.fillTOIs,function(e){console.error("none of the taxonomy data urls available")},{cacheBusting:!1}),u([m.getLangTaxURL(e,"Q4"),"https://raw.githubusercontent.com/TransforMap/transformap-viewer-translations/master/taxonomy-backup/susy/taxonomy."+e+".json"],p.fillTransforMapTax,function(e){console.error("none of the taxonomy data urls available")},{cacheBusting:!1})}function l(e){translations.initializeLanguageSwitcher(e);var t=translations.selectAllowedLang(translations.current_lang);translations.current_lang=t,s(t)}function d(e){$("#languageSelector li.default").removeClass("default"),$("#languageSelector li[targetlang="+e+"]").addClass("default"),_=e,window.translations.current_lang=e,window.translations.fetchAndSetNewTranslation(e),r(),console.log("new lang:"+e)}function c(e){if(console.log("selectAllowedLang("+e+") called"),e){if(f.indexOf(e)!=-1)return _=e;console.log("not in supported, try shorten");var t=e.match(/^([a-zA-Z]*)-/);if(t&&t[1]){var a=t[1];if(console.log("short: "+a),a&&f.indexOf(a)!=-1)return _=a,console.log("current_lang set to "+a),_}}return r(),_=b[0]&&f.indexOf(b[0])!=-1?b[0]:"en"}var u=t("./red_fetch.js"),m=t("./taxonomy.js"),p=t("./ui.js"),f=[],g=[],v={},y={},h=n(),_=h[0],b=[];a.exports={getLangs:n,initializeLanguageSwitcher:o,initializeTranslatedTOIs:l,supported_languages:f,browser_languages:h,current_lang:_,switchToLang:d,selectAllowedLang:c,fetchAndSetNewTranslation:s}}),require.register("lib/ui.js",function(e,t,a){"use strict";function n(e){if(k=e,k._deleted&&(document.getElementById("deleted").style.display="block"),k.properties)for(var t in k.properties)if(!/^_/.test(t)){var a=document.getElementById("_key_"+t),n=k.properties[t];if(a)a.value=n;else{for(var i=document.getElementById("freetags"),s=i.lastChild;3===s.nodeType;)s=s.previousSibling;var l=1===s.firstChild.nodeType?s.firstChild:s.firstChild.nextSibling;l.value=t;var d=1===s.lastChild.nodeType?s.lastChild:s.lastChild.previousSibling;d.value=n,o()}}if(r(k),k.geometry&&k.geometry.coordinates){var c=k.geometry.coordinates[0],u=k.geometry.coordinates[1];if(void 0===u||void 0===c)return void console.error("lat or lon empty");document.getElementById("_geometry_lon").value=c,document.getElementById("_geometry_lat").value=u;var m=F.getMap();m.my_current_marker=new L.marker([u,c],{icon:new m.my_placeMarker}),m.my_editableLayers.addLayer(m.my_current_marker),m.my_drawControl=m.getDrawControl(!1),m.addControl(m.my_drawControl),m.panTo(new L.LatLng(u,c))}else m.my_drawControl=m.getDrawControl(!0),m.addControl(m.my_drawControl);k.properties&&k.properties._id?(document.getElementById("_id").value=k.properties._id,$("#transformapapilink").attr("href",b.getDataEndpoint()+k.properties._id)):k._id&&(document.getElementById("_id").value=k._id,$("#transformapapilink").attr("href",b.getDataEndpoint()+k._id)),k.properties.osm&&$("#osmlink").attr("href",k.properties.osm)}function r(e){$("#media").html(""),b.retrieveMediaFilesForPOI(e._id,function(t){$(".relatedMediaTitle").text("Related media files ("+t.length+")");for(var a=0;a<t.length;a++){var n=$('<div class="row mediaFile '+t[a].mediaId+'"></div>'),i=$('<div class="row mediaInfo"></div>');t[a].name&&i.append("<b>"+t[a].name+"</b>"),t[a].description&&i.append("<p>"+t[a].description+"</p>");var o=$('<div class="row"></div>'),s=$('<a class="mediaOption remove">Remove</h4>');s.on("click",{metadata:t[a],currentData:e},function(t){var a=t.data;console.log("removeButton clicked for mediaFile with id:"+a.metadata.mediaId),confirm("Are you sure you want to delete this media file?")&&dataAPI.removeMediaFileFromPOI(a.currentData._id,a.metadata.mediaId,function(){$("."+a.metadata.mediaId).remove(),r(e)})});var l=$('<a class="mediaOption edit" data-toggle="modal" data-target="#mediaFileDialog" data-id="'+t[a].mediaId+'">Edit</h4>');l.on("click",{metadata:t[a],currentData:e},function(e){var t=e.data;console.log("editButton clicked for mediaFile with id:"+t.metadata.mediaId),$("#mediaFileDialogContent").find(".createOrUpdate").text("update"),$("#mediaFileDialogContent").find(".mediaId").text(t.metadata.mediaId),$("#mediaFileDialogContent").find(".name").val(t.metadata.name),$("#mediaFileDialogContent").find(".description").val(t.metadata.description),$("#mediaFileDialogContent").find("img").attr("src",t.metadata.url),$("#mediaFileDialogContent").find("img").show(),$("#mediaThumbUpload").hide(),$("#mediaFileDialogContent").find(".metadata").text(JSON.stringify(t.metadata))}),o.append(s),o.append(l),i.append(o);var d="https://s3.amazonaws.com/FringeBucket/image_placeholder.png";"image/png"!==t[a].mimetype&&"image/jpeg"!==t[a].mimetype||(d=t[a].url),n.append('<img class="mediaThumb" src="'+d+'"/>'),n.append(i),$("#media").append(n).append("<hr>")}})}function i(){$("#menu").append("<div id=languageSelector onClick=\"$('#languageSelector ul').toggleClass('open');\"><span lang=en>Choose Language:</span><ul></ul></div>")}function o(){for(var e=document.getElementById("freetags"),t=e.lastChild;3===t.nodeType;)t=t.previousSibling;var a=1===t.firstChild.nodeType?t.firstChild:t.firstChild.nextSibling,n=parseInt(a.id.slice(-1))+1,r=document.createElement("div"),i=document.createAttribute("class");i.value="row",r.setAttributeNode(i);var o=document.createElement("input"),s=document.createAttribute("class");s.value="form-control",o.setAttributeNode(s);var s=document.createAttribute("class");s.value="form-control";var l=document.createElement("input");l.setAttributeNode(s);var d=document.createAttribute("id");d.value="key"+n;var c=document.createAttribute("id");c.value="value"+n,o.setAttributeNode(d),l.setAttributeNode(c);var u=document.createAttribute("name");u.value="freetags",o.setAttributeNode(u),l.setAttributeNode(u.cloneNode(!0)),r.appendChild(o),r.appendChild(l),e.appendChild(r)}function s(e){if("string"!=typeof e)return[];for(var t=e.split(";"),a=0;a<t.length;a++)t[a]=t[a].trim();return t}function l(e){console.log("fillTransforMapTax called");var t=e.results.bindings,a=t[0].itemLabel["xml:lang"],n=[],r=[],i=[];t.forEach(function(e){if(e.subclass_of){var t={};t[a]=e.itemLabel.value;var o={item:e.item.value,label:t};"https://base.transformap.co/entity/Q146"==e.subclass_of.value?(o.needs_tag=e.needs_tag.value,n.push(o)):"https://base.transformap.co/entity/Q150"==e.subclass_of.value?(o.interaction_tag=e.interaction_tag.value,r.push(o)):"https://base.transformap.co/entity/Q176"==e.subclass_of.value&&(o.identity_tag=e.identity_tag.value,i.push(o))}}),$("#_key_provides").empty(),n.forEach(function(e){var t=$("<option>");if(t.attr("value",e.needs_tag),k.properties&&k.properties.provides){var n=s(k.properties.provides);n.forEach(function(a){a===e.needs_tag&&t.attr("selected","selected")})}t.append(e.label[a]),$("#_key_provides").append(t),$("#_key_provides").selectpicker("refresh")}),$("#_key_interaction").empty(),r.forEach(function(e){var t=$("<option>");if(t.attr("value",e.interaction_tag),k.properties&&k.properties.interaction){var n=s(k.properties.interaction);n.forEach(function(a){a===e.interaction_tag&&t.attr("selected","selected")})}t.append(e.label[a]),$("#_key_interaction").append(t),$("#_key_interaction").selectpicker("refresh")}),$("#_key_identity").empty(),i.forEach(function(e){var t=$("<option>");if(t.attr("value",e.identity_tag),k.properties&&k.properties.identity){var n=s(k.properties.identity);n.forEach(function(a){a===e.identity_tag&&t.attr("selected","selected")})}t.append(e.label[a]),$("#_key_identity").append(t),$("#_key_identity").selectpicker("refresh")})}function d(e){function t(e,t){return"https://base.transformap.co/entity/Q20"===e.item?1:"https://base.transformap.co/entity/Q20"===t.item?-1:e.type_of_initiative_tag&&e.type_of_initiative_tag.match(/^other_/)?1:t.type_of_initiative_tag&&t.type_of_initiative_tag.match(/^other_/)?-1:e.label[o]<t.label[o]?-1:1}$("#_key_type_of_initiative").empty();var a=[],n={},r=document.getElementById("_key_type_of_initiative"),i=e.results.bindings,o=i[0].itemLabel["xml:lang"];i.forEach(function(e){if(e.type_of_initiative_tag&&!n[e.type_of_initiative_tag.value]){var t={};t[o]=e.itemLabel.value;var r={item:e.item.value,label:t,type_of_initiative_tag:e.type_of_initiative_tag.value};a.push(r),n[e.type_of_initiative_tag.value]=r}}),a.sort(t),a.forEach(function(e){var t=document.createElement("option"),a=document.createAttribute("value");if(a.value=e.type_of_initiative_tag,t.setAttributeNode(a),k.properties&&k.properties.type_of_initiative){var n=s(k.properties.type_of_initiative);n.forEach(function(a){if(a===e.type_of_initiative_tag){var n=document.createAttribute("selected");t.setAttributeNode(n)}})}var i=document.createTextNode(e.label[o]);t.appendChild(i),r.appendChild(t),$("#_key_type_of_initiative").selectpicker("refresh")})}function c(){console.log("clickSubmit enter");for(var e=["_key_type_of_initiative","_key_name","_geometry_lat","_geometry_lon"],t=0;t<e.length;t++){var a=e[t],n=document.getElementById(a).value;if(!n||!n.length)return console.error("submit: field "+a+" empty"),alert("Error on submit: field "+a.replace(/^_key_/,"")+" is not allowed to be empty"),!1}var r={type:"Feature",properties:{},geometry:{type:"Point",coordinates:[parseFloat(document.getElementById("_geometry_lon").value),parseFloat(document.getElementById("_geometry_lat").value)]}},i=document.getElementsByTagName("input"),o={keys:{},values:{}};console.log(i);for(var t=0;t<i.length;t++){var s=i[t];if("text"!==!s.type&&s.value&&s.id)if(console.log(s.id+": "+s.value),/^_key_/.test(s.id)){var l=s.id.replace(/^_key_/,"");r.properties[l]=s.value.trim()}else if(/^key[0-9]+$/.test(s.id)&&"freetags"===s.name){var d=s.id.replace(/^key/,"");o.keys[d]=s.value}else if(/^value[0-9]+$/.test(s.id)&&"freetags"===s.name){var d=s.id.replace(/^value/,"");o.values[d]=s.value}}console.log(o);for(var c in o.keys){var l=o.keys[c].trim();l&&o.values[c]&&(r.properties[l]=o.values[c].trim())}for(var m=document.getElementsByTagName("select"),t=0;t<m.length;t++){var s=m[t];if(/^_key_/.test(s.id)&&s.value)for(var l=s.id.replace(/^_key_/,""),p=0;p<s.children.length;p++){var f=s.children[p];f.selected===!0&&(r.properties[l]=(r.properties[l]?r.properties[l]+";":"")+f.value)}}for(var g=document.getElementsByTagName("textarea"),t=0;t<g.length;t++){var s=g[t];if(/^_key_/.test(s.id)&&s.value){
-var l=s.id.replace(/^_key_/,"");r.properties[l]=s.value.trim()}}console.log(r);var v=document.getElementById("_id").value,y=JSON.stringify(r);console.log(y),b.createOrUpdatePOI(v,y,u),document.getElementById("deleted").style.display="none"}function u(e){document.getElementById("_id").value=e,$("#transformapapilink").attr("href",b.getDataEndpoint()+e),$("#osmlink").attr("href",$("#_key_osm").attr("value"))}function m(){var e=document.getElementById("_id").value;b.deletePOI(e,p),document.getElementById("deleted").style.display="block"}function p(e){console.log("Successfully deleted POI: "+e)}function f(){var e=document.getElementById("_key_addr:country").value,t=document.getElementById("_key_addr:city").value,a=document.getElementById("_key_addr:street").value,n=document.getElementById("_key_addr:housenumber").value,r="q=";a&&(n&&(r+=n+"+"),r+=a+","),t&&(r+=t+","),r+=e;var i="//nominatim.openstreetmap.org/search?"+r+"&format=json&limit=1&email=mapping@transformap.co";console.log(i),redFetch([i],function(e){if(console.log(e),1!==e.length)return console.error("error in Nominatim return data: length != 1"),void alert("Sorry, Nothing found");var t=e[0];"building"===t["class"]||"amenity"===t["class"]||"shop"===t["class"]||"place"===t["class"]&&"house"===t.type?(console.log("address found exactly"),document.getElementById("_geometry_lon").value=t.lon,document.getElementById("_geometry_lat").value=t.lat,document.getElementById("_geometry_lat").focus(),document.getElementById("_geometry_lon").focus(),F.getMap().setView(new L.LatLng(t.lat,t.lon),18)):(F.getMap().setView(new L.LatLng(t.lat,t.lon),18),console.log("address not found exactly"),setTimeout(function(){alert("Attention: The address was not found exactly, please place the marker manually!"),document.getElementById("_geometry_lon").value="",document.getElementById("_geometry_lat").value="",document.getElementById("_geometry_lon").focus(),document.getElementById("_geometry_lat").focus()},400))},function(e){console.log(e),alert("Sorry, Address search did not work")})}function g(e){var e=e||event||null,t=e.target?e.target:e.srcElement?e.srcElement:null;if(13==e.keyCode&&"text"==t.type)return!1}function v(){var e=$("#mediaFileDialogContent").find(".poiUUID").text(),t=$("#mediaFileDialogContent").find(".mediaId").text();if("create"==$("#mediaFileDialogContent").find(".createOrUpdate").text()){var a={name:$("#mediaFileDialogContent").find(".name").val(),description:$("#mediaFileDialogContent").find(".name").val(),versionDate:(new Date).toISOString()};if(I.getCurrentBlob()){x.uploadBlob(I.getCurrentBlob(),function(){a.url=blob.url,a.mimetype=blob.mimetype,x.createNewMediaFileForPOI(e,a,function(){$("#mediaFileDialog").modal("toggle")})})}else x.createNewMediaFileForPOI(e,a,function(){$("#mediaFileDialog").modal("toggle")})}else{var a=JSON.parse($("#mediaFileDialogContent").find(".metadata").text());if(a.name=$("#mediaFileDialogContent").find(".name").val(),a.description=$("#mediaFileDialogContent").find(".description").val(),I.getCurrentBlob()){x.uploadBlob(I.getCurrentBlob(),function(){a.url=blob.url,a.mimetype=blob.mimetype,x.addMediaFileVersion(t,a,function(){x.updateMedataForMediaFile(t,a,function(){$("#mediaFileDialog").modal("toggle")})})})}else x.addMediaFileVersion(t,a,function(){x.updateMedataForMediaFile(t,a,function(){$("#mediaFileDialog").modal("toggle")})})}}function y(){$("#mediaFileDialog").modal("toggle")}function h(){console.log("newMedia button clicked"),$("#mediaFileDialogContent").find(".createOrUpdate").text("create"),$("#mediaFileDialogContent").find(".poiUUID").text(k._id),$("#mediaFileDialogContent").find(".name").val(""),$("#mediaFileDialogContent").find(".description").val(""),$("#mediaFileDialogContent").find("img").hide(),$("#mediaThumbUpload").show(),$("#mediaFileDialogContent").find(".metadata").text(""),$("#mediaFileDialogContent").find(".mediaVersions").html(""),document.getElementById("mediaThumbUpload").addEventListener("change",I.handleFileSelect,!1)}function _(){w.isAlreadyLoggedIn()?w.logout(w.retrieveAuthToken(),function(e){$("#loginbutton").text("Login")}):w.retrieveAuthToken(function(e){$("#loginbutton").text("Logout")})}var b=t("./data_api.js"),x=t("./mms_api.js"),w=t("./auth_api.js"),F=t("./map.js"),I=t("./utils.js"),k={};a.exports={fillForm:n,addLanguageSwitcher:i,addFreeTagsRow:o,fillTransforMapTax:l,fillTOIs:d,map:F,clickSubmit:c,clickDelete:m,clickSearch:f,stopRKey:g,clickMediaSave:v,clickMediaCancel:y,clickNewMedia:h,clickLoginButton:_}}),require.register("lib/utils.js",function(e,t,a){"use strict";function n(e,t){var a=new XMLHttpRequest;return"withCredentials"in a?a.open(e,t,!0):"undefined"!=typeof XDomainRequest?(a=new XDomainRequest,a.open(e,t)):a=null,a}function r(){var e={};window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi,function(t,a,n){e[a]=n.replace(/#.*$/,"")});return e}function i(e){var t=/.+?\:\/\/.+?(\/.+?)(?:#|\?|$)/;return t.exec(e)[1]}function o(){var e=(new Date).getTime(),t="xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g,function(t){var a=(e+16*Math.random())%16|0;return e=Math.floor(e/16),("x"==t?a:3&a|8).toString(16)});return t}function s(e,t){var a=e.target.files,n=new FileReader;n.onload=function(e){var t=e.target.result;d=t,console.log("Storing current asset's binary content in memory: "+d)},n.onerror=function(e){console.error("File could not be read! Code "+e.target.error.code),ui.currentBlob=void 0};for(var r,i={binary:["image/png","image/jpeg"]},o=0;o<a.length;o++)r=a[o],null!==r&&i.binary.indexOf(r.type)>-1&&n.readAsArrayBuffer(r)}function l(){return d}var d,c='//transformap-data.apps.allmende.io';a.exports={createCORSRequest:n,getUrlVars:r,getUrlPath:i,generateUUID:o,handleFileSelect:s,getCurrentBlob:l,baseUrl:c}}),require.register("test/data_api.tests.js",function(e,t,a){"use strict";var n=t("assert"),r=t("../lib/data_api.js");describe("DATA API",function(){describe("getDataEndpoint",function(){it("should return https://data.transformap.co/place/",function(){var e=r.getDataEndpoint();n.equal(e,"https://data.transformap.co/place/")})}),describe("createOrUpdatePOI",function(){it("should return false if no data is provided",function(){var e=r.createOrUpdatePOI("some_uuid",void 0,function(){});n.equal(e,!1)})}),describe("getPOI",function(){it("should return false if no uuid is provided",function(){var e=r.getPOI(void 0,function(){});n.equal(e,!1)})}),describe("deletePOI",function(){it("should return false if no uuid is provided",function(){var e=r.deletePOI(void 0,function(){});n.equal(e,!1)})}),describe("retrieveMediaFilesForPOI",function(){it("should return false if no uuid is provided",function(){var e=r.retrieveMediaFilesForPOI(void 0,function(){});n.equal(e,!1)})}),describe("removeMediaFileFromPOI",function(){it("should return false if no uuid is provided",function(){var e=r.removeMediaFileFromPOI(void 0,"some_media_id",function(){});n.equal(e,!1)}),it("should return false if no mediaId is provided",function(){var e=r.removeMediaFileFromPOI("some_uuid",void 0,function(){});n.equal(e,!1)})})})}),require.register("test/mms_api.tests.js",function(e,t,a){"use strict";var n=t("assert"),r=t("../lib/mms_api.js");describe("MMS API",function(){describe("getMMSEndpoint",function(){it("should return https://data.transformap.co/media/",function(){var e=r.getMMSEndpoint();n.equal(e,"https://data.transformap.co/media/")})}),describe("createNewMediaFileForPOI",function(){it("should return false if no uuid is provided",function(){var e=r.createNewMediaFileForPOI(void 0,{name:"test"},function(){});n.equal(e,!1)}),it("should return false if no data is provided",function(){var e=r.createNewMediaFileForPOI("some_uuid",void 0,function(){});n.equal(e,!1)})}),describe("retrieveMetadataForMediaFile",function(){it("should return false if no mediaId is provided",function(){var e=r.retrieveMetadataForMediaFile(void 0,function(){});n.equal(e,!1)})}),describe("updateMedataForMediaFile",function(){it("should return false if no uuid is provided",function(){var e=r.updateMedataForMediaFile(void 0,{name:"test"},function(){});n.equal(e,!1)}),it("should return false if no data is provided",function(){var e=r.updateMedataForMediaFile("some_uuid",void 0,function(){});n.equal(e,!1)})}),describe("retrieveMediaFileVersions",function(){it("should return false if no mediaId is provided",function(){var e=r.retrieveMediaFileVersions(void 0,function(){});n.equal(e,!1)})}),describe("addMediaFileVersion",function(){it("should return false if no mediaId is provided",function(){var e=r.addMediaFileVersion(void 0,{name:"test"},function(){});n.equal(e,!1)}),it("should return false if no data is provided",function(){var e=r.addMediaFileVersion("some_media_id",void 0,function(){});n.equal(e,!1)})}),describe("setActiveMediaFileVersion",function(){it("should return false if no mediaId is provided",function(){var e=r.setActiveMediaFileVersion(void 0,{name:"test"},function(){});n.equal(e,!1)}),it("should return false if no versionId is provided",function(){var e=r.setActiveMediaFileVersion("some_media_id",void 0,function(){});n.equal(e,!1)})}),describe("uploadBlob",function(){it("should return false if no mediaId is provided",function(){var e=r.uploadBlob(void 0,"some binary content",function(){});n.equal(e,!1)}),it("should return false if no blob is provided",function(){var e=r.uploadBlob("some_media_id",void 0,function(){});n.equal(e,!1)})})})}),require.register("test/utils.tests.js",function(e,t,a){"use strict";var n=t("assert"),r=(t("../lib/data_api.js"),t("../lib/utils.js"));describe("UTILS",function(){describe("getUrlPath",function(){it("should return expected path",function(){var e="https://data.transformap.co/place/",t=r.getUrlPath(e);n.equal(t,"/place/")}),it("should return expected multi-valued path",function(){var e="https://data.transformap.co/place/1234/media",t=r.getUrlPath(e);n.equal(t,"/place/1234/media")})}),describe("generateUUID",function(){it("should return the expected format xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx",function(){var e=r.generateUUID();n.equal(e.length,36),n.equal(e[14],"4")})})})}),require.alias("assert/assert.js","assert"),require.alias("process/browser.js","process"),require.alias("util/util.js","sys"),e=require("process"),require.register("___globals___",function(e,t,a){})}(),require("___globals___");
+(function() {
+  'use strict';
+
+  var globals = typeof global === 'undefined' ? self : global;
+  if (typeof globals.require === 'function') return;
+
+  var modules = {};
+  var cache = {};
+  var aliases = {};
+  var has = {}.hasOwnProperty;
+
+  var expRe = /^\.\.?(\/|$)/;
+  var expand = function(root, name) {
+    var results = [], part;
+    var parts = (expRe.test(name) ? root + '/' + name : name).split('/');
+    for (var i = 0, length = parts.length; i < length; i++) {
+      part = parts[i];
+      if (part === '..') {
+        results.pop();
+      } else if (part !== '.' && part !== '') {
+        results.push(part);
+      }
+    }
+    return results.join('/');
+  };
+
+  var dirname = function(path) {
+    return path.split('/').slice(0, -1).join('/');
+  };
+
+  var localRequire = function(path) {
+    return function expanded(name) {
+      var absolute = expand(dirname(path), name);
+      return globals.require(absolute, path);
+    };
+  };
+
+  var initModule = function(name, definition) {
+    var hot = hmr && hmr.createHot(name);
+    var module = {id: name, exports: {}, hot: hot};
+    cache[name] = module;
+    definition(module.exports, localRequire(name), module);
+    return module.exports;
+  };
+
+  var expandAlias = function(name) {
+    return aliases[name] ? expandAlias(aliases[name]) : name;
+  };
+
+  var _resolve = function(name, dep) {
+    return expandAlias(expand(dirname(name), dep));
+  };
+
+  var require = function(name, loaderPath) {
+    if (loaderPath == null) loaderPath = '/';
+    var path = expandAlias(name);
+
+    if (has.call(cache, path)) return cache[path].exports;
+    if (has.call(modules, path)) return initModule(path, modules[path]);
+
+    throw new Error("Cannot find module '" + name + "' from '" + loaderPath + "'");
+  };
+
+  require.alias = function(from, to) {
+    aliases[to] = from;
+  };
+
+  var extRe = /\.[^.\/]+$/;
+  var indexRe = /\/index(\.[^\/]+)?$/;
+  var addExtensions = function(bundle) {
+    if (extRe.test(bundle)) {
+      var alias = bundle.replace(extRe, '');
+      if (!has.call(aliases, alias) || aliases[alias].replace(extRe, '') === alias + '/index') {
+        aliases[alias] = bundle;
+      }
+    }
+
+    if (indexRe.test(bundle)) {
+      var iAlias = bundle.replace(indexRe, '');
+      if (!has.call(aliases, iAlias)) {
+        aliases[iAlias] = bundle;
+      }
+    }
+  };
+
+  require.register = require.define = function(bundle, fn) {
+    if (bundle && typeof bundle === 'object') {
+      for (var key in bundle) {
+        if (has.call(bundle, key)) {
+          require.register(key, bundle[key]);
+        }
+      }
+    } else {
+      modules[bundle] = fn;
+      delete cache[bundle];
+      addExtensions(bundle);
+    }
+  };
+
+  require.list = function() {
+    var list = [];
+    for (var item in modules) {
+      if (has.call(modules, item)) {
+        list.push(item);
+      }
+    }
+    return list;
+  };
+
+  var hmr = globals._hmr && new globals._hmr(_resolve, require, modules, cache);
+  require._cache = cache;
+  require.hmr = hmr && hmr.wrap;
+  require.brunch = true;
+  globals.require = require;
+})();
+
+(function() {
+var global = typeof window === 'undefined' ? this : window;
+var process;
+var __makeRelativeRequire = function(require, mappings, pref) {
+  var none = {};
+  var tryReq = function(name, pref) {
+    var val;
+    try {
+      val = require(pref + '/node_modules/' + name);
+      return val;
+    } catch (e) {
+      if (e.toString().indexOf('Cannot find module') === -1) {
+        throw e;
+      }
+
+      if (pref.indexOf('node_modules') !== -1) {
+        var s = pref.split('/');
+        var i = s.lastIndexOf('node_modules');
+        var newPref = s.slice(0, i).join('/');
+        return tryReq(name, newPref);
+      }
+    }
+    return none;
+  };
+  return function(name) {
+    if (name in mappings) name = mappings[name];
+    if (!name) return;
+    if (name[0] !== '.' && pref) {
+      var val = tryReq(name, pref);
+      if (val !== none) return val;
+    }
+    return require(name);
+  }
+};
+require.register("fixtures/fixtures.js", function(exports, require, module) {
+"use strict";
+
+module.exports = {
+  listOfMediaFilesForPOI: [{
+    "id": "d07d6ab3-4e3f-44ce-accc-b3efc96b3f04",
+    "ipfs": "QmVXmy59f5QqKDGyhpHbRiGnba5SfHaooDPCWhd8Xtgwz2",
+    "url": "https://ipfs.io/images/ipfs-illustration-history.svg",
+    "mimetype": "image/jpeg",
+    "name": "Chaotic connectome replacement image for the large image on the main screen",
+    "description": "some description",
+    "version_date": "2017-07-30T16:01:34+00:00"
+  }, {
+    "id": "0a6afb5c-70b1-40f7-8f46-8dd7e0d94060",
+    "mimetype": "image/png",
+    "name": "Transformap Base",
+    "url": "https://base.transformap.co/images/transformap.png",
+    "version_date": "2017-07-30T16:01:34+00:00"
+  }],
+  mediaFileMetadataBasic: {
+    "name": "some title",
+    "description": "some description",
+    "mimetype": "image/png",
+    "url": "https://base.transformap.co/images/transformap.png"
+  },
+  mediaFileMetadataComplete: {
+    "id": "0a6afb5c-70b1-40f7-8f46-8dd7e0d94060",
+    "name": "some title",
+    "description": "some description",
+    "mimetype": "image/png",
+    "url": "https://base.transformap.co/images/transformap.png",
+    "version_date": "2017-07-30T16:01:34+00:00"
+  },
+  mediaFileMetadataCompleteDeleted: {
+    "id": "0a6afb5c-70b1-40f7-8f46-8dd7e0d94060",
+    "name": "some title",
+    "deleted": true,
+    "description": "some description",
+    "mimetype": "image/png",
+    "url": "https://base.transformap.co/images/transformap.png",
+    "version_date": "2017-07-30T16:01:34+00:00"
+  },
+  placeMetadata: {
+    "type": "Feature",
+    "properties": {
+      "name": "Bulgarian Food Bank",
+      "addr:country": "BG",
+      "addr:street": "бул. Васил Левски",
+      "addr:housenumber": "106",
+      "addr:postcode": "1000",
+      "addr:city": "София",
+      "POI_TYPE": "food bank",
+      "amenity": "social_facility",
+      "description:bg": "Организацията работи като свързващо звено между хранителната индустрия и социалните организации, за да увеличи многократно достъпа до хранително подпомагане в България. Тя създава системи за сигурност и контрол на храните, които постъпват като дарения.",
+      "website": "http://bgfoodbank.org",
+      "contact:email": "contact@bgfoodbank.org",
+      "organic": "no",
+      "fair-trade": "no",
+      "regional": "yes",
+      "free_keywords": "food bank;food waste",
+      "SSEDAS_PARTNER": "BILS",
+      "description": "The organisation acts as an interface between the food industry and social welfare organisations to increase access to food aid in Bulgaria. It sets up routines for guaranteeing that donated food is safe and properly managed.",
+      "type_of_initiative": "foodbank; recycling_foodwaste",
+      "contact:phone": "+3592 953 4100",
+      "social_facility": "food_bank",
+      "media_files": ["6abf3336-4441-458f-a24f-ed76f7f53533"]
+    },
+    "geometry": {
+      "type": "Point",
+      "coordinates": [23.33513259888, 42.69809702239]
+    },
+    "_id": "2c10b95ea433712f0b06a3f7d310e7d5"
+  },
+  listOfMediaFileVersions: [{
+    "id": "497123c0-f9d8-4e6c-acff-76ec9efcb265",
+    "name": "other version of the same file",
+    "version_date": "2017-07-30T16:01:34+00:00",
+    "mimetype": "image.png",
+    "active": true,
+    "url": "https://base.transformap.co/images/transformap.png",
+    "author": "alex"
+  }, {
+    "id": "c29c8d11-ec27-4fe1-9a23-dd10a3b37e11",
+    "name": "yet another version",
+    "version_date": "2017-07-30T16:01:34+00:00",
+    "mimetype": "image.png",
+    "url": "https://base.transformap.co/images/transformap.png",
+    "author": "jenny"
+  }],
+  listOfMediaFileVersionsUpdate: [{
+    "name": "other version of the same file",
+    "description": "a new description for the same file",
+    "version_date": "2017-07-30T16:01:34+00:00",
+    "mimetype": "image.png",
+    "url": "https://base.transformap.co/images/transformap.png"
+  }, {
+    "id": "497123c0-f9d8-4e6c-acff-76ec9efcb265",
+    "name": "a previous version of the same file",
+    "version_date": "2017-07-30T16:01:34+00:00",
+    "mimetype": "image.png",
+    "url": "https://base.transformap.co/images/transformap.png"
+  }, {
+    "id": "c29c8d11-ec27-4fe1-9a23-dd10a3b37e11",
+    "name": "yet another previous version",
+    "version_date": "2017-07-30T16:01:34+00:00",
+    "mimetype": "image.png",
+    "url": "https://base.transformap.co/images/transformap.png"
+  }],
+  userWithoutAgreedTos: {
+    "name": "Joe",
+    "email": "joe@domain.com",
+    "agreedTos": false
+  },
+
+  userWithAgreedTos: {
+    "name": "Joe",
+    "email": "joe@domain.com",
+    "agreedTos": false
+  }
+};
+});
+
+;require.register("fixtures/intercept_ajax.js", function(exports, require, module) {
+"use strict";
+
+var fixtures = require('./fixtures.js');
+
+xhook.after(function (request, response) {
+
+  if (request.method === "GET") {
+
+    // /place/{uuid}
+    if (request.url.match(".*?/place/(.*)")) {
+      response.status = 200;
+      response.text = JSON.stringify(fixtures.placeMetadata);
+    }
+
+    // /place/{uuid}/media
+    if (request.url.match(".*?/place/(.*)/media")) {
+      response.status = 200;
+      response.text = JSON.stringify(fixtures.listOfMediaFilesForPOI);
+    }
+
+    // /media/{uuid}
+    if (request.url.match(".*?/media/(.*)")) {
+      response.status = 200;
+      response.text = JSON.stringify(fixtures.mediaFileMetadataComplete);
+    }
+
+    // /media/{uuid}/versions
+    if (request.url.match(".*?/media/(.*)/versions")) {
+      response.status = 200;
+      response.text = JSON.stringify(fixtures.listOfMediaFileVersions);
+    }
+
+    // /auth/
+    if (request.url.match(".*?/auth/")) {
+      response.status = 200;
+      utils.setCookie("session", "123456789");
+    }
+
+    // /users/{userId}
+    if (request.url.match(".*?/users/(.*)")) {
+      response.status = 200;
+      response.text = JSON.stringify(fixtures.userWithoutAgreedTos);
+    }
+  } else if (request.method === "POST") {
+
+    // /media
+    if (request.url.match(".*?/media/")) {
+      response.status = 201;
+      response.text = JSON.stringify(fixtures.mediaFileMetadataComplete);
+    }
+
+    // /media
+    if (request.url.match(".*?/media/(.*)/versions")) {
+      response.status = 201;
+      response.text = JSON.stringify(fixtures.listOfMediaFileVersionsUpdate);
+    }
+
+    // /place
+    if (request.url.match(".*?/place/")) {
+      //TBD
+    }
+  } else if (request.method === "PUT") {
+
+    // /media/{uuid}
+    if (request.url.match(".*?/media/(.*)")) {
+      response.status = 200;
+      response.text = JSON.stringify(fixtures.mediaFileMetadataComplete);
+    }
+
+    // /place/{uuid}
+    if (request.url.match(".*?/place/(.*)")) {
+      response.status = 200;
+      //TBD
+    }
+
+    // /users/{userId}
+    if (request.url.match(".*?/users/(.*)")) {
+      response.status = 200;
+      response.text = JSON.stringify(fixtures.userWithAgreedTos);
+    }
+  } else if (request.method === "DELETE") {
+
+    // /place/{uuid}
+    if (request.url.match(".*?/place/(.*)")) {
+      response.status = 200;
+      //TBD
+    }
+
+    // /media/{uuid}
+    if (request.url.match(".*?/place/(.*)/media/(.*)")) {
+      response.status = 200;
+      response.text = JSON.stringify(fixtures.placeMetadata);
+    }
+
+    // /auth/{token}
+    if (request.url.match(".*?/auth/(.*)")) {
+      response.status = 200;
+    }
+  }
+});
+});
+
+;require.register("initialize.js", function(exports, require, module) {
+'use strict';
+
+var editor = require('lib/editor');
+
+document.addEventListener('DOMContentLoaded', function () {
+  // do your setup here
+  editor();
+  console.log('Initialized app');
+});
+});
+
+;require.register("lib/auth_api.js", function(exports, require, module) {
+'use strict';
+
+/*
+ * This library handles calls to the authorization RP api for the transformap editor
+ *
+ * Fri  21 Jul 14:30:00 UTC+1 2017
+ * Alex Corbi (alexcorbi@posteo.net), WTFPL
+
+ * This program is free software. It comes without any warranty, to
+ * the extent permitted by applicable law. You can redistribute it
+ * and/or modify it under the terms of the Do What The Fuck You Want
+ * To Public License, Version 2, as published by Sam Hocevar. See
+ * http://www.wtfpl.net/ for more details. */
+
+var utils = require('./utils.js');
+
+var endpoint = utils.baseUrl + '/auth/';
+
+/* returns the API's endpoint */
+function getAuthEndpoint() {
+  return endpoint;
+}
+
+function isAlreadyLoggedIn() {
+  return utils.getCookie("session") !== undefined && utils.getCookie("session") !== "";
+}
+
+function getUserIdFromSession() {
+  //TODO deserialize
+  return utils.getCookie("session");
+}
+
+/*
+ * Decouples the auth token from the current session
+ * Params:
+ *  - callback: function to be called upon success.
+ * Returns: false if invalid call
+*/
+function logout(authToken, callback) {
+  if (!authToken) {
+    console.log('logout: no authToken given');
+    return false;
+  }
+
+  var xhr = utils.createCORSRequest('GET', endpoint);
+  xhr.setRequestHeader('Content-Type', 'application/json');
+  xhr.send();
+
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4) {
+      if (xhr.status === 200) {
+        callback(JSON.parse(xhr.responseText));
+      } else {
+        console.error(xhr);
+      }
+    }
+  };
+}
+
+module.exports = {
+  getAuthEndpoint: getAuthEndpoint,
+  isAlreadyLoggedIn: isAlreadyLoggedIn,
+  getUserIdFromSession: getUserIdFromSession,
+  logout: logout
+};
+});
+
+;require.register("lib/data_api.js", function(exports, require, module) {
+'use strict';
+
+/*
+ * This library handles calls to the transformap data api for the transformap editor
+ *
+ * Fri  21 Jul 14:30:00 UTC+1 2017
+ * Alex Corbi (alexcorbi@posteo.net), WTFPL
+
+ * This program is free software. It comes without any warranty, to
+ * the extent permitted by applicable law. You can redistribute it
+ * and/or modify it under the terms of the Do What The Fuck You Want
+ * To Public License, Version 2, as published by Sam Hocevar. See
+ * http://www.wtfpl.net/ for more details. */
+
+var utils = require('./utils.js');
+
+var endpoint = utils.baseUrl + '/place/';
+
+/* returns the API's endpoint */
+function getDataEndpoint() {
+  return endpoint;
+}
+
+/*
+ * Creates (if uuid is not set) or updates (if it is) a POI with the data passed as parameter
+ * Params:
+ *  - uuid: POI's uuid, null if does not exist
+ *  - data: to create or update POI
+ *  - callback: function to be called upon success. Receives the uuid of the POI
+ * Returns: false if invalid call
+*/
+function createOrUpdatePOI(uuid, data, callback) {
+  if (!data) {
+    console.error('updateOrCreatePOI: no data given');
+    return false;
+  }
+
+  var xhr = utils.createCORSRequest(uuid ? 'PUT' : 'POST', endpoint + uuid);
+  xhr.setRequestHeader('Content-Type', 'application/json');
+  xhr.send(data);
+
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4) {
+      if (xhr.status === 200) {
+        var retJson = JSON.parse(xhr.responseText);
+        console.log(retJson);
+        if (retJson.id) {
+          callback(retJson.id);
+          alert('Save successful');
+        } else {
+          alert('Error: something wrent wrong on saving: ' + JSON.stringify(retJson));
+        }
+      } else {
+        console.error(xhr);
+      }
+    }
+  };
+}
+
+/*
+ * Gets the metadata of a certain POI
+ * Params:
+ *  - uuid: POI's uuid
+ *  - data: to create or update POI
+ *  - callback: function to be called upon success. Receives the uuid of the POI
+ * Returns: false if invalid call
+*/
+function getPOI(uuid, callback) {
+  if (!uuid) {
+    console.error('getPOI: no uuid given');
+    return false;
+  }
+
+  var xhr = utils.createCORSRequest('GET', getDataEndpoint() + uuid);
+  xhr.setRequestHeader('Content-Type', 'application/json');
+  xhr.send();
+
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4) {
+      if (xhr.status === 200) {
+        callback(JSON.parse(xhr.responseText));
+      } else {
+        console.error(xhr);
+      }
+    }
+  };
+}
+
+/*
+ * Deletes the POI corresponding to the uuid passed as parameter
+ * Params:
+ *  - uuid: POI's uuid, null if does not exist
+ *  - callback: function to be called upon success. Receives the uuid of the POI
+ * Returns: false if invalid call
+*/
+function deletePOI(uuid, callback) {
+  if (!uuid) {
+    console.error('deletePOI: no uuid given');
+    return false;
+  }
+
+  var xhr = utils.createCORSRequest('DELETE', endpoint + uuid);
+  xhr.send();
+
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4) {
+      if (xhr.status === 200) {
+        callback(uuid);
+      } else {
+        console.error(xhr);
+      }
+    }
+  };
+}
+
+module.exports = {
+  getDataEndpoint: getDataEndpoint,
+  createOrUpdatePOI: createOrUpdatePOI,
+  getPOI: getPOI,
+  deletePOI: deletePOI
+};
+});
+
+;require.register("lib/editor.js", function(exports, require, module) {
+'use strict';
+
+/* global alert, L, XMLHttpRequest, XDomainRequest */ // used by standardjs (linter)
+
+var utils = require('./utils.js');
+var redFetch = require('./red_fetch.js');
+var translations = require('./translations.js');
+var dataApi = require('./data_api.js');
+var authApi = require('./auth_api.js');
+var userApi = require('./user_api.js');
+var ui = require('./ui.js');
+var map = require('./map.js');
+
+window.translations = translations;
+var taxonomyTranslationsUrls = ['https://base.transformap.co/wiki/Special:EntityData/Q5.json', 'https://raw.githubusercontent.com/TransforMap/transformap-viewer/Q5-fallback.json'];
+
+if ('false' === "true") {
+  console.log("integrating xhook and mocking ajax calls");
+  require('xhook');
+  require('../fixtures/intercept_ajax.js');
+}
+
+module.exports = function () {
+  console.log('editor initialize start');
+
+  var place = utils.getUrlVars()['place'];
+  var showTosMessage = utils.getUrlVars()['showTosMessage'];
+
+  var startLang = translations.selectAllowedLang(translations.current_lang);
+  console.log('lang on start: ' + startLang);
+  console.log(translations.supported_languages);
+
+  document.getElementById('plus').onclick = ui.addFreeTagsRow;
+
+  if (showTosMessage) {
+    var userId = authApi.getUserIdFromSession();
+    if (userId) {
+      userApi.getUser(userId, function (user) {
+        if (user["agreedTos"] === false) {
+          $("#tos").fadeIn();
+        }
+      });
+    }
+  }
+
+  if (place) {
+    dataApi.getPOI(place, ui.fillForm);
+  }
+
+  ui.addLanguageSwitcher();
+  translations.fetchAndSetNewTranslation = translations.fetchAndSetNewTranslation;
+
+  redFetch(taxonomyTranslationsUrls, translations.initializeTranslatedTOIs, function (error) {
+    console.error('none of the lang init data urls available');
+  });
+
+  document.getElementById('save').onclick = ui.clickSubmit;
+  document.getElementById('delete').onclick = ui.clickDelete;
+  document.getElementById('coordsearch').onclick = ui.clickSearch;
+  document.getElementById('newmedia').onclick = ui.clickNewMedia;
+  document.getElementById('loginbutton').onclick = ui.clickLoginButton;
+  document.getElementById('accepttosbutton').onclick = ui.clickAcceptTosButton;
+  document.onkeypress = ui.stopRKey;
+  document.getElementById('mediacancel').onclick = ui.clickMediaCancel;
+  document.getElementById('mediasave').onclick = ui.clickMediaSave;
+
+  ui.setupLoginButton();
+
+  map.initMap();
+
+  console.log('editor initialize end');
+};
+});
+
+;require.register("lib/map.js", function(exports, require, module) {
+'use strict';
+
+var L = require('leaflet');
+var L_Hash = require('leaflet-hash');
+var L_Draw = require('leaflet-draw');
+
+var map;
+
+var editableLayers;
+var drawControl;
+var placeMarker;
+var popupText = 'Press the edit button to move me. <img style="width:30px;height:30px;background-position:-150px -1px;background-image:url(\'images/spritesheet.svg\');background-size: 270px 30px;"> <br><br> Find it on the bottom left corner of the map.';
+
+function getDrawControl(allowNewMarker) {
+  var markerValue = allowNewMarker ? { icon: new placeMarker() } : false;
+  var options = {
+    position: 'bottomleft',
+    draw: {
+      polyline: false,
+      polygon: false,
+      rectangle: false,
+      circle: false,
+      marker: markerValue
+    },
+    edit: {
+      featureGroup: editableLayers, // REQUIRED!!
+      remove: false
+    }
+  };
+  return new L.Control.Draw(options);
+}
+
+function getMap() {
+  return map;
+}
+
+function initMap() {
+  console.log('initMap start');
+
+  var attrOsm = 'Map data by <a href="https://openstreetmap.org">OpenStreetMap</a> contributors, under <a href="https://www.openstreetmap.org/copyright">ODbL</a>. ';
+  var attrPois = 'POIs by <a href="http://solidariteconomy.eu">SUSY</a>, <a href="https://creativecommons.org/publicdomain/zero/1.0/">CC-0</a>. ';
+  var leafletBgMaps;
+  var zoom;
+  var defaultlayer;
+  var center;
+  var baseMaps = {};
+
+  baseMaps['mapnik'] = new L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: attrOsm + attrPois,
+    maxZoom: 19,
+    noWrap: true
+  });
+  baseMaps['stamen_terrain'] = new L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/terrain/{z}/{x}/{y}.png', {
+    attribution: 'Map tiles by <a href="http://stamen.com/">Stamen Design</a>, ' + 'under <a href="https://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. ' + attrOsm + attrPois,
+    maxZoom: 18,
+    noWrap: true
+  });
+  baseMaps['stamen_terrain_bg'] = new L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/terrain-background/{z}/{x}/{y}.png', {
+    attribution: 'Map tiles by <a href="http://stamen.com/">Stamen Design</a>, ' + 'under <a href="https://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. ' + attrOsm + attrPois,
+    maxZoom: 18,
+    noWrap: true
+  });
+  baseMaps['hot'] = new L.tileLayer('http://tile-{s}.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
+    attribution: 'Tiles courtesy of <a href="http://hot.openstreetmap.org/">Humanitarian OpenStreetMap Team</a>. ' + attrOsm + attrPois,
+    maxZoom: 20,
+    noWrap: true
+  });
+
+  if (!leafletBgMaps) {
+    leafletBgMaps = {
+      'Stamen - Terrain': baseMaps['stamen_terrain'],
+      'Stamen - Terrain Background': baseMaps['stamen_terrain_bg'],
+      'OpenStreetMap - Mapnik': baseMaps['mapnik'],
+      'Humanitarian OpenStreetMap ': baseMaps['hot']
+    };
+  }
+  if (!defaultlayer) {
+    defaultlayer = baseMaps['mapnik'];
+  }
+
+  map = L.map('map', {
+    zoomControl: true,
+    center: center || new L.LatLng(28.6, 9),
+    zoom: zoom || 2,
+    layers: defaultlayer
+  });
+
+  var ctrl = new L.Control.Layers(leafletBgMaps);
+  map.addControl(ctrl);
+  var hash = new L.Hash(map); // Leaflet persistent Url Hash function
+
+  // leaflet draw
+  editableLayers = new L.FeatureGroup();
+  map.addLayer(editableLayers);
+  placeMarker = L.Icon.extend({
+    options: {
+      shadowUrl: null,
+      iconAnchor: new L.Point(12, 40),
+      iconSize: new L.Point(25, 40),
+      iconUrl: 'marker-green.png'
+    }
+  });
+
+  map.on(L.Draw.Event.CREATED, function (e) {
+    var type = e.layerType;
+    var layer = e.layer;
+
+    if (type === 'marker') {
+      layer.bindPopup(popupText);
+    }
+
+    editableLayers.addLayer(layer);
+    map.my_current_marker = layer;
+    document.getElementById('_geometry_lon').value = layer._latlng.lng.toFixed(6);
+    document.getElementById('_geometry_lat').value = layer._latlng.lat.toFixed(6);
+
+    map.removeControl(map.my_drawControl);
+    map.my_drawControl = getDrawControl(false); // deactivate "add marker" after the 1st one
+    map.addControl(map.my_drawControl);
+    // fixme instantly enable 'edit' mode of layer
+  });
+
+  map.on('draw:editmove', function (e) {
+    console.log('editmove');
+    console.log(e);
+    document.getElementById('_geometry_lon').value = e.layer._latlng.lng.toFixed(6);
+    document.getElementById('_geometry_lat').value = e.layer._latlng.lat.toFixed(6);
+  });
+
+  map.on('moveend', function (e) {
+    var centre = map.getCenter();
+    var targetlocation = '#' + map.getZoom() + '/' + centre.lat + '/' + centre.lng;
+
+    var maplink = document.getElementById('gotomap');
+    var href = maplink.getAttribute('href');
+    var splitstr = href.split('#');
+    href = maplink.getAttribute('href').split('#')[0] + targetlocation;
+    maplink.setAttribute('href', href);
+
+    var newlink = document.getElementById('newbutton');
+    newlink.setAttribute('href', './' + targetlocation);
+  });
+
+  map.my_editableLayers = editableLayers;
+  // map.my_drawControl = drawControl
+  map.my_placeMarker = placeMarker;
+  map.getDrawControl = getDrawControl;
+
+  map.updateMarkerFromForm = function () {
+    var lat = document.getElementById('_geometry_lat').value;
+    var lon = document.getElementById('_geometry_lon').value;
+    console.log('new lat: ' + lat + ' lon: ' + lon);
+
+    if (lat && lon) {
+      var coords = L.latLng(lat, lon);
+      if (map.my_current_marker) {
+        map.my_current_marker.setLatLng(coords);
+      } else {
+        map.my_current_marker = new L.marker([lat, lon], { icon: new map.my_placeMarker() });
+        map.my_current_marker.bindPopup(popupText);
+        map.my_editableLayers.addLayer(map.my_current_marker);
+        map.removeControl(map.my_drawControl);
+        map.my_drawControl = getDrawControl(false);
+        map.addControl(map.my_drawControl);
+      }
+
+      map.panTo(coords);
+    } else {
+      // delete marker
+      console.log('no coords, remove marker');
+      map.my_current_marker.remove();
+      delete map.my_current_marker;
+      map.removeControl(map.my_drawControl);
+      map.my_drawControl = getDrawControl(true); // allow "add marker" again
+      map.addControl(map.my_drawControl);
+    }
+  };
+  document.getElementById('_geometry_lat').onblur = map.updateMarkerFromForm;
+  document.getElementById('_geometry_lon').onblur = map.updateMarkerFromForm;
+
+  // console.log(map)
+
+  console.log('initMap end');
+  return map;
+}
+
+module.exports = {
+  getMap: getMap,
+  initMap: initMap
+};
+});
+
+;require.register("lib/mms_api.js", function(exports, require, module) {
+'use strict';
+
+/*
+ * This library handles calls to the transformap MMS api for the transformap editor
+ *
+ * Fri  21 Jul 14:30:00 UTC+1 2017
+ * Alex Corbi (alexcorbi@posteo.net), WTFPL
+
+ * This program is free software. It comes without any warranty, to
+ * the extent permitted by applicable law. You can redistribute it
+ * and/or modify it under the terms of the Do What The Fuck You Want
+ * To Public License, Version 2, as published by Sam Hocevar. See
+ * http://www.wtfpl.net/ for more details. */
+
+var utils = require('./utils.js');
+
+var endpoint = utils.baseUrl + '/media/';
+
+/* returns the API's endpoint */
+function getMMSEndpoint() {
+  return endpoint;
+}
+
+/*
+ * Creates a new media file for a certain POI
+ * Params:
+ *  - data: the metadata to create the media file with
+ *  - callback: function to be called upon success.
+ * Returns: false if invalid call
+*/
+function createNewMediaFile(data, callback) {
+
+  if (!data) {
+    console.error('createNewMediaFile: no data given');
+    return false;
+  }
+
+  var xhr = utils.createCORSRequest('POST', getMMSEndpoint());
+  xhr.setRequestHeader('Content-Type', 'application/json');
+  xhr.send(data);
+
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4) {
+      if (xhr.status === 200) {
+        callback(JSON.parse(xhr.responseText));
+      } else {
+        console.error(xhr);
+      }
+    }
+  };
+}
+
+/*
+ * Retrieves the metadata of a particular media file
+ * Params:
+ *  - mediaId: Media file's uuid
+ *  - callback: function to be called upon success.
+ * Returns: false if invalid call
+*/
+function retrieveMetadataForMediaFile(mediaId, callback) {
+  if (!mediaId) {
+    console.error('retrieveMetadataForMediaFile: no mediaId given');
+    return false;
+  }
+
+  var xhr = utils.createCORSRequest('GET', getMMSEndpoint() + mediaId);
+  xhr.setRequestHeader('Content-Type', 'application/json');
+  xhr.send();
+
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4) {
+      if (xhr.status === 200) {
+        callback(JSON.parse(xhr.responseText));
+      } else {
+        console.error(xhr);
+      }
+    }
+  };
+}
+
+/*
+ * Returns an array with all the versions of a certain media file
+ * Params:
+ *  - mediaId: Media file's uuid
+ *  - callback: function to be called upon success.
+ * Returns: false if invalid call
+*/
+function retrieveMediaFileVersions(mediaId, callback) {
+  if (!mediaId) {
+    console.error('retrieveMediaFileVersions: no mediaId given');
+    return false;
+  }
+
+  var xhr = utils.createCORSRequest('GET', getMMSEndpoint() + mediaId + '/versions');
+  xhr.setRequestHeader('Content-Type', 'application/json');
+  xhr.send();
+
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4) {
+      if (xhr.status === 200) {
+        callback(JSON.parse(xhr.responseText));
+      } else {
+        console.error(xhr);
+      }
+    }
+  };
+}
+
+/*
+ * Adds a new version to an existing media file
+ * Params:
+ *  - mediaId: Media file's uuid
+ *  - data: The payload of the version to create
+ *  - callback: function to be called upon success.
+ * Returns: false if invalid call
+*/
+function addMediaFileVersion(mediaId, data, callback) {
+  if (!mediaId) {
+    console.error('addMediaFileVersion: no mediaId given');
+    return false;
+  }
+  if (!data) {
+    console.error('addMediaFileVersion: no data given');
+    return false;
+  }
+
+  var xhr = utils.createCORSRequest('POST', getMMSEndpoint() + mediaId + '/versions');
+  xhr.setRequestHeader('Content-Type', 'application/json');
+  xhr.send(data);
+
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4) {
+      if (xhr.status === 200) {
+        callback(JSON.parse(xhr.responseText));
+      } else {
+        console.error(xhr);
+      }
+    }
+  };
+}
+
+/*
+ * Sets a version as currently active
+ * Params:
+ *  - mediaId: Media file's uuid
+ *  - versionId: The uuid of the version to set as currently active
+ *  - callback: function to be called upon success.
+ * Returns: false if invalid call
+*/
+function setActiveMediaFileVersion(mediaId, versionId, callback) {
+  if (!mediaId) {
+    console.error('setActiveMediaFileVersion: no mediaId given');
+    return false;
+  }
+  if (!versionId) {
+    console.error('setActiveMediaFileVersion: no versionId given');
+    return false;
+  }
+
+  var xhr = utils.createCORSRequest('POST', getMMSEndpoint() + mediaId + '/versions/' + versionId);
+  xhr.setRequestHeader('Content-Type', 'application/json');
+  xhr.send();
+
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4) {
+      if (xhr.status === 200) {
+        callback(JSON.parse(xhr.responseText));
+      } else {
+        console.error(xhr);
+      }
+    }
+  };
+}
+
+function uploadBlob(mediaId, blob, callback) {
+  if (!mediaId) {
+    console.error('uploadBlob: no mediaId given');
+    return false;
+  }
+  if (!blob) {
+    console.error('uploadBlob: no blob given');
+    return false;
+  }
+
+  var xhr = utils.createCORSRequest('POST', getMMSEndpoint() + mediaId + '/blob');
+  xhr.setRequestHeader('Content-Type', 'multipart/form-data');
+  xhr.send(blob);
+
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4) {
+      if (xhr.status === 200) {
+        callback(JSON.parse(xhr.responseText));
+      } else {
+        console.error(xhr);
+      }
+    }
+  };
+}
+
+module.exports = {
+  getMMSEndpoint: getMMSEndpoint,
+  createNewMediaFile: createNewMediaFile,
+  retrieveMetadataForMediaFile: retrieveMetadataForMediaFile,
+  retrieveMediaFileVersions: retrieveMediaFileVersions,
+  addMediaFileVersion: addMediaFileVersion,
+  setActiveMediaFileVersion: setActiveMediaFileVersion,
+  uploadBlob: uploadBlob
+};
+});
+
+;require.register("lib/red_fetch.js", function(exports, require, module) {
+'use strict';
+
+/*
+ * This library provides a 'fetch', where you can use fallback URIs, to build on redundant servers.
+ *
+ * Mon  3 Oct 15:07:12 CEST 2016
+ * Michael Maier (species@github), WTFPL
+ *
+ * Give it an array of resources, that can be fetched from different urls.
+ * Will try to fetch them in the provided order.
+ * Execute successFunction on the first successful fetch, and errorFunction only if all resources fail to fetch.
+ */
+
+/* This program is free software. It comes without any warranty, to
+     * the extent permitted by applicable law. You can redistribute it
+     * and/or modify it under the terms of the Do What The Fuck You Want
+     * To Public License, Version 2, as published by Sam Hocevar. See
+     * http://www.wtfpl.net/ for more details. */
+
+/* new version of getting map data with promises
+
+  taken from https://blog.hospodarets.com/fetch_in_action
+*/
+
+var processStatus = function processStatus(response) {
+  // status '0' to handle local files fetching (e.g. Cordova/Phonegap etc.)
+  if (response.status === 200 || response.status === 0) {
+    return Promise.resolve(response);
+  } else {
+    return Promise.reject(new Error(response.statusText));
+  }
+};
+
+var parseJson = function parseJson(response) {
+  return response.json();
+};
+
+/* @returns {wrapped Promise} with .resolve/.reject/.catch methods */
+// It goes against Promise concept to not have external access to .resolve/.reject methods, but provides more flexibility
+var getWrappedPromise = function getWrappedPromise() {
+  var wrappedPromise = {};
+  var promise = new Promise(function (resolve, reject) {
+    wrappedPromise.resolve = resolve;
+    wrappedPromise.reject = reject;
+  });
+  wrappedPromise.then = promise.then.bind(promise);
+  wrappedPromise.catch = promise.catch.bind(promise);
+  wrappedPromise.promise = promise; // e.g. if you want to provide somewhere only promise, without .resolve/.reject/.catch methods
+  return wrappedPromise;
+};
+
+/* @returns {wrapped Promise} with .resolve/.reject/.catch methods */
+var getWrappedFetch = function getWrappedFetch() {
+  var wrappedPromise = getWrappedPromise();
+  var args = Array.prototype.slice.call(arguments); // arguments to Array
+
+  window.fetch.apply(null, args) // calling original fetch() method
+  .then(function (response) {
+    wrappedPromise.resolve(response);
+  }, function (error) {
+    wrappedPromise.reject(error);
+  }).catch(function (error) {
+    wrappedPromise.catch(error);
+  });
+  return wrappedPromise;
+};
+
+/**
+ * Fetch JSON by url
+ * @param { {
+ *  url: {String},
+ *  [cacheBusting]: {Boolean}
+ * } } params
+ * @returns {Promise}
+*/var MAX_WAITING_TIME = 5000; // in ms
+
+var getJSON = function getJSON(params) {
+  var wrappedFetch = getWrappedFetch(params.cacheBusting ? params.url + '?' + new Date().getTime() : params.url, {
+    method: 'get', // optional, 'GET' is default value
+    headers: {
+      'Accept': 'application/json'
+    }
+  });
+
+  var timeoutId = setTimeout(function () {
+    wrappedFetch.reject(new Error('Load timeout for resource: ' + params.url)); // reject on timeout
+  }, MAX_WAITING_TIME);
+
+  return wrappedFetch.promise // getting clear promise from wrapped
+  .then(function (response) {
+    clearTimeout(timeoutId);
+    return response;
+  }).then(processStatus).then(parseJson);
+};
+
+function myGetJSON(url, successFunction, errorFunction) {
+  var getJSONparams = { url: url, cacheBusting: true };
+
+  getJSON(getJSONparams).then(function (data) {
+    successFunction(data);
+  }, function (error) {
+    errorFunction(error);
+  });
+}
+
+function redundantFetch(dataUrlArray, successFunction, errorFunction, params) {
+  if (!(!!dataUrlArray && Array === dataUrlArray.constructor)) {
+    console.error('redundantFetch: argument is no array');
+    console.error(dataUrlArray);
+    return false;
+  }
+  var currentUrl = dataUrlArray[0];
+  if (typeof currentUrl !== 'string') {
+    console.error('redundantFetch: url is no string');
+    return false;
+  }
+
+  console.log('redundantFetch called, urls:');
+  console.log(dataUrlArray);
+
+  dataUrlArray.shift();
+
+  var localErrorFunction;
+  var localSuccessFunction;
+  if (dataUrlArray.length == 0) {
+    // last iteration
+    localSuccessFunction = successFunction;
+    localErrorFunction = errorFunction;
+  } else {
+    localSuccessFunction = successFunction;
+    localErrorFunction = function localErrorFunction(error) {
+      redundantFetch(dataUrlArray, successFunction, errorFunction, params);
+    };
+  }
+
+  var getJSONparams = { url: currentUrl, cacheBusting: !(params && params.cacheBusting === false) };
+  getJSON(getJSONparams).then(function (data) {
+    localSuccessFunction(data);console.log('rfetch: success on ');console.log(data);
+  }, function (error) {
+    localErrorFunction(error);console.log('rfetch: fail on ');console.log(error);
+  });
+}
+
+module.exports = redundantFetch;
+});
+
+;require.register("lib/taxonomy.js", function(exports, require, module) {
+'use strict';
+
+/*
+ * This library handles taxonomy related stuff for the transformap editor
+ *
+ * Mon  3 Oct 15:07:12 CEST 2016
+ * Michael Maier (species@github), WTFPL
+
+ * This program is free software. It comes without any warranty, to
+ * the extent permitted by applicable law. You can redistribute it
+ * and/or modify it under the terms of the Do What The Fuck You Want
+ * To Public License, Version 2, as published by Sam Hocevar. See
+ * http://www.wtfpl.net/ for more details. */
+
+/* takes the language (string:"iso"), and the wished taxonomy (string: "Qnn") */
+function getLangTaxURL(lang, taxonomy) {
+  if (!lang) {
+    console.error('setFilterLang: no lang given');
+    return false;
+  }
+
+  if (!taxonomy) {
+    taxonomy = 'Q8';
+  }
+
+  var tax_query = 'prefix bd: <http://www.bigdata.com/rdf#> ' + 'prefix wikibase: <http://wikiba.se/ontology#> ' + 'prefix wdt: <https://base.transformap.co/prop/direct/>' + 'prefix wd: <https://base.transformap.co/entity/>' + 'SELECT ?item ?itemLabel ?instance_of ?subclass_of ?type_of_initiative_tag ?interaction_tag ?needs_tag ?identity_tag ?wikipedia ?description ' + 'WHERE {' + '?item wdt:P8* wd:' + taxonomy + ' .' + '?item wdt:P8 ?subclass_of .' + 'OPTIONAL { ?item wdt:P4 ?instance_of . }' + 'OPTIONAL { ?item wdt:P15 ?type_of_initiative_tag }' + 'OPTIONAL { ?item wdt:P16 ?interaction_tag }' + 'OPTIONAL { ?item wdt:P17 ?needs_tag }' + 'OPTIONAL { ?item wdt:P18 ?identity_tag }' + 'OPTIONAL { ?item schema:description ?description FILTER(LANG(?description) = "' + lang + '") }' + 'OPTIONAL { ?wikipedia schema:about ?item . ?wikipedia schema:inLanguage "en"}' + 'SERVICE wikibase:label {bd:serviceParam wikibase:language "' + lang + '" }' + '}';
+
+  return 'https://query.base.transformap.co/bigdata/namespace/transformap/sparql?query=' + encodeURIComponent(tax_query) + '&format=json';
+}
+
+module.exports = {
+  getLangTaxURL: getLangTaxURL
+};
+});
+
+;require.register("lib/translations.js", function(exports, require, module) {
+'use strict';
+
+var redFetch = require('./red_fetch.js');
+var taxonomy = require('./taxonomy.js');
+var ui = require('./ui.js');
+
+// mostly taken from https://github.com/TransforMap/transformap-viewer/blob/gh-pages/scripts/map.js
+
+function getLangs() {
+  var language = window.navigator.languages ? window.navigator.languages[0] : window.navigator.language || window.navigator.userLanguage;
+
+  if (typeof language === 'string') {
+    language = [language];
+  }
+
+  // we need to have the following languages:
+  // browserlang
+  // a short one (de instead of de-AT) if not present
+  // en as fallback if not present
+
+  for (var i = 0; i < language.length; i++) {
+    if (language[i].match(/-/)) {
+      var short_lang = language[i].match(/^([a-zA-Z]*)-/)[1];
+      if (language.indexOf(short_lang) == -1) {
+        language.push(short_lang);
+        continue;
+      }
+    }
+  }
+
+  if (language.indexOf('en') == -1) {
+    language.push('en');
+  }
+
+  console.log(language);
+  return language;
+}
+
+function setFallbackLangs() {
+  fallback_langs = [];
+  if (current_lang != 'en') {
+    for (var i = 0; i < browser_languages.length; i++) {
+      var abbr = browser_languages[i];
+      if (current_lang != abbr) {
+        fallback_langs.push(abbr);
+      }
+    }
+  }
+  console.log('new fallback langs: ' + fallback_langs.join(',') + '.');
+}
+
+function resetLang() {
+  current_lang = 'en';
+  for (var i = 0; i < browser_languages.length; i++) {
+    var abbr = browser_languages[i];
+    if (abbr_langnames[abbr]) {
+      current_lang = abbr;
+      break;
+    }
+  }
+  switchToLang(current_lang);
+}
+
+/* get languages for UI from our Wikibase, and pick languages that are translated there */
+
+var supported_languages = [],
+    langnames = [],
+    abbr_langnames = {},
+    langnames_abbr = {};
+
+function initializeLanguageSwitcher(returned_data) {
+  var lang;
+  for (lang in returned_data.entities.Q5.labels) {
+    // Q5 is arbitrary. Choose one that gets translated for sure.
+    supported_languages.push(lang);
+  }
+  var langstr = supported_languages.join('|');
+
+  var langstr_query = 'SELECT ?lang ?langLabel ?abbr ' + 'WHERE' + '{' + '?lang wdt:P218 ?abbr;' + 'FILTER regex (?abbr, "^(' + langstr + ')$").' + 'SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }' + '}';
+
+  langstr_query = 'https://query.wikidata.org/bigdata/namespace/wdq/sparql?query=' + encodeURIComponent(langstr_query) + '&format=json';
+  $.getJSON(langstr_query, function (langstrings) {
+    langstrings.results.bindings.forEach(function (item) {
+      abbr_langnames[item.abbr.value] = item.langLabel.value;
+      langnames_abbr[item.langLabel.value] = item.abbr.value;
+      langnames.push(item.langLabel.value);
+    });
+    langnames.sort();
+
+    resetLang();
+    setFallbackLangs();
+
+    langnames.forEach(function (item) {
+      var langcode = langnames_abbr[item];
+      var is_default = langcode == current_lang ? ' class=default' : '';
+      console.log("adding lang '" + langcode + "' (" + item + ')');
+      $('#languageSelector ul').append('<li targetlang=' + langcode + is_default + " onClick='window.translations.switchToLang(\"" + langcode + "\");'>" + item + '</li>');
+    });
+  });
+}
+
+function fetchAndSetNewTranslation(lang) {
+  redFetch([taxonomy.getLangTaxURL(lang, 'Q8'), 'https://raw.githubusercontent.com/TransforMap/transformap-viewer-translations/master/taxonomy-backup/susy/taxonomy.' + lang + '.json'], ui.fillTOIs, function (error) {
+    console.error('none of the taxonomy data urls available');
+  }, { cacheBusting: false });
+  redFetch([taxonomy.getLangTaxURL(lang, 'Q4'), 'https://raw.githubusercontent.com/TransforMap/transformap-viewer-translations/master/taxonomy-backup/susy/taxonomy.' + lang + '.json'], ui.fillTransforMapTax, function (error) {
+    console.error('none of the taxonomy data urls available');
+  }, { cacheBusting: false });
+}
+
+function initializeTranslatedTOIs(Q5data) {
+  translations.initializeLanguageSwitcher(Q5data);
+
+  var nowPossibleLang = translations.selectAllowedLang(translations.current_lang);
+  translations.current_lang = nowPossibleLang;
+  fetchAndSetNewTranslation(nowPossibleLang);
+}
+
+function switchToLang(lang) {
+  $('#languageSelector li.default').removeClass('default');
+  $('#languageSelector li[targetlang=' + lang + ']').addClass('default');
+  current_lang = lang;
+  window.translations.current_lang = lang;
+  window.translations.fetchAndSetNewTranslation(lang);
+  setFallbackLangs();
+  /*
+    //updateTranslatedTexts();
+  
+    if(! dictionary[lang]) {
+      var dict_uri = "https://raw.githubusercontent.com/TransforMap/transformap-viewer-translations/master/json/"+lang+".json";
+  
+      $.ajax({
+        url: dict_uri,
+        context: { lang: current_lang },
+        success: function(returned_data) {
+          var trans_jsonobj = JSON.parse(returned_data);
+  
+          if(! dictionary[this.lang])
+            dictionary[this.lang] = {};
+          for (item in trans_jsonobj) {
+            var index = reverse_dic[item];
+            dictionary[this.lang][index] = trans_jsonobj[item];
+          }
+  
+          console.log("successfully fetched " + this.lang);
+          //updateTranslatedTexts();
+  
+        }
+      });
+  
+    }
+  
+    // As rebuilding the filters does not yet support advanced mode by default,
+    // we switch to simple mode, as language switching is a very rare case.
+    if(getFilterMode() == "advanced")
+      toggleAdvancedFilterMode();
+  
+    resetFilter();
+    setFilterLang(lang);
+  */
+  console.log('new lang:' + lang);
+}
+
+// if wishedLang is in supported, OK
+// shorten wishedLang and see if in supported
+// take fallback
+function selectAllowedLang(wishedLang) {
+  console.log('selectAllowedLang(' + wishedLang + ') called');
+  if (wishedLang) {
+    if (supported_languages.indexOf(wishedLang) != -1) {
+      current_lang = wishedLang;
+      return current_lang;
+    }
+    console.log('not in supported, try shorten');
+    var matches = wishedLang.match(/^([a-zA-Z]*)-/);
+    if (matches && matches[1]) {
+      var short_lang = matches[1];
+      console.log('short: ' + short_lang);
+      if (short_lang) {
+        if (supported_languages.indexOf(short_lang) != -1) {
+          current_lang = short_lang;
+          console.log('current_lang set to ' + short_lang);
+          return current_lang;
+        }
+      }
+    }
+  }
+  setFallbackLangs();
+  if (fallback_langs[0]) {
+    if (supported_languages.indexOf(fallback_langs[0]) != -1) {
+      current_lang = fallback_langs[0];
+      return current_lang;
+    }
+  }
+  current_lang = 'en';
+  return current_lang;
+}
+
+var browser_languages = getLangs(),
+    current_lang = browser_languages[0],
+    fallback_langs = [];
+
+module.exports = {
+  getLangs: getLangs,
+  initializeLanguageSwitcher: initializeLanguageSwitcher,
+  initializeTranslatedTOIs: initializeTranslatedTOIs,
+  supported_languages: supported_languages,
+  browser_languages: browser_languages,
+  current_lang: current_lang,
+  switchToLang: switchToLang,
+  selectAllowedLang: selectAllowedLang,
+  fetchAndSetNewTranslation: fetchAndSetNewTranslation
+};
+});
+
+;require.register("lib/ui.js", function(exports, require, module) {
+'use strict';
+
+var dataApi = require('./data_api.js');
+var mmsApi = require('./mms_api.js');
+var authApi = require('./auth_api.js');
+var userApi = require('./user_api.js');
+var map = require('./map.js');
+var utils = require('./utils.js');
+
+var currentData = {};
+
+function fillForm(placeData) {
+
+  currentData = placeData;
+
+  if (currentData._deleted) {
+    document.getElementById('deleted').style.display = 'block';
+  }
+
+  if (currentData.properties) {
+    for (var key in currentData.properties) {
+      // ignore DB-generated fields
+      if (/^_/.test(key)) {
+        continue;
+      }
+
+      var field = document.getElementById('_key_' + key);
+      var value = currentData.properties[key];
+
+      if (field) {
+        // console.log(field)
+        // console.log(value)
+        field.value = value;
+      } else {
+        // put it into "free tags"
+        // get last child
+        var freetags = document.getElementById('freetags');
+        var lastRow = freetags.lastChild;
+        while (lastRow.nodeType === 3) {
+          // 3 = text-node
+          lastRow = lastRow.previousSibling;
+        }
+
+        // set data on last child
+        var keyNode = lastRow.firstChild.nodeType === 1 ? lastRow.firstChild : lastRow.firstChild.nextSibling;
+        keyNode.value = key;
+        var valueNode = lastRow.lastChild.nodeType === 1 ? lastRow.lastChild : lastRow.lastChild.previousSibling;
+        valueNode.value = value;
+
+        addFreeTagsRow();
+      }
+    }
+  }
+
+  retrieveAndRenderMediaFilesForPOI(currentData);
+
+  if (currentData.geometry && currentData.geometry.coordinates) {
+    var lon = currentData.geometry.coordinates[0];
+    var lat = currentData.geometry.coordinates[1];
+    if (lat === undefined || lon === undefined) {
+      console.error('lat or lon empty');
+      return;
+    }
+
+    document.getElementById('_geometry_lon').value = lon;
+    document.getElementById('_geometry_lat').value = lat;
+
+    var mapInstance = map.getMap();
+    mapInstance.my_current_marker = new L.marker([lat, lon], { icon: new mapInstance.my_placeMarker() });
+    mapInstance.my_editableLayers.addLayer(mapInstance.my_current_marker);
+
+    mapInstance.my_drawControl = mapInstance.getDrawControl(false);
+    mapInstance.addControl(mapInstance.my_drawControl);
+
+    mapInstance.panTo(new L.LatLng(lat, lon));
+  } else {
+    // allow adding a marker
+    mapInstance.my_drawControl = mapInstance.getDrawControl(true);
+    mapInstance.addControl(mapInstance.my_drawControl);
+  }
+
+  if (currentData.properties && currentData.properties._id) {
+    document.getElementById('_id').value = currentData.properties._id;
+    $('#transformapapilink').attr('href', dataApi.getDataEndpoint() + currentData.properties._id);
+  } else if (currentData._id) {
+    document.getElementById('_id').value = currentData._id;
+    $('#transformapapilink').attr('href', dataApi.getDataEndpoint() + currentData._id);
+  }
+
+  if (currentData.properties.osm) {
+    $('#osmlink').attr('href', currentData.properties.osm);
+  }
+}
+
+function retrieveAndRenderMediaFilesForPOI(currentData) {
+  $('#media').html("");
+  if (currentData.properties.media_files) {
+    var mediaFileIds = currentData.properties.media_files;
+    $('.relatedMediaTitle').text('Related media files' + ' (' + mediaFileIds.length + ')');
+    for (var i = 0; i < mediaFileIds.length; i++) {
+      var mediaFileId = mediaFileIds[i];
+      mmsApi.retrieveMetadataForMediaFile(mediaFileId, function (mediaFile) {
+
+        var row = $('<div class="row mediaFile ' + mediaFile.mediaId + '"></div>');
+
+        var info = $('<div class="row mediaInfo"></div>');
+        if (mediaFile.name) {
+          info.append("<b>" + mediaFile.name + "</b>");
+        }
+        if (mediaFile.description) {
+          info.append("<p>" + mediaFile.description + "</p>");
+        }
+
+        var options = $('<div class="row"></div>');
+
+        var removeButton = $('<a class="mediaOption remove">Remove</h4>');
+        removeButton.on('click', { metadata: mediaFile, currentData: currentData }, function (evt) {
+          var data = evt.data;
+          console.log("removeButton clicked for mediaFile with id:" + data.metadata.mediaId);
+          if (confirm("Are you sure you want to delete this media file?")) {
+            dataAPI.removeMediaFileFromPOI(data.currentData._id, data.metadata.mediaId, function () {
+              $('.' + data.metadata.mediaId).remove();
+              retrieveAndRenderMediaFilesForPOI(currentData);
+            });
+          }
+        });
+
+        var editButton = $('<a class="mediaOption edit" data-toggle="modal" data-target="#mediaFileDialog" data-id="' + mediaFile.mediaId + '">Edit</h4>');
+        editButton.on('click', { metadata: mediaFile, currentData: currentData }, function (evt) {
+          var data = evt.data;
+
+          utils.resetCurrentBlob();
+
+          console.log("editButton clicked for mediaFile with id:" + data.metadata.id);
+          $('#mediaFileDialogContent').find('.createOrUpdate').text("update");
+          $('#mediaFileDialogContent').find('.mediaId').text(data.metadata.id);
+          $('#mediaFileDialogContent').find('.name').val(data.metadata.name);
+          $('#mediaFileDialogContent').find('.description').val(data.metadata.description);
+          $('#mediaFileDialogContent').find('img').attr("src", data.metadata.url);
+          $('#mediaFileDialogContent').find('img').show();
+          $('#mediaThumbUpload').hide();
+          $('#mediaFileDialogContent').find('.metadata').text(JSON.stringify(data.metadata));
+
+          mmsApi.retrieveMediaFileVersions(data.metadata.id, function (versionsArray) {
+            if (versionsArray.length > 0) {
+              var versionsList = $('<ul class="row"></ul>');
+              for (var i = 0; i < versionsArray.length; i++) {
+                var version = versionsArray[i];
+                var versionInput = $('<li data-id="' + version.id + '" class="versionItem"><b>' + version.version_date + '</b> - ' + version.name + ' - ' + version.author + '</li></br>');
+                if (version.active) {
+                  versionInput.append(' ').append('<b>[Active]</b>');
+                } else {
+                  var activateLink = $('<a data-id="' + version.id + '" href="#">Activate</a>');
+                  activateLink.on("click", { version: version }, function (evt) {
+                    var versionData = evt.data;
+                    mmsApi.setActiveMediaFileVersion(data.metadata.id, versionData.version.id, function () {
+                      $('#mediaFileDialog').modal('toggle');
+                    });
+                  });
+                  versionInput.append(' ').append(activateLink);
+                }
+                versionsList.append(versionInput);
+              }
+              $('.mediaVersions').html(versionsList);
+            }
+          });
+        });
+
+        options.append(removeButton);
+        options.append(editButton);
+        info.append(options);
+
+        var imageUrl = 'https://s3.amazonaws.com/FringeBucket/image_placeholder.png';
+        if (mediaFile.mimetype === "image/png" || mediaFile.mimetype === "image/jpeg") {
+          imageUrl = mediaFile.url;
+        }
+        row.append('<img class="mediaThumb" src="' + imageUrl + '"/>');
+        row.append(info);
+
+        $('#media').append(row).append('<hr>');
+      });
+    }
+  }
+}
+
+function addLanguageSwitcher() {
+  // add languageswitcher
+  $('#menu').append('<div id=languageSelector onClick="$(\'#languageSelector ul\').toggleClass(\'open\');">' + '<span lang=en>Choose Language:</span>' + '<ul></ul>' + '</div>');
+}
+
+function addFreeTagsRow() {
+  var freetags = document.getElementById('freetags');
+
+  var lastRow = freetags.lastChild;
+  while (lastRow.nodeType === 3) {
+    // 3 = text-node
+    lastRow = lastRow.previousSibling;
+  }
+
+  var keyNode = lastRow.firstChild.nodeType === 1 ? lastRow.firstChild : lastRow.firstChild.nextSibling;
+  var newNr = parseInt(keyNode.id.slice(-1)) + 1;
+
+  var newRow = document.createElement('div');
+  var divClass = document.createAttribute('class');
+  divClass.value = 'row';
+  newRow.setAttributeNode(divClass);
+  var newKey = document.createElement('input');
+  var bootstrapClass = document.createAttribute('class');
+  bootstrapClass.value = 'form-control';
+  newKey.setAttributeNode(bootstrapClass);
+  var bootstrapClass = document.createAttribute('class');
+  bootstrapClass.value = 'form-control';
+  var newValue = document.createElement('input');
+  newValue.setAttributeNode(bootstrapClass);
+  var keyId = document.createAttribute('id');
+  keyId.value = 'key' + newNr;
+  var valueId = document.createAttribute('id');
+  valueId.value = 'value' + newNr;
+  newKey.setAttributeNode(keyId);
+  newValue.setAttributeNode(valueId);
+
+  var elementName = document.createAttribute('name');
+  elementName.value = 'freetags';
+  newKey.setAttributeNode(elementName);
+  newValue.setAttributeNode(elementName.cloneNode(true));
+
+  newRow.appendChild(newKey);
+  newRow.appendChild(newValue);
+  freetags.appendChild(newRow);
+}
+
+function createToiArray(toiString) {
+  if (typeof toiString !== 'string') {
+    return [];
+  }
+  var toiArray = toiString.split(';');
+  for (var i = 0; i < toiArray.length; i++) {
+    toiArray[i] = toiArray[i].trim();
+  }
+  return toiArray;
+}
+
+function fillTransforMapTax(data) {
+  console.log('fillTransforMapTax called');
+
+  var dataArray = data.results.bindings;
+  var current_lang = dataArray[0].itemLabel['xml:lang'];
+
+  var needs = [];
+  var interactions = [];
+  var identities = [];
+
+  dataArray.forEach(function (entry) {
+    if (!entry.subclass_of) {
+      return;
+    }
+    var label = {};
+    label[current_lang] = entry.itemLabel.value;
+    var currentObject = {
+      item: entry.item.value,
+      label: label
+    };
+    if (entry.subclass_of.value == 'https://base.transformap.co/entity/Q146') {
+      currentObject['needs_tag'] = entry.needs_tag.value;
+      needs.push(currentObject);
+    } else if (entry.subclass_of.value == 'https://base.transformap.co/entity/Q150') {
+      currentObject['interaction_tag'] = entry.interaction_tag.value;
+      interactions.push(currentObject);
+    } else if (entry.subclass_of.value == 'https://base.transformap.co/entity/Q176') {
+      currentObject['identity_tag'] = entry.identity_tag.value;
+      identities.push(currentObject);
+    }
+  });
+
+  // needs
+  $('#_key_provides').empty();
+  needs.forEach(function (entry) {
+    var newOption = $('<option>');
+    newOption.attr('value', entry.needs_tag);
+
+    if (currentData.properties && currentData.properties.provides) {
+      var needs_array = createToiArray(currentData.properties.provides);
+      needs_array.forEach(function (need) {
+        if (need === entry.needs_tag) {
+          newOption.attr('selected', 'selected');
+        }
+      });
+    }
+    newOption.append(entry.label[current_lang]);
+    $('#_key_provides').append(newOption);
+    $('#_key_provides').selectpicker('refresh');
+  });
+
+  // interaction
+  $('#_key_interaction').empty();
+  interactions.forEach(function (entry) {
+    var newOption = $('<option>');
+    newOption.attr('value', entry.interaction_tag);
+
+    if (currentData.properties && currentData.properties.interaction) {
+      var interactions_array = createToiArray(currentData.properties.interaction);
+      interactions_array.forEach(function (interact) {
+        if (interact === entry.interaction_tag) {
+          newOption.attr('selected', 'selected');
+        }
+      });
+    }
+    newOption.append(entry.label[current_lang]);
+    $('#_key_interaction').append(newOption);
+    $('#_key_interaction').selectpicker('refresh');
+  });
+
+  // identity
+  $('#_key_identity').empty();
+  identities.forEach(function (entry) {
+    var newOption = $('<option>');
+    newOption.attr('value', entry.identity_tag);
+
+    if (currentData.properties && currentData.properties.identity) {
+      var identity_array = createToiArray(currentData.properties.identity);
+      identity_array.forEach(function (identity) {
+        if (identity === entry.identity_tag) {
+          newOption.attr('selected', 'selected');
+        }
+      });
+    }
+    newOption.append(entry.label[current_lang]);
+    $('#_key_identity').append(newOption);
+    $('#_key_identity').selectpicker('refresh');
+  });
+}
+
+function fillTOIs(data) {
+  $('#_key_type_of_initiative').empty();
+
+  var typeOfInintiatives = [];
+  var toiHashtable = {};
+
+  var toiSelect = document.getElementById('_key_type_of_initiative');
+  var dataArray = data.results.bindings;
+  var current_lang = dataArray[0].itemLabel['xml:lang'];
+  dataArray.forEach(function (entry) {
+    if (!entry.type_of_initiative_tag) {
+      return;
+    }
+    if (toiHashtable[entry.type_of_initiative_tag.value]) {
+      // filter out duplicates
+      return;
+    }
+    var label = {};
+    label[current_lang] = entry.itemLabel.value;
+
+    var currentObject = {
+      item: entry.item.value,
+      label: label,
+      type_of_initiative_tag: entry.type_of_initiative_tag.value
+    };
+    typeOfInintiatives.push(currentObject);
+    toiHashtable[entry.type_of_initiative_tag.value] = currentObject;
+  });
+  function labelCompare(a, b) {
+    // 'Others' cat should get sorted last
+    if (a.item === 'https://base.transformap.co/entity/Q20') return 1;
+    if (b.item === 'https://base.transformap.co/entity/Q20') return -1;
+
+    // in toi list, 'other*' should be last
+    if (a.type_of_initiative_tag && a.type_of_initiative_tag.match(/^other_/)) return 1;
+    if (b.type_of_initiative_tag && b.type_of_initiative_tag.match(/^other_/)) return -1;
+
+    if (a.label[current_lang] < b.label[current_lang]) {
+      return -1;
+    } else {
+      return 1;
+    }
+  }
+  typeOfInintiatives.sort(labelCompare);
+
+  typeOfInintiatives.forEach(function (entry) {
+    var newOption = document.createElement('option');
+    var optionValue = document.createAttribute('value');
+    optionValue.value = entry.type_of_initiative_tag;
+    newOption.setAttributeNode(optionValue);
+
+    if (currentData.properties && currentData.properties.type_of_initiative) {
+      var tois = createToiArray(currentData.properties.type_of_initiative);
+      tois.forEach(function (toi) {
+        if (toi === entry.type_of_initiative_tag) {
+          var newSelected = document.createAttribute('selected');
+          newOption.setAttributeNode(newSelected);
+        }
+      });
+    }
+
+    var label = document.createTextNode(entry.label[current_lang]); // FIXME fallback langs
+    newOption.appendChild(label);
+
+    toiSelect.appendChild(newOption);
+    $('#_key_type_of_initiative').selectpicker('refresh');
+  });
+}
+
+function clickSubmit() {
+  console.log('clickSubmit enter');
+  var requiredFields = ['_key_type_of_initiative', '_key_name', '_geometry_lat', '_geometry_lon'];
+  for (var i = 0; i < requiredFields.length; i++) {
+    var id = requiredFields[i];
+    var value = document.getElementById(id).value;
+    if (!value || !value.length) {
+      console.error('submit: field ' + id + ' empty');
+      alert('Error on submit: field ' + id.replace(/^_key_/, '') + ' is not allowed to be empty');
+      return false;
+    }
+  }
+
+  var data = {
+    'type': 'Feature',
+    'properties': {},
+    'geometry': {
+      'type': 'Point',
+      'coordinates': [parseFloat(document.getElementById('_geometry_lon').value), parseFloat(document.getElementById('_geometry_lat').value)]
+    }
+
+    // all 'input type=text'
+  };var allInputs = document.getElementsByTagName('input');
+  var freeTags = { keys: {}, values: {} };
+
+  console.log(allInputs);
+
+  for (var i = 0; i < allInputs.length; i++) {
+    var element = allInputs[i];
+    if (!element.type === 'text') {
+      continue;
+    }
+    if (element.value && element.id) {
+      console.log(element.id + ': ' + element.value);
+      if (/^_key_/.test(element.id)) {
+        var key = element.id.replace(/^_key_/, '');
+        data.properties[key] = element.value.trim();
+        // element of 'free tags'
+      } else if (/^key[0-9]+$/.test(element.id) && element.name === 'freetags') {
+        var nr = element.id.replace(/^key/, '');
+        freeTags.keys[nr] = element.value;
+      } else if (/^value[0-9]+$/.test(element.id) && element.name === 'freetags') {
+        var nr = element.id.replace(/^value/, '');
+        freeTags.values[nr] = element.value;
+      }
+    }
+  }
+  console.log(freeTags);
+
+  for (var keynr in freeTags.keys) {
+    var key = freeTags.keys[keynr].trim();
+    if (key && freeTags.values[keynr]) {
+      // only take if key and value are not ""
+      data.properties[key] = freeTags.values[keynr].trim();
+    }
+  }
+
+  // drop-down
+  var allSelects = document.getElementsByTagName('select');
+  for (var i = 0; i < allSelects.length; i++) {
+    var element = allSelects[i];
+    if (/^_key_/.test(element.id) && element.value) {
+      var key = element.id.replace(/^_key_/, '');
+
+      for (var childCounter = 0; childCounter < element.children.length; childCounter++) {
+        var child = element.children[childCounter];
+        if (child.selected === true) {
+          data.properties[key] = (data.properties[key] ? data.properties[key] + ';' : '') + child.value;
+        }
+      }
+    }
+  }
+
+  // textarea
+  var allTextareas = document.getElementsByTagName('textarea');
+  for (var i = 0; i < allTextareas.length; i++) {
+    var element = allTextareas[i];
+    if (/^_key_/.test(element.id) && element.value) {
+      var key = element.id.replace(/^_key_/, '');
+      data.properties[key] = element.value.trim();
+    }
+  }
+
+  console.log(data);
+
+  var uuid = document.getElementById('_id').value;
+  var sendData = JSON.stringify(data);
+  console.log(sendData);
+
+  dataApi.createOrUpdatePOI(uuid, sendData, clickSubmitSuccess);
+
+  document.getElementById('deleted').style.display = 'none';
+}
+
+function clickSubmitSuccess(uuid) {
+  document.getElementById('_id').value = uuid;
+  $('#transformapapilink').attr('href', dataApi.getDataEndpoint() + uuid);
+  $('#osmlink').attr('href', $('#_key_osm').attr('value'));
+}
+
+function clickDelete() {
+  var uuid = document.getElementById('_id').value;
+
+  dataApi.deletePOI(uuid, clickDeleteSuccess);
+
+  document.getElementById('deleted').style.display = 'block';
+}
+
+function clickDeleteSuccess(uuid) {
+  console.log('Successfully deleted POI: ' + uuid);
+}
+
+function clickSearch() {
+  var country = document.getElementById('_key_addr:country').value;
+  var city = document.getElementById('_key_addr:city').value;
+  // const postcode = document.getElementById('_key_addr:postcode').value // postcode not used in nominatim, decreases result quality
+  var street = document.getElementById('_key_addr:street').value;
+  var housenumber = document.getElementById('_key_addr:housenumber').value;
+
+  var querystring = 'q=';
+  if (street) {
+    if (housenumber) {
+      querystring += housenumber + '+';
+    }
+    querystring += street + ',';
+  }
+  if (city) {
+    querystring += city + ',';
+  }
+  querystring += country;
+
+  var query = '//nominatim.openstreetmap.org/search?' + querystring + '&format=json&limit=1&email=mapping@transformap.co';
+  console.log(query);
+
+  redFetch([query], function (successData) {
+    console.log(successData);
+    if (successData.length !== 1) {
+      console.error('error in Nominatim return data: length != 1');
+      alert('Sorry, Nothing found');
+      return;
+    }
+    var result = successData[0];
+    if (result.class === 'building' || result.class === 'amenity' || result.class === 'shop' || result.class === 'place' && result.type === 'house') {
+      console.log('address found exactly');
+      document.getElementById('_geometry_lon').value = result.lon;
+      document.getElementById('_geometry_lat').value = result.lat;
+
+      // trigger update of place marker
+      document.getElementById('_geometry_lat').focus();
+      document.getElementById('_geometry_lon').focus();
+      map.getMap().setView(new L.LatLng(result.lat, result.lon), 18);
+    } else {
+      map.getMap().setView(new L.LatLng(result.lat, result.lon), 18);
+      console.log('address not found exactly');
+      setTimeout(function () {
+        // wait for map to pan to location
+        alert('Attention: The address was not found exactly, please place the marker manually!');
+        document.getElementById('_geometry_lon').value = '';
+        document.getElementById('_geometry_lat').value = '';
+        document.getElementById('_geometry_lon').focus();
+        document.getElementById('_geometry_lat').focus();
+      }, 400);
+    }
+  }, function (error) {
+    console.log(error);
+    alert('Sorry, Address search did not work');
+  });
+}
+
+function stopRKey(evt) {
+  var evt = evt || event || null;
+  var node = evt.target ? evt.target : evt.srcElement ? evt.srcElement : null;
+  if (evt.keyCode == 13 && node.type == 'text') {
+    return false;
+  }
+}
+
+function clickMediaSave() {
+  var poi = JSON.parse($('#mediaFileDialogContent').find('.poi').text());
+  var mediaId = $('#mediaFileDialogContent').find('.mediaId').text();
+
+  if ($('#mediaFileDialogContent').find('.createOrUpdate').text() == "create") {
+    var data = {
+      name: $('#mediaFileDialogContent').find('.name').val(),
+      description: $('#mediaFileDialogContent').find('.name').val(),
+      versionDate: new Date().toISOString()
+    };
+    if (utils.getCurrentBlob()) {
+      var blobURL = mmsApi.uploadBlob(utils.getCurrentBlob(), function (blob) {
+        data.url = blob.url;
+        data.mimetype = blob.mimetype;
+        data.id = blob.id;
+        mmsApi.createNewMediaFile(data, function () {
+          $('#mediaFileDialog').modal('toggle');
+        });
+      });
+    } else {
+      mmsApi.createNewMediaFile(data, function () {
+        if (!poi.media_files) {
+          poi.media_files = [];
+        }
+        poi.media_files.indexOf(mediaId) === -1 ? poi.media_files.push(mediaId) : console.log("This media file is already associated with the POI");
+        dataApi.updatePOI(poi.id, poi, function (place) {
+          $('#mediaFileDialog').modal('toggle');
+        });
+      });
+    }
+  } else if ($('#mediaFileDialogContent').find('.createOrUpdate').text() == "update") {
+    var metadataChanged = false;
+    var data = JSON.parse($('#mediaFileDialogContent').find('.metadata').text());
+    var nameField = $('#mediaFileDialogContent').find('.name').val();
+    if (data.name != nameField) {
+      data.name = nameField;
+      metadataChanged = true;
+    }
+    var descriptionField = $('#mediaFileDialogContent').find('.description').val();
+    if (data.description != descriptionField) {
+      data.description = descriptionField;
+      metadataChanged = true;
+    }
+
+    if (utils.getCurrentBlob()) {
+      var blobURL = mmsApi.uploadBlob(utils.getCurrentBlob(), function (blob) {
+        data.url = blob.url;
+        data.mimetype = blob.mimetype;
+        data.id = blob.id;
+        mmsApi.addMediaFileVersion(mediaId, data, function () {
+          $('#mediaFileDialog').modal('toggle');
+        });
+      });
+    } else if (metadataChanged) {
+      mmsApi.addMediaFileVersion(mediaId, data, function () {
+        $('#mediaFileDialog').modal('toggle');
+      });
+    }
+  }
+}
+
+function clickMediaCancel() {
+  $('#mediaFileDialog').modal('toggle');
+}
+
+function clickNewMedia() {
+
+  utils.resetCurrentBlob();
+
+  console.log("newMedia button clicked");
+  $('#mediaFileDialogContent').find('.createOrUpdate').text("create");
+  $('#mediaFileDialogContent').find('.poi').text(JSON.stringify(currentData));
+  $('#mediaFileDialogContent').find('.name').val("");
+  $('#mediaFileDialogContent').find('.description').val("");
+  $('#mediaFileDialogContent').find('img').hide();
+  $('#mediaThumbUpload').show();
+  $('#mediaFileDialogContent').find('.metadata').text("");
+  $('#mediaFileDialogContent').find('.mediaVersions').html("");
+
+  document.getElementById('mediaThumbUpload').addEventListener('change', utils.handleFileSelect, false);
+}
+
+function setupLoginButton() {
+  if (authApi.isAlreadyLoggedIn()) {
+    $('#loginbutton').text("Logout");
+    $('#loginbutton').attr("href", "#");
+    $('#save').removeAttr("disabled");
+  } else {
+    $('#loginbutton').text("Login");
+    $('#loginbutton').attr("href", authApi.getAuthEndpoint());
+    $('#save').attr("disabled", "disabled");
+  }
+}
+
+function clickLoginButton() {
+  if (authApi.isAlreadyLoggedIn()) {
+    utils.setCookie("session", undefined, 0);
+  }
+  setupLoginButton();
+}
+
+function clickAcceptTosButton() {
+  var userId = authApi.getUserIdFromSession();
+  userApi.getUser(userId, function (user) {
+    user["agreedTos"] = true;
+    userApi.updateUser(userId, user, function (updatedUser) {
+      console.log("user accepted TOS");
+      $("#tos").fadeOut();
+    });
+  });
+}
+
+module.exports = {
+  fillForm: fillForm,
+  addLanguageSwitcher: addLanguageSwitcher,
+  addFreeTagsRow: addFreeTagsRow,
+  fillTransforMapTax: fillTransforMapTax,
+  fillTOIs: fillTOIs,
+  map: map,
+  clickSubmit: clickSubmit,
+  clickDelete: clickDelete,
+  clickSearch: clickSearch,
+  stopRKey: stopRKey,
+  clickMediaSave: clickMediaSave,
+  clickMediaCancel: clickMediaCancel,
+  clickNewMedia: clickNewMedia,
+  clickLoginButton: clickLoginButton,
+  setupLoginButton: setupLoginButton,
+  clickAcceptTosButton: clickAcceptTosButton
+};
+});
+
+;require.register("lib/user_api.js", function(exports, require, module) {
+'use strict';
+
+/*
+ * This library handles calls to user api for the transformap editor
+ *
+ * Fri  21 Jul 14:30:00 UTC+1 2017
+ * Alex Corbi (alexcorbi@posteo.net), WTFPL
+
+ * This program is free software. It comes without any warranty, to
+ * the extent permitted by applicable law. You can redistribute it
+ * and/or modify it under the terms of the Do What The Fuck You Want
+ * To Public License, Version 2, as published by Sam Hocevar. See
+ * http://www.wtfpl.net/ for more details. */
+
+var utils = require('./utils.js');
+
+var endpoint = utils.baseUrl + '/users/';
+
+/* returns the API's endpoint */
+function getUserEndpoint() {
+  return endpoint;
+}
+
+function isAlreadyLoggedIn() {
+  return utils.getCookie("session") !== undefined && utils.getCookie("session") !== "";
+}
+
+/*
+ * Gets the metadata of a certain user
+ * Params:
+ *  - userId: the id of the user to pull data from
+ *  - callback: function to be called upon success.
+ * Returns: false if invalid call
+*/
+function getUser(userId, callback) {
+  if (!userId) {
+    console.log('getUser: no userId given');
+    return false;
+  }
+
+  var xhr = utils.createCORSRequest('GET', endpoint + userId);
+  xhr.setRequestHeader('Content-Type', 'application/json');
+  xhr.send();
+
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4) {
+      if (xhr.status === 200) {
+        callback(JSON.parse(xhr.responseText));
+      } else {
+        console.error(xhr);
+      }
+    }
+  };
+}
+
+/*
+ * Updates the metadata of a certain user
+ * Params:
+ *  - userId: the id of the user to update data from
+ *  - callback: function to be called upon success.
+ * Returns: false if invalid call
+*/
+function updateUser(userId, data, callback) {
+  if (!userId) {
+    console.log('updateUser: no userId given');
+    return false;
+  }
+
+  if (!data) {
+    console.log('updateUser: no data given');
+    return false;
+  }
+
+  var xhr = utils.createCORSRequest('PUT', endpoint + userId);
+  xhr.setRequestHeader('Content-Type', 'application/json');
+  xhr.send(data);
+
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4) {
+      if (xhr.status === 200) {
+        callback(JSON.parse(xhr.responseText));
+      } else {
+        console.error(xhr);
+      }
+    }
+  };
+}
+
+module.exports = {
+  getUserEndpoint: getUserEndpoint,
+  getUser: getUser
+};
+});
+
+;require.register("lib/utils.js", function(exports, require, module) {
+"use strict";
+
+var currentBlob;
+
+var baseUrl = '//transformap-data.apps.allmende.io' !== "//undefined" ? '//transformap-data.apps.allmende.io' : "";
+/*
+ * This library provide utility functions
+ *
+ * Mon  3 Oct 15:07:12 CEST 2016
+ * Michael Maier (species@github), WTFPL
+ * Fri  21 Jul 14:30:00 UTC+1 2017
+ * Alex Corbi (alexcorbi@posteo.net), WTFPL
+ *
+ * returns object with key:value pairs
+
+ This program is free software. It comes without any warranty, to
+     * the extent permitted by applicable law. You can redistribute it
+     * and/or modify it under the terms of the Do What The Fuck You Want
+     * To Public License, Version 2, as published by Sam Hocevar. See
+     * http://www.wtfpl.net/ for more details. */
+
+function createCORSRequest(method, url) {
+  // taken from https://www.html5rocks.com/en/tutorials/cors/
+  var xhr = new XMLHttpRequest();
+  if ('withCredentials' in xhr) {
+    // Check if the XMLHttpRequest object has a "withCredentials" property.
+    // "withCredentials" only exists on XMLHTTPRequest2 objects.
+    xhr.open(method, url, true);
+  } else if (typeof XDomainRequest !== 'undefined') {
+    // Otherwise, check if XDomainRequest.
+    // XDomainRequest only exists in IE, and is IE's way of making CORS requests.
+    xhr = new XDomainRequest();
+    xhr.open(method, url);
+  } else {
+    // Otherwise, CORS is not supported by the browser.
+    xhr = null;
+  }
+  return xhr;
+}
+
+function getUrlVars() {
+  var vars = {};
+  var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function (m, key, value) {
+    vars[key] = value.replace(/#.*$/, '');
+  });
+  return vars;
+}
+
+function getUrlPath(url) {
+  var reg = /.+?\:\/\/.+?(\/.+?)(?:#|\?|$)/;
+  return reg.exec(url)[1];
+}
+
+function generateUUID() {
+  var d = new Date().getTime();
+  var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+    var r = (d + Math.random() * 16) % 16 | 0;
+    d = Math.floor(d / 16);
+    return (c == 'x' ? r : r & 0x3 | 0x8).toString(16);
+  });
+  return uuid;
+}
+
+function handleFileSelect(evt, callback) {
+  var files = evt.target.files;
+  var reader = new FileReader();
+
+  reader.onload = function (event) {
+    var contents = event.target.result;
+    currentBlob = contents;
+    $('#mediaFileDialogContent').find('img').attr('src', contents);
+    $('#mediaFileDialogContent').find('img').show();
+    $('#mediaThumbUpload').hide();
+  };
+
+  reader.onerror = function (event) {
+    console.error("File could not be read! Code " + event.target.error.code);
+    ui.currentBlob = undefined;
+  };
+
+  var accept = {
+    binary: ["image/png", "image/jpeg"]
+  };
+
+  var file;
+
+  for (var i = 0; i < files.length; i++) {
+    file = files[i];
+
+    if (file !== null) {
+      if (accept.binary.indexOf(file.type) > -1) {
+        reader.readAsDataURL(file);
+      }
+    }
+  }
+}
+
+function getCurrentBlob() {
+  return currentBlob;
+}
+
+function resetCurrentBlob() {
+  currentBlob = undefined;
+}
+
+function getCookie(cname) {
+  var name = cname + "=";
+  var decodedCookie = decodeURIComponent(document.cookie);
+  var ca = decodedCookie.split(';');
+  for (var i = 0; i < ca.length; i++) {
+    var c = ca[i];
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return "";
+}
+
+function setCookie(cname, cvalue, exdays) {
+  var d = new Date();
+  d.setTime(d.getTime() + exdays * 24 * 60 * 60 * 1000);
+  var expires = "expires=" + d.toUTCString();
+  document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+}
+
+module.exports = {
+  createCORSRequest: createCORSRequest,
+  getUrlVars: getUrlVars,
+  getUrlPath: getUrlPath,
+  generateUUID: generateUUID,
+  handleFileSelect: handleFileSelect,
+  getCurrentBlob: getCurrentBlob,
+  baseUrl: baseUrl,
+  resetCurrentBlob: resetCurrentBlob,
+  getCookie: getCookie,
+  setCookie: setCookie
+};
+});
+
+;require.register("test/data_api.tests.js", function(exports, require, module) {
+'use strict';
+
+var assert = require('assert');
+var dataApi = require('../lib/data_api.js');
+
+describe('DATA API', function () {
+
+  describe('getDataEndpoint', function () {
+
+    it('should return https://data.transformap.co/place/', function () {
+      var endpoint = dataApi.getDataEndpoint();
+      assert.equal(endpoint, "https://data.transformap.co/place/");
+    });
+  });
+
+  describe('createOrUpdatePOI', function () {
+
+    it('should return false if no data is provided', function () {
+      var result = dataApi.createOrUpdatePOI('some_uuid', undefined, function () {});
+      assert.equal(result, false);
+    });
+  });
+
+  describe('getPOI', function () {
+
+    it('should return false if no uuid is provided', function () {
+      var result = dataApi.getPOI(undefined, function () {});
+      assert.equal(result, false);
+    });
+  });
+
+  describe('deletePOI', function () {
+
+    it('should return false if no uuid is provided', function () {
+      var result = dataApi.deletePOI(undefined, function () {});
+      assert.equal(result, false);
+    });
+  });
+});
+});
+
+require.register("test/mms_api.tests.js", function(exports, require, module) {
+'use strict';
+
+var assert = require('assert');
+var mmsApi = require('../lib/mms_api.js');
+
+describe('MMS API', function () {
+
+  describe('getMMSEndpoint', function () {
+
+    it('should return https://data.transformap.co/media/', function () {
+      var endpoint = mmsApi.getMMSEndpoint();
+      assert.equal(endpoint, "https://data.transformap.co/media/");
+    });
+  });
+
+  describe('createNewMediaFile', function () {
+
+    it('should return false if no data is provided', function () {
+      var result = mmsApi.createNewMediaFile('some_uuid', undefined, function () {});
+      assert.equal(result, false);
+    });
+  });
+
+  describe('retrieveMetadataForMediaFile', function () {
+
+    it('should return false if no mediaId is provided', function () {
+      var result = mmsApi.retrieveMetadataForMediaFile(undefined, function () {});
+      assert.equal(result, false);
+    });
+  });
+
+  describe('retrieveMediaFileVersions', function () {
+
+    it('should return false if no mediaId is provided', function () {
+      var result = mmsApi.retrieveMediaFileVersions(undefined, function () {});
+      assert.equal(result, false);
+    });
+  });
+
+  describe('addMediaFileVersion', function () {
+
+    it('should return false if no mediaId is provided', function () {
+      var result = mmsApi.addMediaFileVersion(undefined, { "name": "test" }, function () {});
+      assert.equal(result, false);
+    });
+
+    it('should return false if no data is provided', function () {
+      var result = mmsApi.addMediaFileVersion('some_media_id', undefined, function () {});
+      assert.equal(result, false);
+    });
+  });
+
+  describe('setActiveMediaFileVersion', function () {
+
+    it('should return false if no mediaId is provided', function () {
+      var result = mmsApi.setActiveMediaFileVersion(undefined, { "name": "test" }, function () {});
+      assert.equal(result, false);
+    });
+
+    it('should return false if no versionId is provided', function () {
+      var result = mmsApi.setActiveMediaFileVersion('some_media_id', undefined, function () {});
+      assert.equal(result, false);
+    });
+  });
+
+  describe('uploadBlob', function () {
+
+    it('should return false if no mediaId is provided', function () {
+      var result = mmsApi.uploadBlob(undefined, "some binary content", function () {});
+      assert.equal(result, false);
+    });
+
+    it('should return false if no blob is provided', function () {
+      var result = mmsApi.setActiveMediaFileVersion('some_media_id', undefined, function () {});
+      assert.equal(result, false);
+    });
+  });
+});
+});
+
+require.register("test/utils.tests.js", function(exports, require, module) {
+'use strict';
+
+var assert = require('assert');
+var dataApi = require('../lib/data_api.js');
+var utils = require('../lib/utils.js');
+
+describe('UTILS', function () {
+
+  describe('getUrlPath', function () {
+
+    it('should return expected path', function () {
+      var url = "https://data.transformap.co/place/";
+      var path = utils.getUrlPath(url);
+      assert.equal(path, "/place/");
+    });
+
+    it('should return expected multi-valued path', function () {
+      var url = "https://data.transformap.co/place/1234/media";
+      var path = utils.getUrlPath(url);
+      assert.equal(path, "/place/1234/media");
+    });
+  });
+
+  describe('generateUUID', function () {
+
+    it('should return the expected format xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx', function () {
+      var uuid = utils.generateUUID();
+      assert.equal(uuid.length, 36);
+      assert.equal(uuid[14], "4");
+    });
+  });
+});
+});
+
+require.alias("assert/assert.js", "assert");
+require.alias("process/browser.js", "process");
+require.alias("util/util.js", "sys");process = require('process');require.register("___globals___", function(exports, require, module) {
+  
+});})();require('___globals___');
+
+
+//# sourceMappingURL=app.js.map

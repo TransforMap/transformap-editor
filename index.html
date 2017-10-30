@@ -31,6 +31,9 @@
         <fieldset class="no-padding">
           <div class="row" id="menu"><a class="btn btn-default" href="#" id="loginbutton">Login</a><a class="btn btn-default" href="http://viewer.transformap.co/editable.html?background=mapnik#5/50.458/10.261" id="gotomap" target="_blank">→ Go to Map</a><a class="btn btn-default" href="https://github.com/TransforMap/transformap-editor/blob/master/HELP.md" id="help" target="_blank">Help</a><a class="btn btn-success" href="." id="newbutton" title="Create a new POI">New</a><a class="btn btn-danger" href="" id="resetbutton">Reset</a></div>
         </fieldset>
+        <fieldset class="no-padding" id="tos">
+          <p>In order to be able to contribute to this instance of transformap-editor you first need to accept the<a href="#">TOS</a></p><a class="btn btn-success" href="#" id="accepttosbutton">Accept</a>
+        </fieldset>
         <fieldset id="address">
           <legend>Name and address</legend>
           <div class="row" id="name">
@@ -170,7 +173,8 @@
       <div id="mediaFileDialogContent">
         <input class="form-control mediaId" style="display:none;" type="text">
         <input class="form-control metadata" style="display:none;" type="text">
-        <input class="form-control poiUUID" style="display:none;" type="text">
+        <input class="form-control poi" style="display:none;" type="text">
+        <input class="form-control createOrUpdate" style="display:none;" type="text">
         <div class="row mediaFile"><img class="mediaThumb">
           <input type="file" id="mediaThumbUpload">
           <div class="row mediaInfo">
@@ -178,7 +182,11 @@
             <input class="description form-control mediaFormItem" type="text" placeholder="Description">
           </div>
         </div>
-        <div class="row mediaVersions"></div>
+        <div class="row">
+          <legend>Version history</legend>
+          <p class="hint">You can roll back to a different version by clinking on 'Activate'</p>
+          <div class="row mediaVersions"></div>
+        </div>
         <hr>
         <button class="btn" type="button" id="mediacancel">Cancel</button>
         <button class="btn btn-success" type="button" id="mediasave">Save</button>
