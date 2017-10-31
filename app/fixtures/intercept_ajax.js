@@ -31,7 +31,7 @@ xhook.after(function(request, response) {
     // /auth/
     if(request.url.match(".*?/auth/")){
       response.status = 200;
-      utils.setCookie("session","123456789");
+      utils.setCookie("session.id","123456789");
     }
 
     // /users/{userId}

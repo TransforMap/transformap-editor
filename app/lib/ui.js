@@ -656,7 +656,7 @@ function setupLoginButton(){
 
 function clickLoginButton(){
   if (authApi.isAlreadyLoggedIn()){
-    utils.setCookie("session",undefined,0);
+    utils.setCookie("session.id",undefined,0);
   }
   setupLoginButton();
 }

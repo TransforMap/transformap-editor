@@ -57,15 +57,15 @@ and run it:
 * git add
 * git push
 
-## Development environment
+## Staging environment
 
 If you are integrating feature branches into `staging`, run:
 
-    npm run deploy
+  `npm run deploy transformap-editor.apps.allmende.io` or `npm run deploy transformap-editor.apps.allmende.io <name_of_branch>`
 
 If you intend to push another branch, feel free to invoke the deploy script manually as follows:
 
-    ./scripts/deploy $upstream $branch $repo
+  `./scripts/deploy $upstream $branch $repo`
 
 ### Unit & Integration tests
 

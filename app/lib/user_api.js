@@ -19,10 +19,6 @@ function getUserEndpoint () {
   return endpoint;
 }
 
-function isAlreadyLoggedIn () {
-  return utils.getCookie("session") !== undefined &&  utils.getCookie("session") !== "";
-}
-
 /*
  * Gets the metadata of a certain user
  * Params:
