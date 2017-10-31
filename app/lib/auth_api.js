@@ -20,6 +20,7 @@ function getAuthEndpoint () {
 }
 
 function isAlreadyLoggedIn () {
+  console.log("checking for connect.sid cookie");
   return utils.getCookie("connect.sid") !== undefined &&  utils.getCookie("connect.sid") !== "";
 }
 
