@@ -298,7 +298,7 @@ xhook.after(function (request, response) {
     // /auth/
     if (request.url.match(".*?/auth/")) {
       response.status = 200;
-      utils.setCookie("session", "123456789");
+      utils.setCookie("session.id", "123456789");
     }
 
     // /users/{userId}
@@ -402,11 +402,12 @@ function getAuthEndpoint() {
 }
 
 function isAlreadyLoggedIn() {
-  return utils.getCookie("session") !== undefined && utils.getCookie("session") !== "";
+  console.log("checking for connect.sid cookie");
+  return utils.getCookie("connect.sid") !== undefined && utils.getCookie("connect.sid") !== "";
 }
 
 function getUserIdFromSession() {
-  return utils.getCookie("session");
+  return utils.getCookie("connect.sid");
 }
 
 /*
@@ -2101,7 +2102,7 @@ function setupLoginButton() {
 
 function clickLoginButton() {
   if (authApi.isAlreadyLoggedIn()) {
-    utils.setCookie("session", undefined, 0);
+    utils.setCookie("session.id", undefined, 0);
   }
   setupLoginButton();
 }
@@ -2147,10 +2148,6 @@ var endpoint = utils.baseUrl + '/users/';
 /* returns the API's endpoint */
 function getUserEndpoint() {
   return endpoint;
-}
-
-function isAlreadyLoggedIn() {
-  return utils.getCookie("session") !== undefined && utils.getCookie("session") !== "";
 }
 
 /*
