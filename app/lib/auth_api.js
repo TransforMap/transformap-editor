@@ -20,11 +20,12 @@ function getAuthEndpoint () {
 }
 
 function isAlreadyLoggedIn () {
-  return utils.getCookie("session") !== undefined &&  utils.getCookie("session") !== "";
+  console.log("checking for connect.sid cookie");
+  return utils.getCookie("connect.sid") !== undefined &&  utils.getCookie("connect.sid") !== "";
 }
 
 function getUserIdFromSession() {
-  return utils.getCookie("session");
+  return utils.getCookie("connect.sid");
 }
 
 /*
