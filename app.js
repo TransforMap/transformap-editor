@@ -298,7 +298,7 @@ xhook.after(function (request, response) {
     // /auth/
     if (request.url.match(".*?/auth/")) {
       response.status = 200;
-      utils.setCookie("session.id", "123456789");
+      utils.setCookie("connect.sid", "123456789");
     }
 
     // /users/{userId}
@@ -1594,7 +1594,7 @@ function retrieveAndRenderMediaFilesForPOI(currentData) {
           $('#mediaFileDialogContent').find('img').show();
           $('#mediaFileDialogContent').find('.metadata').text(JSON.stringify(data.metadata));
 
-          document.getElementById('mediaThumbUpload').addEventListener('change', utils.handleFileSelect, false);
+          document.getElementById('mediaUpload').addEventListener('change', utils.handleFileSelect, false);
 
           mmsApi.retrieveMediaFileVersions(data.metadata.id, function (versionsArray) {
             if (versionsArray.length > 0) {
@@ -2085,7 +2085,7 @@ function clickNewMedia() {
   $('#mediaFileDialogContent').find('.metadata').text("");
   $('#mediaFileDialogContent').find('.mediaVersions').html("");
 
-  document.getElementById('mediaThumbUpload').addEventListener('change', utils.handleFileSelect, false);
+  document.getElementById('mediaUpload').addEventListener('change', utils.handleFileSelect, false);
 }
 
 function setupLoginButton() {
@@ -2102,7 +2102,7 @@ function setupLoginButton() {
 
 function clickLoginButton() {
   if (authApi.isAlreadyLoggedIn()) {
-    utils.setCookie("session.id", undefined, 0);
+    utils.setCookie("connect.sid", undefined, 0);
   }
   setupLoginButton();
 }
