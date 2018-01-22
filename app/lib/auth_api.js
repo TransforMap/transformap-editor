@@ -10,7 +10,7 @@
  * To Public License, Version 2, as published by Sam Hocevar. See
  * http://www.wtfpl.net/ for more details. */
 
-import * as Cookies from "js-cookie";
+const Cookies = require("js-cookie");
 
 const utils = require('./utils.js');
 
@@ -96,6 +96,7 @@ function checkIfAuth (yesCallback, noCallback) {
             .always(() => {
               checkAuth = true
             })
+
   } else if (cookieLoginState) {
     yesCallback(profile)
   } else {
