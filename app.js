@@ -380,23 +380,21 @@ document.addEventListener('DOMContentLoaded', function () {
 ;require.register("lib/auth_api.js", function(exports, require, module) {
 'use strict';
 
-var _jsCookie = require('js-cookie');
+/*
+ * This library handles calls to the authorization RP api for the transformap editor
+ *
+ * Fri  21 Jul 14:30:00 UTC+1 2017
+ * Alex Corbi (alexcorbi@posteo.net), WTFPL
 
-var Cookies = _interopRequireWildcard(_jsCookie);
+ * This program is free software. It comes without any warranty, to
+ * the extent permitted by applicable law. You can redistribute it
+ * and/or modify it under the terms of the Do What The Fuck You Want
+ * To Public License, Version 2, as published by Sam Hocevar. See
+ * http://www.wtfpl.net/ for more details. */
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+var Cookies = require("js-cookie");
 
-var utils = require('./utils.js'); /*
-                                    * This library handles calls to the authorization RP api for the transformap editor
-                                    *
-                                    * Fri  21 Jul 14:30:00 UTC+1 2017
-                                    * Alex Corbi (alexcorbi@posteo.net), WTFPL
-                                   
-                                    * This program is free software. It comes without any warranty, to
-                                    * the extent permitted by applicable law. You can redistribute it
-                                    * and/or modify it under the terms of the Do What The Fuck You Want
-                                    * To Public License, Version 2, as published by Sam Hocevar. See
-                                    * http://www.wtfpl.net/ for more details. */
+var utils = require('./utils.js');
 
 var endpoint = utils.baseUrl + '/auth/';
 
@@ -463,8 +461,14 @@ function checkIfAuth(yesCallback, noCallback) {
   var cookieLoginState = getLoginState();
   if (checkLoginStateChanged()) checkAuth = false;
   if (!checkAuth || typeof cookieLoginState === 'undefined') {
-    $.get(utils.baseUrl + '/user').done(function (data) {
-      if (data && data._id === true) {
+    $.get({
+      url: utils.baseUrl + '/user',
+      contentType: 'application/json',
+      xhrFields: {
+        withCredentials: true
+      }
+    }).done(function (data) {
+      if (data && typeof data._id !== 'undefined') {
         profile = data;
         yesCallback(profile);
         setLoginState(true, data._id);
@@ -1538,6 +1542,7 @@ var authApi = require('./auth_api.js');
 var userApi = require('./user_api.js');
 var map = require('./map.js');
 var utils = require('./utils.js');
+var redFetch = require('./red_fetch.js');
 
 var currentData = {};
 
@@ -2296,7 +2301,7 @@ require.register("lib/utils.js", function(exports, require, module) {
 
 var currentBlob;
 
-var baseUrl = '//transformap-data.apps.allmende.io' !== "//undefined" ? '//transformap-data.apps.allmende.io' : "";
+var baseUrl = 'https://transformap-data.apps.allmende.io' !== "//undefined" ? 'https://transformap-data.apps.allmende.io' : "";
 /*
  * This library provide utility functions
  *
