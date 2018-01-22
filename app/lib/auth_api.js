@@ -14,11 +14,15 @@ const Cookies = require("js-cookie");
 
 const utils = require('./utils.js');
 
-const endpoint = utils.baseUrl + '/auth/';
+const endpoint = utils.baseUrl;
 
 /* returns the API's endpoint */
 function getAuthEndpoint () {
-  return endpoint;
+  return endpoint + '/auth/';
+}
+
+function getLogoutEndpoint () {
+  return endpoint + '/logout/';
 }
 
 /* taken "a bit" of inspiration from https://github.com/hackmdio/hackmd/blob/master/public/js/lib/common/login.js#L47 */
@@ -147,5 +151,6 @@ module.exports = {
   resetCheckAuth: resetCheckAuth,
   setloginStateChangeEvent: setloginStateChangeEvent,
   getAuthEndpoint: getAuthEndpoint,
+  getLogoutEndpoint: getLogoutEndpoint,
   logout: logout
 };

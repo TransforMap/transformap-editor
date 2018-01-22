@@ -56,5 +56,5 @@ module.exports = function () {
   map.initMap();
 
   console.log('editor initialize end');
-  
+
 };
