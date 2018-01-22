@@ -4,6 +4,7 @@ const authApi = require('./auth_api.js');
 const userApi = require('./user_api.js');
 const map = require('./map.js');
 const utils = require('./utils.js');
+const redFetch = require('./red_fetch.js');
 
 var currentData = {}
 
