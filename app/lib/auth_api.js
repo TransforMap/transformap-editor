@@ -10,6 +10,8 @@
  * To Public License, Version 2, as published by Sam Hocevar. See
  * http://www.wtfpl.net/ for more details. */
 
+import * as Cookies from "js-cookie";
+
 const utils = require('./utils.js');
 
 const endpoint = utils.baseUrl + '/auth/';
@@ -19,13 +21,86 @@ function getAuthEndpoint () {
   return endpoint;
 }
 
-function isAlreadyLoggedIn () {
-  console.log("checking for connect.sid cookie");
-  return utils.getCookie("connect.sid") !== undefined &&  utils.getCookie("connect.sid") !== "";
+/* taken "a bit" of inspiration from https://github.com/hackmdio/hackmd/blob/master/public/js/lib/common/login.js#L47 */
+
+let checkAuth = false
+let profile = null
+let lastLoginState = getLoginState()
+let lastUserId = getUserId()
+var loginStateChangeEvent = null
+
+function setloginStateChangeEvent (func) {
+  loginStateChangeEvent = func
 }
 
-function getUserIdFromSession() {
-  return utils.getCookie("connect.sid");
+function resetCheckAuth () {
+  checkAuth = false
+}
+
+function setLoginState (bool, id) {
+  Cookies.set('loginstate', bool, {
+    expires: 365
+  })
+  if (id) {
+    Cookies.set('userid', id, {
+      expires: 365
+    })
+  } else {
+    Cookies.remove('userid')
+  }
+  lastLoginState = bool
+  lastUserId = id
+  checkLoginStateChanged()
+}
+
+function checkLoginStateChanged () {
+  if (getLoginState() !== lastLoginState || getUserId() !== lastUserId) {
+    if (loginStateChangeEvent) setTimeout(loginStateChangeEvent, 100)
+    return true
+  } else {
+    return false
+  }
+}
+
+function getLoginState () {
+  const state = Cookies.get('loginstate')
+  return state === 'true' || state === true
+}
+
+function getUserId () {
+  return Cookies.get('userid')
+}
+
+function clearLoginState () {
+  Cookies.remove('loginstate')
+}
+
+function checkIfAuth (yesCallback, noCallback) {
+  const cookieLoginState = getLoginState()
+  if (checkLoginStateChanged()) checkAuth = false
+  if (!checkAuth || typeof cookieLoginState === 'undefined') {
+    $.get(`${utils.baseUrl}/user`)
+            .done(data => {
+              if (data && data._id === true) {
+                profile = data
+                yesCallback(profile)
+                setLoginState(true, data._id)
+              } else {
+                noCallback()
+                setLoginState(false)
+              }
+            })
+            .fail(() => {
+              noCallback()
+            })
+            .always(() => {
+              checkAuth = true
+            })
+  } else if (cookieLoginState) {
+    yesCallback(profile)
+  } else {
+    noCallback()
+  }
 }
 
 /*
@@ -57,8 +132,14 @@ function logout (authToken,callback) {
 }
 
 module.exports = {
+  checkIfAuth: checkIfAuth,
+  clearLoginState: clearLoginState,
+  getUserId: getUserId,
+  getLoginState: getLoginState,
+  checkLoginStateChanged: checkLoginStateChanged,
+  setLoginState: setLoginState,
+  resetCheckAuth: resetCheckAuth,
+  setloginStateChangeEvent: setloginStateChangeEvent,
   getAuthEndpoint: getAuthEndpoint,
-  isAlreadyLoggedIn: isAlreadyLoggedIn,
-  getUserIdFromSession: getUserIdFromSession,
   logout: logout
 };

@@ -46,12 +46,12 @@ module.exports = function () {
   document.getElementById('delete').onclick = ui.clickDelete;
   document.getElementById('coordsearch').onclick = ui.clickSearch;
   document.getElementById('newmedia').onclick = ui.clickNewMedia;
-  document.getElementById('loginbutton').onclick = ui.clickLoginButton;
+  document.getElementById('loginbutton').onclick = ui.toggleLoginButton;
   document.onkeypress = ui.stopRKey;
   document.getElementById('mediacancel').onclick = ui.clickMediaCancel;
   document.getElementById('mediasave').onclick = ui.clickMediaSave;
 
-  ui.setupLoginButton();
+  ui.toggleLoginButton();
 
   map.initMap();
 

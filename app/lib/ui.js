@@ -642,23 +642,16 @@ function clickNewMedia(){
   document.getElementById('mediaUpload').addEventListener('change', utils.handleFileSelect, false);
 }
 
-function setupLoginButton(){
-  if (authApi.isAlreadyLoggedIn()){
+function toggleLoginButton(){
+  authApi.checkIfAuth(data => {
     $('#loginbutton').text("Logout");
     $('#loginbutton').attr("href","#");
     $('#save').removeAttr("disabled");
-  }else{
+  },() => {
     $('#loginbutton').text("Login");
     $('#loginbutton').attr("href",authApi.getAuthEndpoint());
     $('#save').attr("disabled","disabled");
-  }
-}
-
-function clickLoginButton(){
-  if (authApi.isAlreadyLoggedIn()){
-    utils.setCookie("connect.sid",undefined,0);
-  }
-  setupLoginButton();
+  })
 }
 
 module.exports = {
@@ -675,6 +668,5 @@ module.exports = {
   clickMediaSave:clickMediaSave,
   clickMediaCancel: clickMediaCancel,
   clickNewMedia: clickNewMedia,
-  clickLoginButton: clickLoginButton,
-  setupLoginButton: setupLoginButton
+  toggleLoginButton: toggleLoginButton,
 };
