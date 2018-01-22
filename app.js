@@ -396,11 +396,15 @@ var Cookies = require("js-cookie");
 
 var utils = require('./utils.js');
 
-var endpoint = utils.baseUrl + '/auth/';
+var endpoint = utils.baseUrl;
 
 /* returns the API's endpoint */
 function getAuthEndpoint() {
-  return endpoint;
+  return endpoint + '/auth/';
+}
+
+function getLogoutEndpoint() {
+  return endpoint + '/logout/';
 }
 
 /* taken "a bit" of inspiration from https://github.com/hackmdio/hackmd/blob/master/public/js/lib/common/login.js#L47 */
@@ -526,6 +530,7 @@ module.exports = {
   resetCheckAuth: resetCheckAuth,
   setloginStateChangeEvent: setloginStateChangeEvent,
   getAuthEndpoint: getAuthEndpoint,
+  getLogoutEndpoint: getLogoutEndpoint,
   logout: logout
 };
 });
@@ -2175,8 +2180,8 @@ function clickNewMedia() {
 
 function toggleLoginButton() {
   authApi.checkIfAuth(function (data) {
-    $('#loginbutton').text("Logout");
-    $('#loginbutton').attr("href", "#");
+    $('#loginbutton').text("Logout " + data.contact.name);
+    $('#loginbutton').attr("href", authApi.getLogoutEndpoint());
     $('#save').removeAttr("disabled");
   }, function () {
     $('#loginbutton').text("Login");
