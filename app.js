@@ -380,19 +380,23 @@ document.addEventListener('DOMContentLoaded', function () {
 ;require.register("lib/auth_api.js", function(exports, require, module) {
 'use strict';
 
-/*
- * This library handles calls to the authorization RP api for the transformap editor
- *
- * Fri  21 Jul 14:30:00 UTC+1 2017
- * Alex Corbi (alexcorbi@posteo.net), WTFPL
+var _jsCookie = require('js-cookie');
 
- * This program is free software. It comes without any warranty, to
- * the extent permitted by applicable law. You can redistribute it
- * and/or modify it under the terms of the Do What The Fuck You Want
- * To Public License, Version 2, as published by Sam Hocevar. See
- * http://www.wtfpl.net/ for more details. */
+var Cookies = _interopRequireWildcard(_jsCookie);
 
-var utils = require('./utils.js');
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+var utils = require('./utils.js'); /*
+                                    * This library handles calls to the authorization RP api for the transformap editor
+                                    *
+                                    * Fri  21 Jul 14:30:00 UTC+1 2017
+                                    * Alex Corbi (alexcorbi@posteo.net), WTFPL
+                                   
+                                    * This program is free software. It comes without any warranty, to
+                                    * the extent permitted by applicable law. You can redistribute it
+                                    * and/or modify it under the terms of the Do What The Fuck You Want
+                                    * To Public License, Version 2, as published by Sam Hocevar. See
+                                    * http://www.wtfpl.net/ for more details. */
 
 var endpoint = utils.baseUrl + '/auth/';
 
@@ -401,13 +405,83 @@ function getAuthEndpoint() {
   return endpoint;
 }
 
-function isAlreadyLoggedIn() {
-  console.log("checking for connect.sid cookie");
-  return utils.getCookie("connect.sid") !== undefined && utils.getCookie("connect.sid") !== "";
+/* taken "a bit" of inspiration from https://github.com/hackmdio/hackmd/blob/master/public/js/lib/common/login.js#L47 */
+
+var checkAuth = false;
+var profile = null;
+var lastLoginState = getLoginState();
+var lastUserId = getUserId();
+var loginStateChangeEvent = null;
+
+function setloginStateChangeEvent(func) {
+  loginStateChangeEvent = func;
 }
 
-function getUserIdFromSession() {
-  return utils.getCookie("connect.sid");
+function resetCheckAuth() {
+  checkAuth = false;
+}
+
+function setLoginState(bool, id) {
+  Cookies.set('loginstate', bool, {
+    expires: 365
+  });
+  if (id) {
+    Cookies.set('userid', id, {
+      expires: 365
+    });
+  } else {
+    Cookies.remove('userid');
+  }
+  lastLoginState = bool;
+  lastUserId = id;
+  checkLoginStateChanged();
+}
+
+function checkLoginStateChanged() {
+  if (getLoginState() !== lastLoginState || getUserId() !== lastUserId) {
+    if (loginStateChangeEvent) setTimeout(loginStateChangeEvent, 100);
+    return true;
+  } else {
+    return false;
+  }
+}
+
+function getLoginState() {
+  var state = Cookies.get('loginstate');
+  return state === 'true' || state === true;
+}
+
+function getUserId() {
+  return Cookies.get('userid');
+}
+
+function clearLoginState() {
+  Cookies.remove('loginstate');
+}
+
+function checkIfAuth(yesCallback, noCallback) {
+  var cookieLoginState = getLoginState();
+  if (checkLoginStateChanged()) checkAuth = false;
+  if (!checkAuth || typeof cookieLoginState === 'undefined') {
+    $.get(utils.baseUrl + '/user').done(function (data) {
+      if (data && data._id === true) {
+        profile = data;
+        yesCallback(profile);
+        setLoginState(true, data._id);
+      } else {
+        noCallback();
+        setLoginState(false);
+      }
+    }).fail(function () {
+      noCallback();
+    }).always(function () {
+      checkAuth = true;
+    });
+  } else if (cookieLoginState) {
+    yesCallback(profile);
+  } else {
+    noCallback();
+  }
 }
 
 /*
@@ -439,9 +513,15 @@ function logout(authToken, callback) {
 }
 
 module.exports = {
+  checkIfAuth: checkIfAuth,
+  clearLoginState: clearLoginState,
+  getUserId: getUserId,
+  getLoginState: getLoginState,
+  checkLoginStateChanged: checkLoginStateChanged,
+  setLoginState: setLoginState,
+  resetCheckAuth: resetCheckAuth,
+  setloginStateChangeEvent: setloginStateChangeEvent,
   getAuthEndpoint: getAuthEndpoint,
-  isAlreadyLoggedIn: isAlreadyLoggedIn,
-  getUserIdFromSession: getUserIdFromSession,
   logout: logout
 };
 });
@@ -621,12 +701,12 @@ module.exports = function () {
   document.getElementById('delete').onclick = ui.clickDelete;
   document.getElementById('coordsearch').onclick = ui.clickSearch;
   document.getElementById('newmedia').onclick = ui.clickNewMedia;
-  document.getElementById('loginbutton').onclick = ui.clickLoginButton;
+  document.getElementById('loginbutton').onclick = ui.toggleLoginButton;
   document.onkeypress = ui.stopRKey;
   document.getElementById('mediacancel').onclick = ui.clickMediaCancel;
   document.getElementById('mediasave').onclick = ui.clickMediaSave;
 
-  ui.setupLoginButton();
+  ui.toggleLoginButton();
 
   map.initMap();
 
@@ -2088,23 +2168,16 @@ function clickNewMedia() {
   document.getElementById('mediaUpload').addEventListener('change', utils.handleFileSelect, false);
 }
 
-function setupLoginButton() {
-  if (authApi.isAlreadyLoggedIn()) {
+function toggleLoginButton() {
+  authApi.checkIfAuth(function (data) {
     $('#loginbutton').text("Logout");
     $('#loginbutton').attr("href", "#");
     $('#save').removeAttr("disabled");
-  } else {
+  }, function () {
     $('#loginbutton').text("Login");
     $('#loginbutton').attr("href", authApi.getAuthEndpoint());
     $('#save').attr("disabled", "disabled");
-  }
-}
-
-function clickLoginButton() {
-  if (authApi.isAlreadyLoggedIn()) {
-    utils.setCookie("connect.sid", undefined, 0);
-  }
-  setupLoginButton();
+  });
 }
 
 module.exports = {
@@ -2121,8 +2194,7 @@ module.exports = {
   clickMediaSave: clickMediaSave,
   clickMediaCancel: clickMediaCancel,
   clickNewMedia: clickNewMedia,
-  clickLoginButton: clickLoginButton,
-  setupLoginButton: setupLoginButton
+  toggleLoginButton: toggleLoginButton
 };
 });
 
