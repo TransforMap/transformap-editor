@@ -79,24 +79,29 @@ function checkIfAuth (yesCallback, noCallback) {
   const cookieLoginState = getLoginState()
   if (checkLoginStateChanged()) checkAuth = false
   if (!checkAuth || typeof cookieLoginState === 'undefined') {
-    $.get(`${utils.baseUrl}/user`)
-            .done(data => {
-              if (data && data._id === true) {
-                profile = data
-                yesCallback(profile)
-                setLoginState(true, data._id)
-              } else {
-                noCallback()
-                setLoginState(false)
-              }
-            })
-            .fail(() => {
-              noCallback()
-            })
-            .always(() => {
-              checkAuth = true
-            })
-
+    $.get({
+      url: `${utils.baseUrl}/user`,
+      contentType: 'application/json',
+      xhrFields: {
+        withCredentials: true
+      }
+    })
+      .done(data => {
+        if (data && typeof data._id !== 'undefined') {
+          profile = data
+          yesCallback(profile)
+          setLoginState(true, data._id)
+        } else {
+          noCallback()
+          setLoginState(false)
+        }
+      })
+      .fail(() => {
+        noCallback()
+      })
+      .always(() => {
+        checkAuth = true
+      })
   } else if (cookieLoginState) {
     yesCallback(profile)
   } else {
