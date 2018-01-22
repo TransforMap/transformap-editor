@@ -645,7 +645,7 @@ function clickNewMedia(){
 
 function toggleLoginButton(){
   authApi.checkIfAuth(data => {
-    $('#loginbutton').text("Logout");
+    $('#loginbutton').text("Logout " + data.contact.name);
     $('#loginbutton').attr("href",authApi.getLogoutEndpoint());
     $('#save').removeAttr("disabled");
   },() => {
