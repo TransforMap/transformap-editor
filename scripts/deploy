@@ -8,7 +8,7 @@ branch=$2
 host=$1
 REPO=$4
 : ${upstream:=origin}
-: ${branch:=staging}
+: ${branch:=master}
 : ${host:=data.transformap.co}
 : ${REPO:=git@github.com:transformap/transformap-editor.git}
 git fetch $upstream
@@ -27,7 +27,7 @@ npm i
 REV=`git describe --always`
 BUILD=git-$REV FQDN=$host npm run compile
 cd public
-git remote add deploy dokku@apps.allmende.io:transformap-editor
+git remote add deploy dokku@apps.allmende.io:edit.transformap.co
 git add -A .
 echo "regen for $REV" | git commit-tree `git write-tree` -p `git rev-parse HEAD` -p $REV | xargs git reset --hard
 git push origin dokku
