@@ -2306,7 +2306,7 @@ require.register("lib/utils.js", function(exports, require, module) {
 
 var currentBlob;
 
-var baseUrl = 'https://transformap-data.apps.allmende.io' !== "//undefined" ? 'https://transformap-data.apps.allmende.io' : "";
+var baseUrl = 'https://data.transformap.co' !== "//undefined" ? 'https://data.transformap.co' : "";
 /*
  * This library provide utility functions
  *
